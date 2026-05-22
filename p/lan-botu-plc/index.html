@@ -1,0 +1,451 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="指令集合  基本指令  常规指令   | 序号 | 名称 | 功能说明 | |-----|------|----------| | 1 | 插入程序段 | 在梯形图中新建一个空白的程序段（Network），用于组织代码 | | 2 | 空功…"><title>博途PLC</title><link rel=canonical href=https://2004ccf/io/p/lan-botu-plc/><link rel=stylesheet href=/io/scss/style.min.c91073e1bef24baf3131464aee14e30bb1335275cee51563e55fb2a5e03eca69.css><meta property='og:title' content="博途PLC"><meta property='og:description' content="指令集合  基本指令  常规指令   | 序号 | 名称 | 功能说明 | |-----|------|----------| | 1 | 插入程序段 | 在梯形图中新建一个空白的程序段（Network），用于组织代码 | | 2 | 空功…"><meta property='og:url' content='https://2004ccf/io/p/lan-botu-plc/'><meta property='og:site_name' content='陈乘峰'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='蓝经理培训班'><meta property='article:tag' content='电气自动化'><meta property='article:tag' content='学习与专业能力'><meta property='article:published_time' content='2026-05-22T16:00:00+08:00'><meta property='article:modified_time' content='2026-05-22T16:00:00+08:00'><meta name=twitter:title content="博途PLC"><meta name=twitter:description content="指令集合  基本指令  常规指令   | 序号 | 名称 | 功能说明 | |-----|------|----------| | 1 | 插入程序段 | 在梯形图中新建一个空白的程序段（Network），用于组织代码 | | 2 | 空功…"><link rel="shortcut icon" href=/favicon.ico></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切换菜单>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/io/><img src=/io/img/avatar_hu_dee33d711e2a3510.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>👨‍🎓</span></figure><div class=site-meta><h1 class=site-name><a href=/io>陈乘峰</a></h1><h2 class=site-description>欢迎来到我的网站</h2></div></header><ol class=menu-social><li><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://twitter.com target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/io/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>主页</span></a></li><li><a href=/io/%E5%85%B3%E4%BA%8E/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>关于</span></a></li><li><a href=/io/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/io/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/io/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span></a></li><li class=menu-bottom-section><ol class=menu><li id=i18n-switch><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg>
+<select name=language title=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://2004ccf/io/en/>English</option><option value=https://2004ccf/io/ selected>简体中文</option><option value=https://2004ccf/io/ar/>عربي</option></select></li><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>暗色模式</span></li></ol></li></ol></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/io/categories/skill/>Skill
+</a><a href=/io/categories/%E8%93%9D%E7%BB%8F%E7%90%86%E5%9F%B9%E8%AE%AD%E7%8F%AD/>蓝经理培训班
+</a><a href=/io/categories/%E7%94%B5%E6%B0%94%E8%87%AA%E5%8A%A8%E5%8C%96/>电气自动化</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/io/p/lan-botu-plc/>博途PLC</a></h2><h3 class=article-subtitle>指令集合 基本指令 常规指令 | 序号 | 名称 | 功能说明 | |-----|------|----------| | 1 | 插入程序段 | 在梯形图中新建一个空白的程序段（Network），用于组织代码 | | 2 | 空功…</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>May 22, 2026</time></div></footer></div></header><section class=article-content><p>指令集合</p><p>基本指令</p><p>常规指令
+![](attachments/Pasted image 20260115100302.png)</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>1</td><td>插入程序段</td><td>在梯形图中新建一个空白的程序段（Network），用于组织代码</td></tr><tr><td>2</td><td>空功能框</td><td>插入一个空的功能块框架，可以填入任意指令或功能块</td></tr><tr><td>3</td><td>打开分支</td><td>创建并联支路的起点，让多个条件可以"或"的关系连接</td></tr><tr><td>4</td><td>嵌套闭合</td><td>关闭并联支路，把分支合并回主线</td></tr><tr><td>5</td><td>连接线 ─┤</td><td>画一条横线，用于连接触点、线圈或延长电路</td></tr></tbody></table></div><p>常规指令例子：</p><ul><li>插入程序段：每个独立的控制逻辑放一个程序段，比如"启停控制"放Network1，&ldquo;报警"放Network2</li><li>空功能框：先占个位置，后面再填具体指令，比如定时器、计数器</li><li>打开分支：启动按钮OR自保持，两个条件任一满足都能输出</li><li>嵌套闭合：分支结束后回到主线继续串联其他条件</li><li>连接线：把两个元件连起来，或者延长线路到下一个触点</li></ul><p>打开分支和嵌套闭合详解：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>        ┌─ I0.0 ─┐        打开分支：从这里开始分叉
+</span></span><span class=line><span class=cl>母线 ───┤        ├─── Q0.0
+</span></span><span class=line><span class=cl>        └─ I0.1 ─┘        嵌套闭合：在这里合并
+</span></span></code></pre></td></tr></table></div></div><p>意思是：I0.0 或 I0.1 任一个=1，Q0.0就输出
+这就是"或"逻辑（OR），用于：</p><ul><li>多个启动按钮（主站启动OR副站启动）</li><li>自保持电路（启动按钮OR输出自己）</li></ul><p>位逻辑运算 ![](attachments/Pasted image 20260115093448.png)</p><p>触点类指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>符号</th><th>功能说明</th></tr></thead><tbody><tr><td>1</td><td>常开触点</td><td>─┤ ├─</td><td>信号=1时通，信号=0时断。最常用的触点，用于检测某个信号是否为ON</td></tr><tr><td>2</td><td>常闭触点</td><td>─┤/├─</td><td>信号=0时通，信号=1时断。与常开相反，常用于检测信号是否为OFF</td></tr><tr><td>3</td><td>取反</td><td>─┤NOT├─</td><td>把前面的逻辑结果反过来（1变0，0变1）</td></tr></tbody></table></div><p>触点类例子：</p><ul><li>常开触点：按下启动按钮(I0.0=1)，电机(Q0.0)转。 <code>I0.0 ─┤ ├─ Q0.0</code></li><li>常闭触点：急停没按下(I0.1=0)才允许运行。 <code>I0.1 ─┤/├─ Q0.0</code></li><li>取反：传感器没检测到(I0.2=0)时报警。 <code>I0.2 ─┤NOT├─ Q0.1</code></li></ul><p>线圈类指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>符号</th><th>功能说明</th></tr></thead><tbody><tr><td>4</td><td>普通线圈</td><td>─( )─</td><td>条件满足就ON，不满足就OFF。最基本的输出方式</td></tr><tr><td>5</td><td>取反线圈</td><td>─(/)─</td><td>条件满足就OFF，不满足就ON。与普通线圈相反</td></tr><tr><td>6</td><td>复位线圈</td><td>─(R)─</td><td>条件满足时，把输出强制变成0。用于清除置位状态</td></tr><tr><td>7</td><td>置位线圈</td><td>─(S)─</td><td>条件满足时，把输出强制变成1，之后一直保持。断电或复位才会清除</td></tr></tbody></table></div><p>线圈类例子：</p><ul><li>普通线圈：按住按钮灯亮，松开灯灭。 <code>I0.0 ─┤ ├─( Q0.0 )</code></li><li>取反线圈：按钮按下时灯灭，松开时灯亮。 <code>I0.0 ─┤ ├─(/ Q0.0 )</code></li><li>置位线圈：按启动按钮，电机一直转。 <code>I0.0 ─┤ ├─(S Q0.0)</code> 松手也不停</li><li>复位线圈：按停止按钮，电机停。 <code>I0.1 ─┤ ├─(R Q0.0)</code> 清除置位状态</li></ul><p>置位/复位功能块</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>8</td><td>SET_BF</td><td>置位位域，一次性把多个连续的位都设为1</td></tr><tr><td>9</td><td>RESET_BF</td><td>复位位域，一次性把多个连续的位都设为0</td></tr><tr><td>10</td><td>SR</td><td>置位优先触发器。当S和R同时为1时，输出=1（置位优先）</td></tr><tr><td>11</td><td>RS</td><td>复位优先触发器。当S和R同时为1时，输出=0（复位优先）</td></tr></tbody></table></div><p>置位/复位例子：</p><ul><li>SET_BF：一键把Q0.0到Q0.7全部置1（8个灯全亮）</li><li>RESET_BF：一键把Q0.0到Q0.7全部清0（8个灯全灭）</li><li>SR：启动和停止同时按下，电机转（启动优先）</li><li>RS：启动和停止同时按下，电机停（停止优先，更安全）</li></ul><p>边沿检测指令（触点型）</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>符号</th><th>功能说明</th></tr></thead><tbody><tr><td>12</td><td>上升沿触点</td><td>─┤P├─</td><td>信号从0变1的那一瞬间通一个扫描周期，用于检测按钮按下的瞬间</td></tr><tr><td>13</td><td>下降沿触点</td><td>─┤N├─</td><td>信号从1变0的那一瞬间通一个扫描周期，用于检测按钮松开的瞬间</td></tr></tbody></table></div><p>边沿检测指令（线圈型）</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>符号</th><th>功能说明</th></tr></thead><tbody><tr><td>14</td><td>上升沿线圈</td><td>─(P)─</td><td>检测到上升沿时输出一个扫描周期的脉冲</td></tr><tr><td>15</td><td>下降沿线圈</td><td>─(N)─</td><td>检测到下降沿时输出一个扫描周期的脉冲</td></tr></tbody></table></div><p>边沿检测指令（功能块型）</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>16</td><td>P_TRIG</td><td>上升沿触发器，需要配合存储位使用，功能同 ─┤P├─</td></tr><tr><td>17</td><td>N_TRIG</td><td>下降沿触发器，需要配合存储位使用，功能同 ─┤N├─</td></tr><tr><td>18</td><td>R_TRIG</td><td>上升沿检测（IEC标准写法），R=Rising上升</td></tr><tr><td>19</td><td>F_TRIG</td><td>下降沿检测（IEC标准写法），F=Falling下降</td></tr></tbody></table></div><p>边沿检测例子：</p><ul><li>上升沿：按一下按钮计数+1，按住不放也只加1次。 <code>I0.0 ─┤P├─ 计数器</code></li><li>下降沿：松开按钮的瞬间触发动作。 <code>I0.0 ─┤N├─ Q0.0</code></li><li>应用场景：按一下启动，再按一下停止（切换开关效果）</li></ul><p>小白必须掌握的6个指令</p><ol><li>─┤ ├─ 常开触点 - 检测信号是否ON → 例：按钮按下检测</li><li>─┤/├─ 常闭触点 - 检测信号是否OFF → 例：急停联锁</li><li>─( )─ 普通线圈 - 基本输出 → 例：按住亮松开灭</li><li>─(S)─ 置位线圈 - 保持输出ON → 例：启动后保持运行</li><li>─(R)─ 复位线圈 - 清除输出 → 例：停止按钮</li><li>─┤P├─ 上升沿 - 检测信号变化的瞬间 → 例：计数、切换</li></ol><p>定时器操作
+![](attachments/Pasted image 20260115102558.png)
+IEC标准定时器（常用）</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>1</td><td>TP</td><td>脉冲定时器：输入ON后，输出固定时长的脉冲，时间到自动OFF</td></tr><tr><td>2</td><td>TON</td><td>接通延时：输入ON后，延时一段时间才输出ON</td></tr><tr><td>3</td><td>TOF</td><td>关断延时：输入OFF后，延时一段时间才输出OFF</td></tr><tr><td>4</td><td>TONR</td><td>时间累加器：可暂停的定时器，输入OFF时暂停计时，ON时继续</td></tr></tbody></table></div><p>IEC定时器例子：</p><ul><li>TP：按一下按钮，灯亮5秒后自动灭（固定脉冲）</li><li>TON：按下启动3秒后电机才转（防误触）</li><li>TOF：松开按钮后风扇再转10秒才停（延时关闭）</li><li>TONR：累计运行时间，中途停机不清零</li></ul><p>定时器线圈型</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>5</td><td>─(TP)─</td><td>启动脉冲定时器</td></tr><tr><td>6</td><td>─(TON)─</td><td>启动接通延时定时器</td></tr><tr><td>7</td><td>─(TOF)─</td><td>启动关断延时定时器</td></tr><tr><td>8</td><td>─(TONR)─</td><td>启动时间累加器</td></tr><tr><td>9</td><td>─(RT)─</td><td>复位定时器，把定时器当前值清零</td></tr><tr><td>10</td><td>─(PT)─</td><td>加载持续时间，动态修改定时器的设定时间</td></tr></tbody></table></div><p>线圈型例子：</p><ul><li>─(TON)─：条件满足时启动延时，用于简单的延时控制</li><li>─(RT)─：按复位按钮，把定时器清零重新开始计时</li></ul><p>S7兼容定时器（原有/旧版）</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>11</td><td>S_PULSE</td><td>脉冲定时器，输出固定时长脉冲</td></tr><tr><td>12</td><td>S_PEXT</td><td>扩展脉冲定时器，可重触发延长脉冲</td></tr><tr><td>13</td><td>S_ODT</td><td>接通延时定时器</td></tr><tr><td>14</td><td>S_ODTS</td><td>保持型接通延时，输入断开后继续计时</td></tr><tr><td>15</td><td>S_OFFDT</td><td>关断延时定时器</td></tr></tbody></table></div><p>S7定时器线圈型</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>16</td><td>─(SP)─</td><td>启动脉冲定时器</td></tr><tr><td>17</td><td>─(SE)─</td><td>启动扩展脉冲定时器</td></tr><tr><td>18</td><td>─(SD)─</td><td>启动接通延时定时器</td></tr><tr><td>19</td><td>─(SS)─</td><td>启动保持型接通延时</td></tr><tr><td>20</td><td>─(SF)─</td><td>启动关断延时定时器</td></tr></tbody></table></div><p>小白必须掌握的3个定时器：</p><ol><li>TON 接通延时 - 最常用，按下后延时动作 → 例：启动延时、防抖动</li><li>TOF 关断延时 - 松开后延时停止 → 例：风扇延时关闭、润滑延时</li><li>TP 脉冲 - 固定时长输出 → 例：蜂鸣器响3秒、指示灯闪烁</li></ol><p>定时器使用要点：</p><ul><li>PT：设定时间（Preset Time），比如 T#5S 表示5秒</li><li>ET：已计时时间（Elapsed Time）</li><li>Q：定时器输出</li><li>IN：定时器输入/启动条件</li></ul><p>计数器操作
+![](attachments/Pasted image 20260115102541.png)
+IEC标准计数器（常用）</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>1</td><td>CTU</td><td>加计数器：每来一个脉冲，计数值+1，达到设定值时输出ON</td></tr><tr><td>2</td><td>CTD</td><td>减计数器：每来一个脉冲，计数值-1，减到0时输出ON</td></tr><tr><td>3</td><td>CTUD</td><td>加减计数器：可以加也可以减，有两个输入分别控制加和减</td></tr></tbody></table></div><p>IEC计数器例子：</p><ul><li>CTU：数产品数量，每过一个产品+1，数到10个输出信号</li><li>CTD：倒计时，从10开始减，减到0报警</li><li>CTUD：入库+1出库-1，实时显示库存数量</li></ul><p>计数器线圈型</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>4</td><td>─(SC)─</td><td>设置计数器值，把计数器设为指定数值</td></tr><tr><td>5</td><td>─(CU)─</td><td>加计数，每触发一次计数值+1</td></tr><tr><td>6</td><td>─(CD)─</td><td>减计数，每触发一次计数值-1</td></tr></tbody></table></div><p>线圈型例子：</p><ul><li>─(CU)─：传感器检测到产品，计数+1</li><li>─(CD)─：产品出库，计数-1</li><li>─(SC)─：按复位按钮，把计数器设为0或其他初始值</li></ul><p>S7兼容计数器（原有/旧版）</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>7</td><td>S_CU</td><td>分配参数并加计数</td></tr><tr><td>8</td><td>S_CD</td><td>分配参数并减计数</td></tr><tr><td>9</td><td>S_CUD</td><td>分配参数并加减计数</td></tr></tbody></table></div><p>S7计数器例子：</p><ul><li>S_CU：老版本加计数器，功能同CTU</li><li>S_CD：老版本减计数器，功能同CTD</li><li>S_CUD：老版本加减计数器，功能同CTUD</li></ul><p>小白必须掌握的2个计数器：</p><ol><li>CTU 加计数 - 最常用，数数量 → 例：产品计数、循环次数</li><li>CTUD 加减计数 - 需要双向计数时用 → 例：库存管理、人数统计</li></ol><p>计数器使用要点：</p><ul><li>CU：加计数输入（Count Up）</li><li>CD：减计数输入（Count Down）</li><li>R：复位输入，把计数值清零</li><li>PV：设定值（Preset Value），比如10</li><li>CV：当前计数值（Current Value）</li><li>Q/QU：达到设定值时输出ON</li><li>QD：减到0时输出ON</li></ul><p>比较操作
+![](attachments/Pasted image 20260115102508.png)
+基本比较指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>符号</th><th>功能说明</th></tr></thead><tbody><tr><td>1</td><td>CMP ==</td><td>等于</td><td>两个值相等时触点通</td></tr><tr><td>2</td><td>CMP &lt;></td><td>不等于</td><td>两个值不相等时触点通</td></tr><tr><td>3</td><td>CMP >=</td><td>大于或等于</td><td>第一个值≥第二个值时触点通</td></tr><tr><td>4</td><td>CMP &lt;=</td><td>小于或等于</td><td>第一个值≤第二个值时触点通</td></tr><tr><td>5</td><td>CMP ></td><td>大于</td><td>第一个值>第二个值时触点通</td></tr><tr><td>6</td><td>CMP &lt;</td><td>小于</td><td>第一个值&lt;第二个值时触点通</td></tr></tbody></table></div><p>基本比较例子：</p><ul><li>CMP ==：温度=50℃时启动风扇 <code>温度 == 50</code></li><li>CMP &lt;>：计数值≠0时允许运行 <code>计数值 &lt;> 0</code></li><li>CMP >=：液位≥80%时停止进料 <code>液位 >= 80</code></li><li>CMP &lt;=：压力≤10时报警 <code>压力 &lt;= 10</code></li><li>CMP >：速度>100时减速 <code>速度 > 100</code></li><li>CMP &lt;：温度&lt;0时加热 <code>温度 &lt; 0</code></li></ul><p>范围比较指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>7</td><td>IN_Range</td><td>值在范围内：判断值是否在最小值和最大值之间</td></tr><tr><td>8</td><td>OUT_Range</td><td>值超出范围：判断值是否在范围之外</td></tr></tbody></table></div><p>范围比较例子：</p><ul><li>IN_Range：温度在20~30℃之间时正常 <code>20 &lt;= 温度 &lt;= 30</code></li><li>OUT_Range：温度超出20~30℃范围时报警</li></ul><p>有效性检查指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>9</td><td>─┤OK├─</td><td>检查有效性：检查浮点数是否有效（不是NaN或无穷大）</td></tr><tr><td>10</td><td>─┤NOT_OK├─</td><td>检查无效性：检查浮点数是否无效</td></tr></tbody></table></div><p>有效性检查例子：</p><ul><li>─┤OK├─：模拟量读数有效时才使用</li><li>─┤NOT_OK├─：模拟量读数无效时报警</li></ul><p>变量类型比较指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>11</td><td>EQ_Type</td><td>比较数据类型与变量是否相等</td></tr><tr><td>12</td><td>NE_Type</td><td>比较数据类型与变量是否不相等</td></tr><tr><td>13</td><td>EQ_ElemType</td><td>比较ARRAY元素数据类型是否相等</td></tr><tr><td>14</td><td>NE_ElemType</td><td>比较ARRAY元素数据类型是否不相等</td></tr><tr><td>15</td><td>IS_NULL</td><td>检查指针是否为NULL（空）</td></tr><tr><td>16</td><td>NOT_NULL</td><td>检查指针是否不为NULL</td></tr><tr><td>17</td><td>IS_ARRAY</td><td>检查变量是否为数组类型</td></tr><tr><td>18</td><td>EQ_TypeOfDB</td><td>比较DB数据块类型是否相等</td></tr><tr><td>19</td><td>NE_TypeOfDB</td><td>比较DB数据块类型是否不相等</td></tr></tbody></table></div><p>变量类型比较例子：</p><ul><li>IS_NULL：检查指针是否为空，防止空指针错误</li><li>IS_ARRAY：检查变量是否为数组，用于通用函数</li></ul><p>小白必须掌握的4个比较指令：</p><ol><li>CMP == 等于 - 判断两个值是否相等 → 例：步骤号==1时执行第1步</li><li>CMP > 大于 - 判断是否超过某个值 → 例：温度>80报警</li><li>CMP &lt; 小于 - 判断是否低于某个值 → 例：液位&lt;20补水</li><li>IN_Range 范围内 - 判断是否在正常范围 → 例：温度在20~30正常</li></ol><p>数学函数</p><p>![](attachments/Pasted image 20260115103026.png)
+基本运算指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>符号</th><th>功能说明</th></tr></thead><tbody><tr><td>1</td><td>CALCULATE</td><td>计算</td><td>通用计算指令，可以写复杂的数学表达式</td></tr><tr><td>2</td><td>ADD</td><td>+</td><td>加法运算：两个数相加</td></tr><tr><td>3</td><td>SUB</td><td>-</td><td>减法运算：第一个数减去第二个数</td></tr><tr><td>4</td><td>MUL</td><td>×</td><td>乘法运算：两个数相乘</td></tr><tr><td>5</td><td>DIV</td><td>÷</td><td>除法运算：第一个数除以第二个数</td></tr><tr><td>6</td><td>MOD</td><td>%</td><td>取余运算：求除法的余数</td></tr><tr><td>7</td><td>NEG</td><td>-x</td><td>取负运算：把正数变负数，负数变正数</td></tr><tr><td>8</td><td>INC</td><td>++</td><td>递增：变量值+1</td></tr><tr><td>9</td><td>DEC</td><td>&ndash;</td><td>递减：变量值-1</td></tr><tr><td>10</td><td>ABS</td><td></td><td>x</td></tr></tbody></table></div><p>基本运算例子：</p><ul><li>CALCULATE：复杂计算 <code>结果 := (A+B)*C/D-E</code> 一次性完成多步运算</li><li>ADD：温度补偿 = 实际温度 + 修正值 <code>实际温度 + 5 = 补偿温度</code></li><li>SUB：剩余数量 = 总数 - 已用数量 <code>100 - 已用 = 剩余</code></li><li>MUL：总价 = 单价 × 数量 <code>10元 × 5个 = 50元</code></li><li>DIV：平均值 = 总和 ÷ 个数 <code>300 ÷ 3 = 100</code></li><li>MOD：判断奇偶数 <code>数值 MOD 2 = 0是偶数，=1是奇数</code></li><li>NEG：反向控制 <code>-速度</code> 让电机反转</li><li>INC：计数器+1 <code>每次触发计数值自动+1</code></li><li>DEC：倒计时-1 <code>每次触发计数值自动-1</code></li><li>ABS：距离计算 <code>|目标位置 - 当前位置|</code> 不管正负都是距离</li></ul><p>高级数学函数</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>11</td><td>MIN</td><td>取最小值：从多个数中找出最小的</td></tr><tr><td>12</td><td>MAX</td><td>取最大值：从多个数中找出最大的</td></tr><tr><td>13</td><td>LIMIT</td><td>限幅：把数值限制在最小值和最大值之间</td></tr><tr><td>14</td><td>SQR</td><td>平方：数值的2次方 x²</td></tr><tr><td>15</td><td>SQRT</td><td>开平方：求平方根 √x</td></tr><tr><td>16</td><td>LN</td><td>自然对数：以e为底的对数</td></tr><tr><td>17</td><td>EXP</td><td>指数函数：e的x次方</td></tr><tr><td>18</td><td>SIN</td><td>正弦函数：三角函数sin(x)</td></tr><tr><td>19</td><td>COS</td><td>余弦函数：三角函数cos(x)</td></tr><tr><td>20</td><td>TAN</td><td>正切函数：三角函数tan(x)</td></tr><tr><td>21</td><td>ASIN</td><td>反正弦：arcsin(x)</td></tr><tr><td>22</td><td>ACOS</td><td>反余弦：arccos(x)</td></tr><tr><td>23</td><td>ATAN</td><td>反正切：arctan(x)</td></tr><tr><td>24</td><td>FRAC</td><td>取小数部分：3.14的小数部分是0.14</td></tr><tr><td>25</td><td>EXPT</td><td>取幂：计算x的y次方 x^y</td></tr></tbody></table></div><p>高级数学例子：</p><ul><li>MIN：取三个传感器的最小值 <code>MIN(传感器1, 传感器2, 传感器3)</code></li><li>MAX：取最高温度 <code>MAX(温度1, 温度2, 温度3)</code></li><li>LIMIT：限制输出范围 <code>LIMIT(0, 输出值, 100)</code> 输出限制在0~100</li><li>SQR：计算面积 <code>边长² = 面积</code></li><li>SQRT：计算距离 <code>√(x²+y²)</code> 两点间距离</li><li>SIN/COS：圆周运动 <code>X = 半径×COS(角度), Y = 半径×SIN(角度)</code></li><li>FRAC：提取小数部分 <code>FRAC(3.14) = 0.14</code> 用于精度控制</li><li>EXPT：功率计算 <code>功率 = 电压^2 ÷ 电阻</code></li></ul><p>浮点数运算</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>26</td><td>CEIL</td><td>向上取整：3.1变成4，-3.1变成-3</td></tr><tr><td>27</td><td>FLOOR</td><td>向下取整：3.9变成3，-3.1变成-4</td></tr><tr><td>28</td><td>TRUNC</td><td>截断取整：直接去掉小数部分</td></tr><tr><td>29</td><td>ROUND</td><td>四舍五入：3.4变成3，3.6变成4</td></tr></tbody></table></div><p>浮点数运算例子：</p><ul><li>CEIL：计算需要几个包装盒 <code>CEIL(产品数÷每盒数量)</code></li><li>FLOOR：计算完整的小时数 <code>FLOOR(分钟数÷60)</code></li><li>TRUNC：去掉小数显示整数 <code>TRUNC(25.9) = 25</code></li><li>ROUND：显示温度到整数 <code>ROUND(25.7) = 26</code></li></ul><p>累加器运算</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>30</td><td>ADD_I</td><td>整数累加：把新值加到累加器上</td></tr><tr><td>31</td><td>SUB_I</td><td>整数累减：从累加器减去新值</td></tr><tr><td>32</td><td>MUL_I</td><td>整数累乘：累加器乘以新值</td></tr><tr><td>33</td><td>DIV_I</td><td>整数累除：累加器除以新值</td></tr></tbody></table></div><p>累加器例子：</p><ul><li>ADD_I：累计产量 <code>总产量 += 本次产量</code></li><li>SUB_I：扣除库存 <code>库存 -= 出库数量</code></li><li>MUL_I：复利计算 <code>本金 *= (1+利率)</code></li><li>DIV_I：平均分配 <code>总数 /= 分组数</code></li></ul><p>小白必须掌握的10个运算指令：</p><ol><li>CALCULATE 计算 - 万能计算器 → 例：复杂公式一次搞定</li><li>ADD 加法 - 最基本的运算 → 例：温度补偿、数量累加</li><li>SUB 减法 - 计算差值 → 例：剩余量、偏差计算</li><li>MUL 乘法 - 比例计算 → 例：单价×数量、比例换算</li><li>DIV 除法 - 求平均值 → 例：平均温度、速度计算</li><li>INC 递增 - 简单计数+1 → 例：步骤计数、循环计数</li><li>DEC 递减 - 简单计数-1 → 例：倒计时、库存减少</li><li>MIN 最小值 - 多选一 → 例：多传感器取最小值</li><li>MAX 最大值 - 多选一 → 例：多传感器取最大值</li><li>LIMIT 限幅 - 防止超限 → 例：输出限制在0~100%</li></ol><p>运算指令使用要点：</p><ul><li>数据类型要匹配：整数用INT，小数用REAL</li><li>除法要防止除零错误：先判断分母≠0</li><li>浮点数比较要用范围：不要用==，用ABS(A-B)&lt;0.01</li><li>溢出保护：结果可能超出变量范围要检查</li><li>CALCULATE最灵活：可以写复杂表达式，但要注意运算优先级</li><li>INC/DEC最简单：不需要输入参数，直接对变量操作</li></ul><p>运算指令梯形图使用方法：</p><ol><li>功能块型（推荐）：</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>─┤条件├─┤ ADD ├─
+</span></span><span class=line><span class=cl>          │ IN1: 变量A
+</span></span><span class=line><span class=cl>          │ IN2: 变量B  
+</span></span><span class=line><span class=cl>          │ OUT: 结果
+</span></span></code></pre></td></tr></table></div></div><ol start=2><li>CALCULATE型（万能）：</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>─┤条件├─┤ CALCULATE ├─
+</span></span><span class=line><span class=cl>          │ 结果 := A + B * C - D
+</span></span></code></pre></td></tr></table></div></div><ol start=3><li>线圈型（简单）：</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>─┤条件├─( INC 变量A )  // 变量A自动+1
+</span></span></code></pre></td></tr></table></div></div><p>常见运算组合应用：</p><p>温度控制：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>偏差 := 设定值 - 实际值        (SUB)
+</span></span><span class=line><span class=cl>输出 := LIMIT(0, 偏差*10, 100) (MUL + LIMIT)
+</span></span></code></pre></td></tr></table></div></div><p>速度计算：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>速度 := 脉冲数 / 时间          (DIV)
+</span></span><span class=line><span class=cl>平均速度 := (速度1+速度2+速度3)/3 (ADD + DIV)
+</span></span></code></pre></td></tr></table></div></div><p>位置控制：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>距离 := ABS(目标位置 - 当前位置) (SUB + ABS)
+</span></span><span class=line><span class=cl>到位 := 距离 &lt; 0.1             (CMP &lt;)
+</span></span></code></pre></td></tr></table></div></div><p>实际应用案例：</p><p>案例1：温度PID控制</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>偏差 = 设定温度 - 实际温度          (SUB减法)
+</span></span><span class=line><span class=cl>积分 += 偏差                      (ADD_I累加)
+</span></span><span class=line><span class=cl>微分 = 偏差 - 上次偏差             (SUB减法)
+</span></span><span class=line><span class=cl>输出 = Kp×偏差 + Ki×积分 + Kd×微分  (MUL乘法 + ADD加法)
+</span></span><span class=line><span class=cl>输出 = LIMIT(0, 输出, 100)        (LIMIT限幅)
+</span></span></code></pre></td></tr></table></div></div><p>案例2：传送带速度计算</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>实际速度 = 脉冲数 ÷ 时间           (DIV除法)
+</span></span><span class=line><span class=cl>速度偏差 = ABS(设定速度 - 实际速度) (ABS绝对值 + SUB减法)
+</span></span><span class=line><span class=cl>如果 速度偏差 &gt; 5 则报警           (CMP比较)
+</span></span></code></pre></td></tr></table></div></div><p>案例3：料仓管理</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>进料总量 += 本次进料              (ADD_I累加)
+</span></span><span class=line><span class=cl>出料总量 += 本次出料              (ADD_I累加)
+</span></span><span class=line><span class=cl>当前库存 = 进料总量 - 出料总量     (SUB减法)
+</span></span><span class=line><span class=cl>库存率 = 当前库存 ÷ 最大容量 × 100 (DIV除法 + MUL乘法)
+</span></span></code></pre></td></tr></table></div></div><p>移动操作 ![](attachments/Pasted image 20260115103026.png)</p><p>基本移动指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>1</td><td>MOVE</td><td>移动值：把一个变量的值复制到另一个变量</td></tr><tr><td>2</td><td>Deserialize</td><td>反序列化：把字节数组转换成结构化数据</td></tr><tr><td>3</td><td>Serialize</td><td>序列化：把结构化数据转换成字节数组</td></tr><tr><td>4</td><td>MOVE_BLK</td><td>块移动：一次性移动多个连续的数据</td></tr><tr><td>5</td><td>MOVE_BLK_VARIANT</td><td>块移动变体：支持不同数据类型的块移动</td></tr><tr><td>6</td><td>UMOVE_BLK</td><td>不可中断的存储区移动：高优先级的块移动</td></tr><tr><td>7</td><td>?=</td><td>尝试分配给一个引用：安全的赋值操作</td></tr></tbody></table></div><p>基本移动例子：</p><ul><li>MOVE：温度显示 = 传感器读数 <code>把AI0的值复制到显示变量</code></li><li>Serialize：把配方数据打包成字节流发送给上位机</li><li>Deserialize：把上位机发来的字节流解包成配方数据</li><li>MOVE_BLK：批量复制数组 <code>把数组A[0~9]全部复制到数组B[0~9]</code></li><li>?=：安全赋值，如果目标变量存在才赋值</li></ul><p>填充和初始化指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>8</td><td>FILL_BLK</td><td>填充块：用同一个值填充多个连续的存储位置</td></tr><tr><td>9</td><td>UFILL_BLK</td><td>不可中断的存储区填充：高优先级的填充操作</td></tr></tbody></table></div><p>填充例子：</p><ul><li>FILL_BLK：数组初始化 <code>把数组A[0~99]全部填充为0</code></li><li>UFILL_BLK：关键数据清零，不允许被其他任务中断</li></ul><p>数据分散和收集指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>10</td><td>SCATTER</td><td>将位序列解析为单个位：把一个字节拆分成8个独立的位</td></tr><tr><td>11</td><td>SCATTER_BLK</td><td>将ARRAY型位序列解析为单个位：批量拆分操作</td></tr><tr><td>12</td><td>GATHER</td><td>将单个位组合成一个位序列：把8个独立的位合并成一个字节</td></tr><tr><td>13</td><td>GATHER_BLK</td><td>将单个位组合成ARRAY型位序列：批量合并操作</td></tr></tbody></table></div><p>分散收集例子：</p><ul><li>SCATTER：状态字解析 <code>把状态字节拆分成8个状态位</code></li><li>GATHER：状态位打包 <code>把8个报警位合并成一个报警字节</code></li><li>应用：通讯协议中经常需要位操作和字节操作互转</li></ul><p>交换指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>14</td><td>SWAP</td><td>交换：两个变量的值互相交换</td></tr></tbody></table></div><p>交换例子：</p><ul><li>SWAP：变量交换 <code>A=10, B=20 → 交换后 A=20, B=10</code></li><li>应用：排序算法、数据轮换</li></ul><p>数组操作指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>15</td><td>ReadFromArrayDB</td><td>从ARRAY数据块中读取数据</td></tr><tr><td>16</td><td>WriteToArrayDB</td><td>写入ARRAY数据块</td></tr><tr><td>17</td><td>ReadFromArrayDBL</td><td>从装载存储器的ARRAY数据块中读取</td></tr><tr><td>18</td><td>WriteToArrayDBL</td><td>向装载存储器中的ARRAY数据块写入</td></tr></tbody></table></div><p>数组操作例子：</p><ul><li>ReadFromArrayDB：读取配方数据 <code>从配方数组中读取第3号配方</code></li><li>WriteToArrayDB：保存配方数据 <code>把当前参数保存到配方数组</code></li><li>应用：配方管理、历史数据存储</li></ul><p>变量操作指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>19</td><td>VariantGet</td><td>读出VARIANT变量值：读取动态类型变量</td></tr><tr><td>20</td><td>VariantPut</td><td>写入VARIANT变量值：写入动态类型变量</td></tr><tr><td>21</td><td>CountOfElements</td><td>获取ARRAY元素的数量：返回数组长度</td></tr></tbody></table></div><p>变量操作例子：</p><ul><li>VariantGet：读取动态数据 <code>根据类型标识读取对应的变量值</code></li><li>VariantPut：写入动态数据 <code>根据类型标识写入对应的变量值</code></li><li>CountOfElements：获取数组大小 <code>返回数组有多少个元素</code></li></ul><p>符号化移动指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>22</td><td>解析多个符号</td><td>解析多个符号：批量解析符号地址</td></tr><tr><td>23</td><td>MoveResolvedSymbol</td><td>从已解析的符号中读取值：通过符号名读取变量</td></tr><tr><td>24</td><td>MoveResolvedSymbol</td><td>从缓冲区中读取值并写入符号：通过符号名写入变量</td></tr></tbody></table></div><p>符号化移动例子：</p><ul><li>解析多个符号：批量获取变量地址，提高访问效率</li><li>MoveResolvedSymbol：通过变量名动态访问变量，用于通用程序</li></ul><p>数组边界指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>25</td><td>LOWER_BOUND</td><td>读取ARRAY下限：获取数组的最小索引</td></tr><tr><td>26</td><td>UPPER_BOUND</td><td>读取ARRAY上限：获取数组的最大索引</td></tr></tbody></table></div><p>数组边界例子：</p><ul><li>LOWER_BOUND：获取数组起始索引 <code>通常返回0或1</code></li><li>UPPER_BOUND：获取数组结束索引 <code>用于循环遍历数组</code></li></ul><p>原有移动指令（S7兼容）</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>27</td><td>FieldRead</td><td>读取域：读取结构体中的字段</td></tr><tr><td>28</td><td>FieldWrite</td><td>写入域：写入结构体中的字段</td></tr><tr><td>29</td><td>BLKMOV</td><td>块移动：S7兼容的块移动指令</td></tr><tr><td>30</td><td>UBLKMOV</td><td>不可中断的存储区移动：S7兼容版本</td></tr><tr><td>31</td><td>FILL</td><td>填充块：S7兼容的填充指令</td></tr></tbody></table></div><p>原有指令例子：</p><ul><li>FieldRead/FieldWrite：访问结构体成员，用于复杂数据操作</li><li>BLKMOV：老版本的块移动，功能同MOVE_BLK</li><li>FILL：老版本的填充，功能同FILL_BLK</li></ul><p>小白必须掌握的8个移动指令：</p><ol><li>MOVE 移动 - 最基本的数据复制 → 例：显示值=传感器值</li><li>MOVE_BLK 块移动 - 批量复制数据 → 例：配方数据批量复制</li><li>FILL_BLK 填充 - 批量初始化 → 例：数组清零、初始化</li><li>SWAP 交换 - 两个变量互换 → 例：数据轮换、排序</li><li>SCATTER 拆分 - 字节拆成位 → 例：状态字解析成独立状态</li><li>GATHER 合并 - 位合成字节 → 例：多个报警位合成报警字</li><li>ReadFromArrayDB 数组读取 → 例：读取配方、历史数据</li><li>WriteToArrayDB 数组写入 → 例：保存配方、记录数据</li></ol><p>移动指令使用要点：</p><ul><li>数据类型要匹配：源和目标的数据类型要兼容</li><li>数组操作要检查边界：防止越界访问</li><li>块移动效率高：一次移动多个数据比逐个移动快</li><li>不可中断指令优先级高：用于关键数据操作</li><li>VARIANT类型灵活：可以处理不同类型的数据</li></ul><p>移动指令梯形图使用方法：</p><ol><li>简单移动：</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>─┤条件├─┤ MOVE ├─
+</span></span><span class=line><span class=cl>          │ IN: 源变量
+</span></span><span class=line><span class=cl>          │ OUT: 目标变量
+</span></span></code></pre></td></tr></table></div></div><ol start=2><li>块移动：</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>─┤条件├─┤ MOVE_BLK ├─
+</span></span><span class=line><span class=cl>          │ IN: 源数组
+</span></span><span class=line><span class=cl>          │ COUNT: 移动个数
+</span></span><span class=line><span class=cl>          │ OUT: 目标数组
+</span></span></code></pre></td></tr></table></div></div><ol start=3><li>填充操作：</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>─┤条件├─┤ FILL_BLK ├─
+</span></span><span class=line><span class=cl>          │ IN: 填充值
+</span></span><span class=line><span class=cl>          │ COUNT: 填充个数
+</span></span><span class=line><span class=cl>          │ OUT: 目标数组
+</span></span></code></pre></td></tr></table></div></div><p>实际应用案例：</p><p>案例1：配方管理系统</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>// 读取配方
+</span></span><span class=line><span class=cl>ReadFromArrayDB(配方数组, 配方号, 当前配方)
+</span></span><span class=line><span class=cl>// 应用配方到设备
+</span></span><span class=line><span class=cl>MOVE_BLK(当前配方, 设备参数数组)
+</span></span><span class=line><span class=cl>// 保存新配方
+</span></span><span class=line><span class=cl>WriteToArrayDB(设备参数数组, 配方数组, 配方号)
+</span></span></code></pre></td></tr></table></div></div><p>案例2：状态监控系统</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>// 读取设备状态字节
+</span></span><span class=line><span class=cl>MOVE(设备状态寄存器, 状态字节)
+</span></span><span class=line><span class=cl>// 拆分成独立状态位
+</span></span><span class=line><span class=cl>SCATTER(状态字节, 状态位数组)
+</span></span><span class=line><span class=cl>// 各种报警处理...
+</span></span><span class=line><span class=cl>// 合并报警位成报警字节
+</span></span><span class=line><span class=cl>GATHER(报警位数组, 报警字节)
+</span></span></code></pre></td></tr></table></div></div><p>案例3：数据初始化</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>// 系统启动时清零所有计数器
+</span></span><span class=line><span class=cl>FILL_BLK(0, 100, 计数器数组)
+</span></span><span class=line><span class=cl>// 初始化默认参数
+</span></span><span class=line><span class=cl>MOVE_BLK(默认参数, 当前参数)
+</span></span></code></pre></td></tr></table></div></div><p>转换操作 ![](attachments/Pasted image 20260115103026.png)</p><p>基本转换指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>1</td><td>CONVERT</td><td>转换值：在不同数据类型之间转换</td></tr><tr><td>2</td><td>ROUND</td><td>取整：四舍五入到最接近的整数</td></tr><tr><td>3</td><td>CEIL</td><td>浮点数向上取整：3.1变成4，-3.1变成-3</td></tr><tr><td>4</td><td>FLOOR</td><td>浮点数向下取整：3.9变成3，-3.1变成-4</td></tr><tr><td>5</td><td>TRUNC</td><td>截尾取整：直接去掉小数部分</td></tr><tr><td>6</td><td>SCALE_X</td><td>缩放：按比例缩放数值</td></tr><tr><td>7</td><td>NORM_X</td><td>标准化：将数值标准化到0~1范围</td></tr></tbody></table></div><p>基本转换例子：</p><ul><li>CONVERT：数据类型转换 <code>把INT转成REAL，把REAL转成INT</code></li><li>ROUND：温度显示 <code>25.7℃ → 26℃</code> 四舍五入显示</li><li>CEIL：包装盒计算 <code>需要3.2个盒子 → 4个盒子</code> 向上取整</li><li>FLOOR：完整小时数 <code>运行了2.8小时 → 2小时</code> 向下取整</li><li>TRUNC：去小数显示 <code>速度25.9 → 25</code> 直接截断</li><li>SCALE_X：模拟量缩放 <code>0~27648 → 0~100%</code> 按比例转换</li><li>NORM_X：数据标准化 <code>把任意范围的数据转换到0~1</code></li></ul><p>原有转换指令（S7兼容）</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>8</td><td>SCALE</td><td>缩放：S7兼容的缩放指令</td></tr><tr><td>9</td><td>UNSCALE</td><td>取消缩放：S7兼容的反缩放指令</td></tr></tbody></table></div><p>原有转换例子：</p><ul><li>SCALE：模拟量输入缩放 <code>把0~27648转成工程量0~100</code></li><li>UNSCALE：模拟量输出反缩放 <code>把工程量0~100转成0~27648</code></li></ul><p>小白必须掌握的5个转换指令：</p><ol><li>CONVERT 转换 - 数据类型转换 → 例：整数转小数，小数转整数</li><li>ROUND 四舍五入 - 显示用取整 → 例：温度25.7显示为26</li><li>SCALE_X 缩放 - 模拟量处理 → 例：0<del>27648转成0</del>100%</li><li>CEIL 向上取整 - 计算包装数 → 例：需要3.2个→取4个</li><li>TRUNC 截断 - 去掉小数 → 例：25.9直接变25</li></ol><p>转换指令使用要点：</p><ul><li>数据类型转换要注意精度损失：REAL转INT会丢失小数</li><li>缩放要设置正确的上下限：避免超出范围</li><li>模拟量处理必用SCALE：把原始值转成工程量</li><li>显示用ROUND：用户看到的数据要四舍五入</li><li>计算用TRUNC：内部计算可以直接截断</li></ul><p>转换指令梯形图使用方法：</p><ol><li>简单转换：</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>─┤条件├─┤ CONVERT ├─
+</span></span><span class=line><span class=cl>          │ IN: 源数据
+</span></span><span class=line><span class=cl>          │ OUT: 目标数据
+</span></span></code></pre></td></tr></table></div></div><ol start=2><li>缩放转换：</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>─┤条件├─┤ SCALE_X ├─
+</span></span><span class=line><span class=cl>          │ VALUE: 原始值
+</span></span><span class=line><span class=cl>          │ MIN: 最小值
+</span></span><span class=line><span class=cl>          │ MAX: 最大值
+</span></span><span class=line><span class=cl>          │ OUT: 缩放后值
+</span></span></code></pre></td></tr></table></div></div><p>实际应用案例：</p><p>案例1：温度传感器处理</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>// 模拟量输入缩放
+</span></span><span class=line><span class=cl>SCALE_X(AI温度原始值, 0, 27648, 0.0, 100.0, 温度工程值)
+</span></span><span class=line><span class=cl>// 显示用四舍五入
+</span></span><span class=line><span class=cl>ROUND(温度工程值, 温度显示值)
+</span></span></code></pre></td></tr></table></div></div><p>案例2：包装计算</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>// 计算需要多少个包装盒
+</span></span><span class=line><span class=cl>包装盒数 := 产品数量 / 每盒数量
+</span></span><span class=line><span class=cl>// 向上取整，不够一盒也要一个盒子
+</span></span><span class=line><span class=cl>实际盒数 := CEIL(包装盒数)
+</span></span></code></pre></td></tr></table></div></div><p>程序控制指令 ![](attachments/Pasted image 20260115103026.png)</p><p>跳转指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>符号</th><th>功能说明</th></tr></thead><tbody><tr><td>1</td><td>─(JMP)─</td><td>若RLO=&ldquo;1"则跳转</td><td>条件满足时跳转到指定标签</td></tr><tr><td>2</td><td>─(JMPN)─</td><td>若RLO=&ldquo;0"则跳转</td><td>条件不满足时跳转到指定标签</td></tr><tr><td>3</td><td>LABEL</td><td>跳转标签</td><td>跳转的目标位置，给跳转指令用</td></tr><tr><td>4</td><td>JMP_LIST</td><td>定义跳转列表</td><td>根据数值选择跳转到不同标签</td></tr><tr><td>5</td><td>SWITCH</td><td>跳转分配器</td><td>多路选择跳转，类似switch语句</td></tr><tr><td>6</td><td>─(RET)─</td><td>返回</td><td>从子程序返回到调用处</td></tr></tbody></table></div><p>跳转指令例子：</p><ul><li>JMP：条件跳转 <code>如果温度>80则跳转到报警处理</code></li><li>JMPN：条件不满足跳转 <code>如果启动按钮没按则跳过启动程序</code></li><li>LABEL：标签 <code>报警处理: (标签名)</code></li><li>SWITCH：多路选择 <code>根据步骤号跳转到对应的步骤程序</code></li><li>RET：子程序返回 <code>处理完毕返回主程序</code></li></ul><p>运行时控制指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>7</td><td>ENDIS_PW</td><td>限制和启用密码验证：控制程序访问权限</td></tr><tr><td>8</td><td>SHUT_DOWN</td><td>关闭目标系统：安全关闭PLC系统</td></tr><tr><td>9</td><td>RE_TRIGR</td><td>重置循环周期监视时间：防止看门狗超时</td></tr><tr><td>10</td><td>STP</td><td>退出程序：停止当前程序执行</td></tr></tbody></table></div><p>运行时控制例子：</p><ul><li>ENDIS_PW：权限控制 <code>只有输入正确密码才能修改参数</code></li><li>SHUT_DOWN：安全关机 <code>紧急情况下安全关闭系统</code></li><li>RE_TRIGR：重置看门狗 <code>长时间运算时防止系统重启</code></li><li>STP：程序停止 <code>遇到严重错误时停止程序</code></li></ul><p>错误处理指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>11</td><td>GET_ERROR</td><td>获取本地错误信息：读取最近发生的错误</td></tr><tr><td>12</td><td>GET_ERR_ID</td><td>获取本地错误ID：读取错误代码</td></tr></tbody></table></div><p>错误处理例子：</p><ul><li>GET_ERROR：错误诊断 <code>读取错误信息显示给操作员</code></li><li>GET_ERR_ID：错误代码 <code>根据错误ID执行对应的处理</code></li></ul><p>系统控制指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>13</td><td>INIT_RD</td><td>初始化所有保持性数据：系统启动时初始化</td></tr><tr><td>14</td><td>WAIT</td><td>组态延时时间：程序暂停指定时间</td></tr><tr><td>15</td><td>RUNTIME</td><td>测量程序运行时间：性能分析用</td></tr></tbody></table></div><p>系统控制例子：</p><ul><li>INIT_RD：系统初始化 <code>首次启动时清除所有保持数据</code></li><li>WAIT：程序延时 <code>等待设备稳定后再继续执行</code></li><li>RUNTIME：性能测试 <code>测量某段程序的执行时间</code></li></ul><p>小白必须掌握的6个程序控制指令：</p><ol><li>JMP 跳转 - 条件跳转 → 例：温度过高跳转到报警处理</li><li>LABEL 标签 - 跳转目标 → 例：报警处理程序的起始位置</li><li>SWITCH 选择 - 多路跳转 → 例：根据步骤号执行不同步骤</li><li>RET 返回 - 子程序返回 → 例：子程序执行完返回主程序</li><li>GET_ERROR 错误 - 读取错误信息 → 例：显示故障原因</li><li>WAIT 延时 - 程序暂停 → 例：等待设备响应</li></ol><p>程序控制使用要点：</p><ul><li>跳转要谨慎使用：过多跳转会让程序难以理解</li><li>标签命名要清晰：用有意义的名字，如"报警处理&rdquo;</li><li>SWITCH适合步骤控制：顺序控制程序的首选</li><li>错误处理要完善：每个关键操作都要检查错误</li><li>WAIT不要滥用：会影响系统响应速度</li></ul><p>字逻辑运算 ![](attachments/Pasted image 20260115103026.png)</p><p>基本逻辑运算指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>1</td><td>AND</td><td>&ldquo;与"运算：两个字按位进行AND操作</td></tr><tr><td>2</td><td>OR</td><td>&ldquo;或"运算：两个字按位进行OR操作</td></tr><tr><td>3</td><td>XOR</td><td>&ldquo;异或"运算：两个字按位进行XOR操作</td></tr><tr><td>4</td><td>INVERT</td><td>求反码：把所有位取反（0变1，1变0）</td></tr></tbody></table></div><p>基本逻辑例子：</p><ul><li>AND：屏蔽位 <code>状态字 AND 屏蔽字 = 只保留需要的位</code></li><li>OR：合并位 <code>报警字1 OR 报警字2 = 合并所有报警</code></li><li>XOR：比较差异 <code>新状态 XOR 旧状态 = 找出变化的位</code></li><li>INVERT：取反 <code>正常状态取反 = 故障状态</code></li></ul><p>编码解码指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>5</td><td>DECO</td><td>解码：把二进制码转换成独热码</td></tr><tr><td>6</td><td>ENCO</td><td>编码：把独热码转换成二进制码</td></tr><tr><td>7</td><td>SEL</td><td>选择：根据选择信号选择不同的输入</td></tr></tbody></table></div><p>编码解码例子：</p><ul><li>DECO：译码器 <code>输入3 → 输出00001000（第3位为1）</code></li><li>ENCO：编码器 <code>输入00001000 → 输出3（找到第几位为1）</code></li><li>SEL：数据选择 <code>根据选择信号从多个数据中选一个</code></li></ul><p>多路复用指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>8</td><td>MUX</td><td>多路复用：从多个输入中选择一个输出</td></tr><tr><td>9</td><td>DEMUX</td><td>多路分用：把一个输入分配到多个输出中的一个</td></tr></tbody></table></div><p>多路复用例子：</p><ul><li>MUX：信号选择 <code>根据选择码从8个传感器中选1个显示</code></li><li>DEMUX：信号分配 <code>根据地址码把数据送到8个设备中的1个</code></li></ul><p>小白必须掌握的5个字逻辑指令：</p><ol><li>AND 与运算 - 屏蔽不需要的位 → 例：只保留状态字的某几位</li><li>OR 或运算 - 合并多个状态 → 例：合并多个报警信号</li><li>XOR 异或 - 找出变化的位 → 例：检测状态变化</li><li>DECO 解码 - 二进制转独热码 → 例：步骤号转步骤状态</li><li>SEL 选择 - 多选一 → 例：根据模式选择不同参数</li></ol><p>字逻辑运算使用要点：</p><ul><li>位操作要理解二进制：每一位代表一个开关状态</li><li>AND用于屏蔽：只保留需要的位，其他位清零</li><li>OR用于合并：把多个状态合并成一个</li><li>XOR用于比较：找出两个状态的不同之处</li><li>编码解码用于地址转换：在二进制地址和设备选择间转换</li></ul><p>移位和循环 ![](attachments/Pasted image 20260115103026.png)</p><p>移位指令</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>1</td><td>SHR</td><td>右移：数据向右移动，左边补0</td></tr><tr><td>2</td><td>SHL</td><td>左移：数据向左移动，右边补0</td></tr><tr><td>3</td><td>ROR</td><td>循环右移：数据向右移动，右边移出的位从左边进入</td></tr><tr><td>4</td><td>ROL</td><td>循环左移：数据向左移动，左边移出的位从右边进入</td></tr></tbody></table></div><p>移位指令例子：</p><ul><li>SHR：除法运算 <code>数值右移1位 = 除以2</code> 快速除法</li><li>SHL：乘法运算 <code>数值左移1位 = 乘以2</code> 快速乘法</li><li>ROR：数据轮换 <code>循环右移实现数据轮换显示</code></li><li>ROL：循环移位 <code>循环左移实现流水灯效果</code></li></ul><p>原有移位指令（S7兼容）</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>名称</th><th>功能说明</th></tr></thead><tbody><tr><td>5</td><td>DRUM</td><td>执行顺序程序：鼓轮控制器，顺序控制专用</td></tr><tr><td>6</td><td>DCAT</td><td>离散控制定时器报警：离散控制报警功能</td></tr><tr><td>7</td><td>MCAT</td><td>电机控制定时器报警：电机控制报警功能</td></tr><tr><td>8</td><td>IMC</td><td>比较输入位与掩码位：位模式匹配</td></tr><tr><td>9</td><td>SMC</td><td>比较扫描矩阵：扫描多个输入状态</td></tr><tr><td>10</td><td>LEAD_LAG</td><td>提前和滞后算法：控制算法专用</td></tr><tr><td>11</td><td>SEG</td><td>创建7段显示的位模式：数码管显示</td></tr><tr><td>12</td><td>BCDCPL</td><td>求十进制补码：BCD码运算</td></tr><tr><td>13</td><td>BITSUM</td><td>统计置位位数量：计算有多少位为1</td></tr></tbody></table></div><p>原有指令例子：</p><ul><li>DRUM：步骤控制 <code>按时间或条件顺序执行各个步骤</code></li><li>SEG：数码管 <code>把数字0~9转换成7段数码管显示码</code></li><li>BITSUM：位计数 <code>统计报警字中有多少个报警</code></li></ul><p>小白必须掌握的4个移位指令：</p><ol><li>SHL 左移 - 快速乘2 → 例：数值×2，流水灯左移</li><li>SHR 右移 - 快速除2 → 例：数值÷2，数据压缩</li><li>ROL 循环左移 - 数据轮换 → 例：流水灯循环，数据轮显</li><li>BITSUM 位计数 - 统计1的个数 → 例：统计报警数量</li></ol><p>移位指令使用要点：</p><ul><li>移位是快速乘除法：左移1位=×2，右移1位=÷2</li><li>循环移位保持数据：数据不会丢失，只是位置变化</li><li>流水灯用循环移位：ROL实现灯光循环效果</li><li>位统计用BITSUM：快速统计状态位数量</li><li>注意移位位数：移位位数不能超过数据宽度</li></ul><p>实际应用案例：</p><p>案例1：流水灯控制</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>// 初始化：第一个灯亮
+</span></span><span class=line><span class=cl>流水灯状态 := 16#0001
+</span></span><span class=line><span class=cl>// 定时左移，实现流水效果
+</span></span><span class=line><span class=cl>IF 定时器到 THEN
+</span></span><span class=line><span class=cl>    ROL(流水灯状态, 1, 流水灯状态)
+</span></span><span class=line><span class=cl>    输出到灯 := 流水灯状态
+</span></span><span class=line><span class=cl>END_IF
+</span></span></code></pre></td></tr></table></div></div><p>案例2：报警统计</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>// 统计当前有多少个报警
+</span></span><span class=line><span class=cl>报警总数 := BITSUM(报警状态字)
+</span></span><span class=line><span class=cl>// 如果报警超过3个，启动总报警
+</span></span><span class=line><span class=cl>IF 报警总数 &gt; 3 THEN
+</span></span><span class=line><span class=cl>    总报警 := TRUE
+</span></span><span class=line><span class=cl>END_IF
+</span></span></code></pre></td></tr></table></div></div><p>案例3：数据压缩</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>// 把16位数据压缩成8位
+</span></span><span class=line><span class=cl>压缩数据 := SHR(原始数据, 8)  // 右移8位，保留高8位
+</span></span><span class=line><span class=cl>// 恢复数据
+</span></span><span class=line><span class=cl>恢复数据 := SHL(压缩数据, 8)  // 左移8位，恢复到高8位
+</span></span></code></pre></td></tr></table></div></div><p>数据类型和功能块使用</p><p>基本数据类型详解</p><div class=table-wrapper><table><thead><tr><th>序号</th><th>类型名称</th><th>大小</th><th>取值范围</th><th>功能说明</th></tr></thead><tbody><tr><td>1</td><td>BOOL</td><td>1位</td><td>TRUE/FALSE (1/0)</td><td>布尔型：开关状态，最基本的数据类型</td></tr><tr><td>2</td><td>BYTE</td><td>8位</td><td>0~255</td><td>字节型：8个位组成，常用于状态字</td></tr><tr><td>3</td><td>WORD</td><td>16位</td><td>0~65535</td><td>字型：16个位，常用于数据传输</td></tr><tr><td>4</td><td>DWORD</td><td>32位</td><td>0~4294967295</td><td>双字型：32个位，大数据量</td></tr><tr><td>5</td><td>INT</td><td>16位</td><td>-32768~32767</td><td>整数型：有符号整数</td></tr><tr><td>6</td><td>DINT</td><td>32位</td><td>-2147483648~2147483647</td><td>双整数型：大范围整数</td></tr><tr><td>7</td><td>REAL</td><td>32位</td><td>±1.18×10⁻³⁸~±3.40×10³⁸</td><td>实数型：浮点数，带小数</td></tr><tr><td>8</td><td>STRING</td><td>可变</td><td>最多254个字符</td><td>字符串型：文本数据</td></tr></tbody></table></div><p>数据类型例子：</p><ul><li>BOOL：按钮状态 <code>启动按钮 := TRUE</code> 表示按下</li><li>BYTE：状态字 <code>报警状态 := 16#0F</code> 表示低4位有报警</li><li>INT：温度值 <code>温度 := 25</code> 表示25℃</li><li>REAL：精确温度 <code>温度 := 25.5</code> 表示25.5℃</li><li>STRING：设备名称 <code>设备名 := '机器人1'</code></li></ul><p>功能块的基本结构</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>功能块外观：
+</span></span><span class=line><span class=cl>┌─────────────────────┐
+</span></span><span class=line><span class=cl>│      == ==          │  ← 功能块图标
+</span></span><span class=line><span class=cl>│                     │
+</span></span><span class=line><span class=cl>│      Byte           │  ← 数据类型显示
+</span></span><span class=line><span class=cl>│                     │
+</span></span><span class=line><span class=cl>│        0            │  ← 当前值显示
+</span></span><span class=line><span class=cl>└─────────────────────┘
+</span></span></code></pre></td></tr></table></div></div><p>功能块的三个组成部分：</p><ol><li>输入端（左侧）：接收数据或条件</li><li>功能块主体（中间）：处理逻辑</li><li>输出端（右侧）：输出结果</li></ol><p>Byte类型功能块详解</p><p>Byte功能块的作用：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>作用：存储和传递8位（1字节）的数据
+</span></span><span class=line><span class=cl>├─ 可以表示0~255的数值
+</span></span><span class=line><span class=cl>├─ 可以表示8个独立的开关状态
+</span></span><span class=line><span class=cl>└─ 常用于状态字、通讯数据
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>实际应用：
+</span></span><span class=line><span class=cl>1. 状态监控：8个设备的运行状态
+</span></span><span class=line><span class=cl>2. 报警字：8个报警位的组合
+</span></span><span class=line><span class=cl>3. 通讯协议：数据包中的一个字节
+</span></span><span class=line><span class=cl>4. 步骤号：顺序控制中的步骤编号
+</span></span></code></pre></td></tr></table></div></div><p>Byte功能块的使用方法：</p><p>方法1：直接赋值</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>─┤条件├─┤ MOVE ├─
+</span></span><span class=line><span class=cl>          │ IN: 5
+</span></span><span class=line><span class=cl>          │ OUT: Byte变量
+</span></span><span class=line><span class=cl>          
+</span></span><span class=line><span class=cl>结果：Byte变量 = 5
+</span></span></code></pre></td></tr></table></div></div><p>方法2：位操作</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Byte变量的8个位：
+</span></span><span class=line><span class=cl>位7 位6 位5 位4 位3 位2 位1 位0
+</span></span><span class=line><span class=cl> 0   0   0   0   0   1   0   1  = 5
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>可以单独访问每一位：
+</span></span><span class=line><span class=cl>Byte变量.0 = 1  (第0位=1)
+</span></span><span class=line><span class=cl>Byte变量.1 = 0  (第1位=0)
+</span></span><span class=line><span class=cl>Byte变量.2 = 1  (第2位=1)
+</span></span></code></pre></td></tr></table></div></div><p>方法3：作为计数器</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>─┤每次触发├─┤ INC ├─
+</span></span><span class=line><span class=cl>               │ Byte变量
+</span></span><span class=line><span class=cl>               
+</span></span><span class=line><span class=cl>每触发一次，Byte变量+1
+</span></span><span class=line><span class=cl>0 → 1 → 2 → 3 ... → 255 → 0（溢出）
+</span></span></code></pre></td></tr></table></div></div><p>实际应用案例</p><p>案例1：8个设备状态监控</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>设备状态字：Byte类型
+</span></span><span class=line><span class=cl>├─ 位0：设备1运行状态 (1=运行，0=停止)
+</span></span><span class=line><span class=cl>├─ 位1：设备2运行状态
+</span></span><span class=line><span class=cl>├─ 位2：设备3运行状态
+</span></span><span class=line><span class=cl>├─ 位3：设备4运行状态
+</span></span><span class=line><span class=cl>├─ 位4：设备5运行状态
+</span></span><span class=line><span class=cl>├─ 位5：设备6运行状态
+</span></span><span class=line><span class=cl>├─ 位6：设备7运行状态
+</span></span><span class=line><span class=cl>└─ 位7：设备8运行状态
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>读取状态：
+</span></span><span class=line><span class=cl>IF 设备状态字.0 = 1 THEN
+</span></span><span class=line><span class=cl>    // 设备1正在运行
+</span></span><span class=line><span class=cl>END_IF
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>设置状态：
+</span></span><span class=line><span class=cl>设备状态字.0 := 设备1运行信号
+</span></span></code></pre></td></tr></table></div></div><p>案例2：步骤号控制</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>步骤号：Byte类型 (0~255)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>步骤控制逻辑：
+</span></span><span class=line><span class=cl>CASE 步骤号 OF
+</span></span><span class=line><span class=cl>    0: // 初始化步骤
+</span></span><span class=line><span class=cl>       初始化设备
+</span></span><span class=line><span class=cl>       步骤号 := 1
+</span></span><span class=line><span class=cl>       
+</span></span><span class=line><span class=cl>    1: // 等待启动
+</span></span><span class=line><span class=cl>       IF 启动按钮 THEN
+</span></span><span class=line><span class=cl>           步骤号 := 2
+</span></span><span class=line><span class=cl>       END_IF
+</span></span><span class=line><span class=cl>       
+</span></span><span class=line><span class=cl>    2: // 执行动作1
+</span></span><span class=line><span class=cl>       执行动作1
+</span></span><span class=line><span class=cl>       IF 动作1完成 THEN
+</span></span><span class=line><span class=cl>           步骤号 := 3
+</span></span><span class=line><span class=cl>       END_IF
+</span></span><span class=line><span class=cl>       
+</span></span><span class=line><span class=cl>    3: // 执行动作2
+</span></span><span class=line><span class=cl>       执行动作2
+</span></span><span class=line><span class=cl>       IF 动作2完成 THEN
+</span></span><span class=line><span class=cl>           步骤号 := 0  // 回到初始
+</span></span><span class=line><span class=cl>       END_IF
+</span></span><span class=line><span class=cl>END_CASE
+</span></span></code></pre></td></tr></table></div></div><p>案例3：报警字处理</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>报警字：Byte类型
+</span></span><span class=line><span class=cl>├─ 位0：温度过高报警
+</span></span><span class=line><span class=cl>├─ 位1：压力过高报警
+</span></span><span class=line><span class=cl>├─ 位2：液位过低报警
+</span></span><span class=line><span class=cl>├─ 位3：速度异常报警
+</span></span><span class=line><span class=cl>├─ 位4：通讯故障报警
+</span></span><span class=line><span class=cl>├─ 位5：急停触发报警
+</span></span><span class=line><span class=cl>├─ 位6：安全门打开报警
+</span></span><span class=line><span class=cl>└─ 位7：系统故障报警
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>设置报警：
+</span></span><span class=line><span class=cl>IF 温度 &gt; 80 THEN
+</span></span><span class=line><span class=cl>    报警字.0 := 1  // 温度过高报警
+</span></span><span class=line><span class=cl>ELSE
+</span></span><span class=line><span class=cl>    报警字.0 := 0  // 清除报警
+</span></span><span class=line><span class=cl>END_IF
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>统计报警数量：
+</span></span><span class=line><span class=cl>报警总数 := BITSUM(报警字)
+</span></span><span class=line><span class=cl>IF 报警总数 &gt; 0 THEN
+</span></span><span class=line><span class=cl>    总报警灯 := TRUE
+</span></span><span class=line><span class=cl>END_IF
+</span></span></code></pre></td></tr></table></div></div><p>案例4：通讯数据包</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>发送数据包：
+</span></span><span class=line><span class=cl>├─ 字节0：设备地址 (Byte)
+</span></span><span class=line><span class=cl>├─ 字节1：功能码 (Byte)
+</span></span><span class=line><span class=cl>├─ 字节2：数据长度 (Byte)
+</span></span><span class=line><span class=cl>├─ 字节3~N：数据内容
+</span></span><span class=line><span class=cl>└─ 字节N+1：校验和 (Byte)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>示例：
+</span></span><span class=line><span class=cl>发送缓冲区[0] := 1      // 设备地址=1
+</span></span><span class=line><span class=cl>发送缓冲区[1] := 3      // 功能码=3(读取)
+</span></span><span class=line><span class=cl>发送缓冲区[2] := 10     // 读取10个数据
+</span></span><span class=line><span class=cl>发送缓冲区[3] := 校验和  // 计算校验和
+</span></span></code></pre></td></tr></table></div></div><p>Byte类型的常用操作</p><p>操作1：清零</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>─┤条件├─┤ MOVE ├─
+</span></span><span class=line><span class=cl>          │ IN: 0
+</span></span><span class=line><span class=cl>          │ OUT: Byte变量
+</span></span></code></pre></td></tr></table></div></div><p>操作2：置位某一位</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>─┤条件├─( S Byte变量.3 )  // 把第3位置1
+</span></span></code></pre></td></tr></table></div></div><p>操作3：复位某一位</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>─┤条件├─( R Byte变量.3 )  // 把第3位清0
+</span></span></code></pre></td></tr></table></div></div><p>操作4：取反某一位</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Byte变量.3 := NOT Byte变量.3  // 第3位取反
+</span></span></code></pre></td></tr></table></div></div><p>操作5：位与操作（屏蔽）</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>结果 := Byte变量 AND 16#0F  // 只保留低4位
+</span></span></code></pre></td></tr></table></div></div><p>操作6：位或操作（合并）</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>结果 := Byte变量1 OR Byte变量2  // 合并两个字节
+</span></span></code></pre></td></tr></table></div></div><p>操作7：位异或操作（比较）</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>变化位 := 新状态 XOR 旧状态  // 找出变化的位
+</span></span></code></pre></td></tr></table></div></div><p>小白必须掌握的Byte操作：</p><ol><li>赋值操作 - 给Byte变量赋值 → 例：步骤号 := 1</li><li>位访问 - 访问单独的位 → 例：状态字.0 := 1</li><li>位统计 - 统计有多少位为1 → 例：BITSUM(报警字)</li><li>位屏蔽 - 只保留需要的位 → 例：数据 AND 16#0F</li><li>位合并 - 合并多个状态 → 例：状态1 OR 状态2</li></ol><p>Byte类型使用要点：</p><ul><li>范围是0~255：超出会溢出（255+1=0）</li><li>可以当数值用：存储小范围的整数</li><li>可以当位组用：8个独立的开关状态</li><li>通讯常用：数据包中的基本单位</li><li>状态字首选：紧凑高效的状态表示</li></ul><p>调试技巧：</p><ul><li>用16进制显示：更容易看出位的状态</li><li>用二进制显示：直接看到每一位</li><li>监控表查看：实时观察Byte变量的变化</li><li>强制赋值测试：测试不同值的效果</li></ul></section><footer class=article-footer><section class=article-tags><a href=/io/tags/%E8%93%9D%E7%BB%8F%E7%90%86%E5%9F%B9%E8%AE%AD%E7%8F%AD/>蓝经理培训班</a>
+<a href=/io/tags/%E7%94%B5%E6%B0%94%E8%87%AA%E5%8A%A8%E5%8C%96/>电气自动化</a>
+<a href=/io/tags/%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%B8%93%E4%B8%9A%E8%83%BD%E5%8A%9B/>学习与专业能力</a></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css integrity=sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js integrity=sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8 crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}],ignoredClasses:["gist"]})})</script></article><aside class=related-content--wrapper><h2 class=section-title>相关文章</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/io/p/lan-virtual-debug-intro/><div class=article-details><h2 class=article-title>虚拟调试技术介绍</h2></div></a></article><article><a href=/io/p/lan-virtual-sim-design/><div class=article-details><h2 class=article-title>虚拟仿真环境设计</h2></div></a></article><article><a href=/io/p/lan-jiaoshi-tuandui/><div class=article-details><h2 class=article-title>教师团队</h2></div></a></article><article><a href=/io/p/lan-projects-summary/><div class=article-details><h2 class=article-title>所有项目的总结集合</h2></div></a></article><article><a href=/io/p/lan-robot/><div class=article-details><h2 class=article-title>Robot</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2026 陈乘峰博客</section><section class=powerby></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/io/ts/main.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
