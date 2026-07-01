@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>论文笔记 on 陈乘峰</title><link>https://2004ccf.github.io/io/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</link><description>Recent content in 论文笔记 on 陈乘峰</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>陈乘峰博客</copyright><lastBuildDate>Tue, 30 Jun 2026 20:00:00 +0800</lastBuildDate><atom:link href="https://2004ccf.github.io/io/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml"/><item><title>PID 控制论文笔记：Give us PID controllers and we can control the world</title><link>https://2004ccf.github.io/io/p/pid-kongzhi-lunwen-biji/</link><pubDate>Tue, 30 Jun 2026 20:00:00 +0800</pubDate><guid>https://2004ccf.github.io/io/p/pid-kongzhi-lunwen-biji/</guid><description>&lt;h2 id="读这篇论文的背景"&gt;读这篇论文的背景
+&lt;/h2&gt;&lt;p&gt;学自动化、接触博图和 FMTP 设备之后，我一直听到 PID，但印象里它「很老、很基础」。直到看到 IFAC 2024 这篇短文 &lt;em&gt;Give us PID controllers and we can control the world&lt;/em&gt;，以及公众号《PID控制世界？》的转发，我才意识到：工业界并没有因为 MPC、智能控制这些新名词而抛弃 PID，相反，超过九成的控制回路仍在用它。&lt;/p&gt;
+&lt;p&gt;作者是瑞典隆德大学的 Tore Häglund 和西班牙阿尔梅里亚大学的 José Luis Guzmán。我把读后的笔记按「论文在说什么」「我自己怎么理解 PID」「软硬件实现」三块写下，方便复习，也便于向老师说明我读了什么、学到了什么。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="论文基本信息与核心立场"&gt;论文基本信息与核心立场
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;题目&lt;/strong&gt;：&lt;em&gt;Give us PID controllers and we can control the world&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;出处&lt;/strong&gt;：IFAC PapersOnLine 58-7 (2024) 103–108&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;作者想证明的大意是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;PID 是自动控制领域最重要、影响最深的发明之一，对工业和社会的贡献，可以和电、蒸汽机等经典发明放在同一量级来谈。&lt;/li&gt;
+&lt;li&gt;在 MPC、鲁棒控制、自适应控制、智能控制等算法大量出现之后，&lt;strong&gt;PI/PID 仍是工业界绝对主角&lt;/strong&gt;，覆盖超过 90% 的工业控制回路。&lt;/li&gt;
+&lt;li&gt;PID 不应被简单当成「过时技术」，而是自动控制领域的&lt;strong&gt;形象大使和基础构件&lt;/strong&gt;；在可预见的未来，绝大多数单回路问题里它仍是默认首选。&lt;/li&gt;
+&lt;li&gt;PID 与 MPC 等高级算法是&lt;strong&gt;互补、分层&lt;/strong&gt;关系，不是谁取代谁。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="历史从自动舵到看不见的基础设施"&gt;历史：从自动舵到「看不见的基础设施」
+&lt;/h2&gt;&lt;p&gt;1922 年，Minorsky 为美国海军设计自动舵时提出 PID 控制原型。之后几十年，PID 在化工、冶金、造纸等过程工业成为主流，再扩展到：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;能源：发电、输电、配电&lt;/li&gt;
+&lt;li&gt;制造与过程控制&lt;/li&gt;
+&lt;li&gt;日常设备：汽车巡航、空调、烤箱、微波炉、无人机、电动自行车、电梯、平衡车等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如今 &lt;strong&gt;&amp;gt;90% 工业控制回路基于 PI/PID&lt;/strong&gt;；高校教反馈控制，PID 几乎是标准范例。它已经从一个公式，变成&lt;strong&gt;基础设施级的隐形技术&lt;/strong&gt;——用户很少意识到背后有 PID，但每天都在用。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="作者说的韧性resilience为什么百年还在用"&gt;作者说的「韧性」（Resilience）：为什么百年还在用
+&lt;/h2&gt;&lt;p&gt;论文用 Resilience 形容 PID 的生命力，我归纳成三点：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. 适用面极广&lt;/strong&gt;&lt;br&gt;
+温度、压力、流量、转速、位移、液位等单回路问题，整定得当往往够好，甚至接近更复杂算法。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. 现代 PID 远不止 P、I、D 三项&lt;/strong&gt;&lt;br&gt;
+工业控制器里常见：信号滤波、前馈、防积分饱和（anti-windup）、无扰切换（bumpless transfer）、限幅与模式切换等。今天的 PID 块更像&lt;strong&gt;小型控制平台&lt;/strong&gt;，不是三个系数那么简单。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. 结构简单，性能却不差&lt;/strong&gt;&lt;br&gt;
+在带时滞的一阶、二阶等常见过程上，合理整定的 PID 闭环性能可非常接近更复杂的最优控制；算上实现成本、维护难度和鲁棒性，&lt;strong&gt;性价比往往最高&lt;/strong&gt;。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="pid-和-mpc分层配合不是对立"&gt;PID 和 MPC：分层配合，不是对立
+&lt;/h2&gt;&lt;p&gt;工程里常见结构是&lt;strong&gt;分层控制&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;上层&lt;/strong&gt;：MPC 或其他优化控制——多变量协调、约束处理、经济优化，输出最优设定值或轨迹。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;下层&lt;/strong&gt;：PI/PID 回路——快速反馈、局部稳定、抗扰。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;论文强调：高层用 MPC 做优化时，&lt;strong&gt;底层回路绝大多数仍是 PID&lt;/strong&gt;——够快、够稳、实现简单、工程师普遍会调。PID 是分层架构里的&lt;strong&gt;基层执行核心&lt;/strong&gt;；MPC 更适合在上层做优化与协调。&lt;/p&gt;
+&lt;p&gt;单回路场景下，稳定过程、带时滞过程、积分或弱不稳定过程等，都有成熟的 PID 设计与整定方法（IMC、Ziegler–Nichols 改进、频域设计等）。加上前馈、滤波、anti-windup 和限幅，多数现场对&lt;strong&gt;性能 + 安全 + 成本&lt;/strong&gt;的要求都能满足。在「单回路 + 能落地 + 好维护」的约束下，作者认为 &lt;strong&gt;PID 现在和可预见的未来仍是最佳默认选择&lt;/strong&gt;。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="作者对未来的呼吁我摘录的要点"&gt;作者对未来的呼吁（我摘录的要点）
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;承认 PID 的历史地位和现实价值&lt;/strong&gt;：少数被持续研究超过一百年的控制技术之一，不宜简单贴「落伍」标签。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;在 PID 上继续研究有意义&lt;/strong&gt;：更易用的整定方法与工程工具；分层、模块化架构里 PID 与 MPC 的协同；教学上强调 PID 是一整套工程实践，不只是一个公式。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;学界应重视工程现实&lt;/strong&gt;：PID 在工业中占统治地位，在 PID 上每前进一步，社会价值往往大于在冷门新算法上迈一大步。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;自动控制常被称为「隐藏技术」——广泛存在于能源、交通、制造和日常生活。反馈是自动控制的心脏，PID 是反馈在工业界最成功、最现实的实现之一。论文标题那句「给我们 PID，我们就能控制世界」，是在强调这种基础性，而不是说 PID 万能。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="pid-是什么我用自己的话解释"&gt;PID 是什么：我用自己的话解释
+&lt;/h2&gt;&lt;p&gt;一句话：&lt;strong&gt;PID 是自动纠错系统&lt;/strong&gt;——不停看「目标值」和「实际值」差多少，自动调节，让实际值尽快跟上目标。&lt;/p&gt;
+&lt;h3 id="用开车理解-pid"&gt;用开车理解 P、I、D
+&lt;/h3&gt;&lt;p&gt;假设我在高速上想保持 &lt;strong&gt;120 km/h&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;P（比例）&lt;/strong&gt;：现在只有 100，差 20，就多踩油门；差越大，踩得越狠。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;I（积分）&lt;/strong&gt;：若老停在 118 附近，误差一直积着，会持续加力直到真到 120。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;D（微分）&lt;/strong&gt;：若速度蹿得太快（100 突然到 130），提前松油，避免 overshoot。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;三个合在一起，就是自动把速度稳在 120。&lt;/p&gt;
+&lt;h3 id="生活里我能想到的十个例子"&gt;生活里我能想到的十个例子
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;空调&lt;/strong&gt;：设 26℃，检测室温，制冷或制热，微调至稳定。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;电热水壶&lt;/strong&gt;：设 100℃，快到点时减功率，避免烧过头。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;汽车巡航&lt;/strong&gt;：设 80 km/h，上坡多给油、下坡少给油。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;平衡车 / 电动滑板车&lt;/strong&gt;：检测重心角度，调电机转速。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;无人机悬停&lt;/strong&gt;：检测高度，调螺旋桨转速。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;电梯平层&lt;/strong&gt;：快到楼层减速，精确停位，不冲过头。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;烤箱 / 微波炉&lt;/strong&gt;：设 180℃ 烤蛋糕，开关加热元件保恒温。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;洗衣机甩干&lt;/strong&gt;：设 800 转/分，调电压或频率恒转速。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;恒温花洒&lt;/strong&gt;：设 38℃，调冷热水比例。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;手机快充&lt;/strong&gt;：检测电压电流，调节功率，防过充。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;凡是「要把某个物理量稳在目标上」的场景——温度、速度、位置、压力、液位、流量——PID 出现概率都很高。它像一种&lt;strong&gt;通用稳定器&lt;/strong&gt;：不一定最优，但简单、可靠、工程师熟。&lt;/p&gt;
+&lt;p&gt;我学完后还在想：P、I、D 调不好会怎样？比如空调温度一直波动、平衡车容易摔——这和我以后在 FMTP 里调伺服、温控、压力回路是直接相关的。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="pid-都在软件里吗三种实现方式"&gt;PID 都在软件里吗？三种实现方式
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;不全是。&lt;/strong&gt; 现代大多数是软件，但历史上和特殊场景也有硬件或混合。&lt;/p&gt;
+&lt;h3 id="1-软件实现我现在接触最多"&gt;1. 软件实现（我现在接触最多）
+&lt;/h3&gt;&lt;p&gt;算法写在程序里，跑在 CPU 或微控制器上。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;PLC / 博图&lt;/strong&gt;：调用 &lt;code&gt;PID_Compact&lt;/code&gt; 等功能块，就是软件 PID，跑在 PLC CPU 上，HMI 可改 P、I、D。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;单片机 / 嵌入式&lt;/strong&gt;：平衡车、无人机里的控制代码。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;工控机、DCS&lt;/strong&gt;：模块本质也是软件。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;优点：灵活、便宜、能加滤波、anti-windup、前馈；升级调试方便。空调 MCU、汽车 ECU 巡航同理。&lt;/p&gt;
+&lt;h3 id="2-硬件实现现在较少"&gt;2. 硬件实现（现在较少）
+&lt;/h3&gt;&lt;p&gt;用模拟电路（运放、电阻、电容）直接做 P、I、D，不需要 CPU。P 用运放放大，I 用电容积分，D 用电感/电容微分。老式温度控制器旋钮调参，背后常是模拟电路；激光功率等微秒级场景仍有需求。&lt;/p&gt;
+&lt;p&gt;优点：响应极快、不受扫描周期影响；没有软件 bug 一类的问题。缺点：改参数要动电阻电容，很麻烦；很难加滤波、anti-windup 等复杂功能。&lt;/p&gt;
+&lt;p&gt;例子：1970–1990 年代老式工业温控器；激光器功率控制等需要微秒级响应的场合。&lt;/p&gt;
+&lt;h3 id="3-软硬件混合"&gt;3. 软硬件混合
+&lt;/h3&gt;&lt;p&gt;核心计算放在 FPGA、DSP 等专用硬件上，参数整定和逻辑切换仍用软件完成。高速运动控制、航空航天、医疗设备、多轴同步等场景常见。&lt;/p&gt;
+&lt;p&gt;例子：伺服驱动器里 DSP 算 PID、上位机或面板改参数；高精度机器人控制器用 FPGA 做运算、软件侧调参。&lt;/p&gt;
+&lt;h3 id="为什么现在多数是软件"&gt;为什么现在多数是软件？
+&lt;/h3&gt;&lt;p&gt;我归纳论文和课堂上的说法，大致五点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;单片机成本低，几块钱就能跑 PID。&lt;/li&gt;
+&lt;li&gt;改参数、加功能、远程调试都方便。&lt;/li&gt;
+&lt;li&gt;能集成滤波、anti-windup、前馈、自适应等，现代工业 PID 块往往自带这些。&lt;/li&gt;
+&lt;li&gt;升级、备份、和 HMI 联动维护成本低。&lt;/li&gt;
+&lt;li&gt;对多数工业过程，PLC 扫描周期已经够快，软件 PID 能满足需求。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;硬件实现仍出现在：响应要微秒级、系统不容许软件延迟、或极简单低成本模拟控温等场合。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;实现方式&lt;/th&gt;
+&lt;th&gt;常见场景&lt;/th&gt;
+&lt;th&gt;优点&lt;/th&gt;
+&lt;th&gt;缺点&lt;/th&gt;
+&lt;th&gt;现代占比（行业说法）&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;软件&lt;/td&gt;
+&lt;td&gt;PLC、单片机、DCS&lt;/td&gt;
+&lt;td&gt;灵活、成本低、功能强&lt;/td&gt;
+&lt;td&gt;受 CPU 性能限制&lt;/td&gt;
+&lt;td&gt;绝大多数&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;硬件&lt;/td&gt;
+&lt;td&gt;老式模拟、极快响应&lt;/td&gt;
+&lt;td&gt;极快、实时性好&lt;/td&gt;
+&lt;td&gt;不灵活、成本高&lt;/td&gt;
+&lt;td&gt;很少&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;混合&lt;/td&gt;
+&lt;td&gt;伺服、多轴运动&lt;/td&gt;
+&lt;td&gt;快且可调&lt;/td&gt;
+&lt;td&gt;成本较高&lt;/td&gt;
+&lt;td&gt;少量&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="和我专业的联系"&gt;和我专业的联系
+&lt;/h3&gt;&lt;p&gt;在&lt;strong&gt;博图&lt;/strong&gt;里：&lt;code&gt;PID_Compact&lt;/code&gt; 是典型的软件实现，运行在 PLC CPU 上，HMI 可改 P/I/D 参数。&lt;/p&gt;
+&lt;p&gt;在 &lt;strong&gt;FMTP 设备&lt;/strong&gt;里：伺服位置可能在 PLC（软件）或驱动器（偏混合）；温压控制多在 PLC 或温控器（偏软件）。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="论文里几个主题我用自己的话再捋一遍"&gt;论文里几个主题，我用自己的话再捋一遍
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;引言与「隐藏技术」&lt;/strong&gt;&lt;br&gt;
+自动控制渗透在经济、生命、能源、交通、制造里，用户往往意识不到。反馈是核心，PID 是工业界最成功、最现实的反馈实现之一。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;历史与应用版图&lt;/strong&gt;&lt;br&gt;
+从 1922 自动舵到过程工业，再到家电和出行设备；今天 &amp;gt;90% 回路用 PI/PID，高校教学也绕不开它。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;演化与韧性&lt;/strong&gt;&lt;br&gt;
+从三个系数到带滤波、anti-windup、前馈、无扰切换的「小平台」；和级联、多变量、分层、自适应结构结合，常作为底层执行模块；在典型过程上性能可接近更复杂最优控制。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;与 MPC 等的分工&lt;/strong&gt;&lt;br&gt;
+不是替代关系；上层优化、下层 PID 快反馈，高级算法与 PID 协同。从可实施性、维护成本、人员技能看，PID 长期是底层基石。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;未来研究方向（作者呼吁）&lt;/strong&gt;&lt;br&gt;
+更好的整定工具；模块化/分层里 PID 的接口设计；工业 4.0、智能制造下与数据驱动、AI、MPC 的融合——教学上别把 PID 教成三个字母而已。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;读书报告式笔记，非原文翻译；细节以 IFAC 原文为准。&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

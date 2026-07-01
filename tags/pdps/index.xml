@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>PDPS on 陈乘峰</title><link>https://2004ccf.github.io/io/tags/pdps/</link><description>Recent content in PDPS on 陈乘峰</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>陈乘峰博客</copyright><lastBuildDate>Sat, 22 Nov 2025 10:00:00 +0800</lastBuildDate><atom:link href="https://2004ccf.github.io/io/tags/pdps/index.xml" rel="self" type="application/rss+xml"/><item><title>FMTP 环境内搭建起来：PDPS 虚拟环境笔记</title><link>https://2004ccf.github.io/io/p/lan-nov24-env/</link><pubDate>Sat, 22 Nov 2025 10:00:00 +0800</pubDate><guid>https://2004ccf.github.io/io/p/lan-nov24-env/</guid><description>&lt;h2 id="我为什么写这篇"&gt;我为什么写这篇
+&lt;/h2&gt;&lt;p&gt;蓝经理培训班虚拟调试专题里，有一堂专门讲：&lt;strong&gt;一切都要在电脑环境里先搭起来&lt;/strong&gt;。我当时的困惑是：PDPS 软件算「干活的双手」，那 &lt;strong&gt;环境、Resource 文件夹、智能组件、信号&lt;/strong&gt; 各自管哪一段？和后面博图 PLC 联调怎么接上？&lt;/p&gt;
+&lt;p&gt;这篇是我 &lt;strong&gt;11 月 24 日&lt;/strong&gt; 课堂笔记的整理版，并参照本地 &lt;code&gt;深圳公司面试\集合蓝精灵&lt;/code&gt; 里的 &lt;strong&gt;PDPS虚拟联调&lt;/strong&gt;、&lt;strong&gt;FMTP_VC_Finish_TOPLC_P11&lt;/strong&gt; 等工程目录，把文件夹命名和课堂步骤对上了。整体框架见 &lt;a class="link" href="https://2004ccf.github.io/io/p/lan-virtual-debug-intro/" &gt;虚拟调试技术介绍&lt;/a&gt;；VC 六块操作清单见 &lt;a class="link" href="https://2004ccf.github.io/io/p/lan-virtual-sim-design/" &gt;虚拟仿真环境设计&lt;/a&gt;；PLC 侧见 &lt;a class="link" href="https://2004ccf.github.io/io/p/lan-fmtp-botu/" &gt;FMTP设备学习笔记-博图&lt;/a&gt;。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="一这节课在整条链里的位置"&gt;一、这节课在整条链里的位置
+&lt;/h2&gt;&lt;p&gt;虚拟调试不是单独一块，而是嵌在 &lt;strong&gt;PD（工艺）→ PS（仿真数据）→ VC（虚拟环境 + PLC 联调）&lt;/strong&gt; 中间。老师画的三张总图我保留在下面——复习时 &lt;strong&gt;对着图看比纯文字快&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;关键词：节拍（周期）&lt;/strong&gt; —— 后面做物料流、序列播放都要回到节拍是否合理。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251124093332.png"
+width="1877"
+height="1082"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251124093332_hu_917660fcbc7523cc.png 480w, https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251124093332_hu_87e9866e9494f808.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="173"
+data-flex-basis="416px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;虚拟调试在整线中的位置&lt;/strong&gt;（和机械设计、电气、现场安装的关系）：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251124093444.png"
+width="1838"
+height="907"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251124093444_hu_7cc469c29f9afac8.png 480w, https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251124093444_hu_39a0a27b0690697d.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="202"
+data-flex-basis="486px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;本日工作内容概览&lt;/strong&gt;（环境搭建 + 设备导入 + 运动机构 + 后续 VC 操作）：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251124094713.png"
+width="1245"
+height="563"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251124094713_hu_bf8b2fd7c8692247.png 480w, https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251124094713_hu_1db13851d0681d69.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="221"
+data-flex-basis="530px"
+&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;我在集合蓝精灵里对应的练手目录&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;PDPS虚拟联调\Library\Resource\...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;标准 Resource 树：Device、Gripper、VC\LB 等&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;FMTP_VC_Finish_TOPLC_P11_20260130&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;较完整的 VC 联调成品，可对照命名&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;项目10/11-PLC程序在虚拟环境中调试&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;博图 V18 + 左3 虚拟，和环境搭建后的 PLC 联调衔接&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;项目12-PLC程序在实体设备中调试&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;环境确认后再上真机&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2 id="二核心概念上课先讲清楚"&gt;二、核心概念（上课先讲清楚）
+&lt;/h2&gt;&lt;h3 id="21-智能组件--逻辑--模型"&gt;2.1 智能组件 = 逻辑 + 模型
+&lt;/h3&gt;&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251124095409.png"
+width="1056"
+height="454"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251124095409_hu_a40c88fb89282c26.png 480w, https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251124095409_hu_c02a0aa8ad31778b.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="232"
+data-flex-basis="558px"
+&gt;&lt;/p&gt;
+&lt;p&gt;智能组件要同时满足两点，缺一则仿真不像真产线：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;逻辑&lt;/strong&gt; —— 什么时候动、什么信号触发（后面逻辑块、LB、PLC 对接）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;模型（物体）&lt;/strong&gt; —— 三维数模、运动范围、包络体&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;二者要在 PS/VC 里 &lt;strong&gt;交互&lt;/strong&gt;，不是只放一个静态 JT。&lt;/p&gt;
+&lt;h3 id="22-宏程序macro-program"&gt;2.2 宏程序（Macro Program）
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;宏程序&lt;/strong&gt; = 预定义、可复用的模块化程序块：把一组重复逻辑（动作、判断、参数计算）封装起来，主程序里 &lt;strong&gt;调用 + 参数传入&lt;/strong&gt;。和普通子程序比，强调 &lt;strong&gt;参数化&lt;/strong&gt;，减少重复代码、方便维护。机器人侧和 PLC 侧后面都会用到类似思路。&lt;/p&gt;
+&lt;h3 id="23-环境指什么"&gt;2.3 「环境」指什么
+&lt;/h3&gt;&lt;p&gt;到 &lt;strong&gt;现场&lt;/strong&gt; 后，一切以 &lt;strong&gt;现场实物与 IO&lt;/strong&gt; 为准；在 &lt;strong&gt;课堂/项目&lt;/strong&gt; 里说的 &lt;strong&gt;改环境&lt;/strong&gt; 指：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;部分&lt;/th&gt;
+&lt;th&gt;内容&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;虚拟环境&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;PS 里模拟的产线：机械结构、动作、传感器信号、物料流&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;真实关联环境&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;真实 PLC（或 PLCSIM）、通讯与接口，做虚拟—真实联调&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;PDPS（Process Simulate）是我这阶段 &lt;strong&gt;主要操作的「手」&lt;/strong&gt; —— 建模型、摆设备、编运动、接信号。&lt;/p&gt;
+&lt;h3 id="24-最小单元与-resource"&gt;2.4 最小单元与 Resource
+&lt;/h3&gt;&lt;p&gt;设计在上游，仿真/调试在中间，安装在现场下游。Resource 分 &lt;strong&gt;简单件&lt;/strong&gt; 与 &lt;strong&gt;组合（集合）&lt;/strong&gt;；要学会像思维导图一样 &lt;strong&gt;从小单元叠到大单元&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251124105815.png"
+width="1173"
+height="510"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251124105815_hu_570f454552ad4a59.png 480w, https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251124105815_hu_b08abb5ab005d2c7.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="230"
+data-flex-basis="552px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;操作本质&lt;/strong&gt;：定义设备 → 落位 → 让机构 &lt;strong&gt;按运动过程&lt;/strong&gt; 动起来 → 做干涉与安全检查。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="三pdps-标准文件夹与数据体系"&gt;三、PDPS 标准文件夹与数据体系
+&lt;/h2&gt;&lt;h3 id="31-library-三层对象"&gt;3.1 Library 三层对象
+&lt;/h3&gt;&lt;p&gt;以 &lt;strong&gt;library → libroot&lt;/strong&gt; 为根，对象分三类：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;类型&lt;/th&gt;
+&lt;th&gt;典型内容&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Product&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;工件、零件流&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Robot&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;机器人及控制器&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Resource&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;设备：布局、转台、输送机、夹具、LB 逻辑块等&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;项目场景常用 &lt;strong&gt;PS2_xxx&lt;/strong&gt;（如 PS2_1126）标识版本。我本地 &lt;code&gt;PDPS虚拟联调\Library&lt;/code&gt; 下能看到 &lt;code&gt;Resource\Device\&lt;/code&gt;、&lt;code&gt;Resource\Gripper\&lt;/code&gt;、&lt;code&gt;Resource\VC\LB\&lt;/code&gt; 等，和课堂讲的一致。&lt;/p&gt;
+&lt;h3 id="32-标准目录示意"&gt;3.2 标准目录示意
+&lt;/h3&gt;&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/45753b07961b33bc5c387ab68f3804e2.jpg"
+width="1706"
+height="1279"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/45753b07961b33bc5c387ab68f3804e2_hu_a7c150fd9232ebeb.jpg 480w, https://2004ccf.github.io/io/p/lan-nov24-env/45753b07961b33bc5c387ab68f3804e2_hu_f7b7f37bf65e714f.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="320px"
+&gt;&lt;/p&gt;
+&lt;h3 id="33-设备流程定义--落位--3d-建模"&gt;3.3 设备流程：定义 → 落位 → 3D 建模
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;定义&lt;/strong&gt; —— 明确设备类型（转台、输送机、通用 Device…），生成 &lt;code&gt;TuneData.xml&lt;/code&gt;、JT 等&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;落位&lt;/strong&gt; —— &lt;strong&gt;放置&lt;/strong&gt;（直接摆位）或 &lt;strong&gt;重定位&lt;/strong&gt;（按坐标/规则调整）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;3D 建模&lt;/strong&gt; —— 新建资源 → 柱体/方体 → 参数化 → &lt;strong&gt;安全包络体&lt;/strong&gt;（防干涉）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;干涉&lt;/strong&gt; = 集合交集；动态轨迹里 &lt;strong&gt;不能碰撞&lt;/strong&gt;，要先开干涉模式检查。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="四新工程与-resource-导入四步"&gt;四、新工程与 Resource 导入（四步）
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/a7f5b4b6505859a2741c7afd7d14159b.jpg"
+width="1440"
+height="1080"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/a7f5b4b6505859a2741c7afd7d14159b_hu_e35cf7385e21ae99.jpg 480w, https://2004ccf.github.io/io/p/lan-nov24-env/a7f5b4b6505859a2741c7afd7d14159b_hu_b91cd52320f360ba.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="320px"
+&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;步骤&lt;/th&gt;
+&lt;th&gt;操作要点&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;1. 替换 Robot&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;选收集好的数模；&lt;code&gt;.cojt&lt;/code&gt; 放到 Resource 对应路径下&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;2. 定义设备类型&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;建模里 &lt;strong&gt;定义组件类型&lt;/strong&gt;；不移动的物件可标为 &lt;strong&gt;Device 通用设备&lt;/strong&gt; → 自动生成 &lt;code&gt;TuneData.xml&lt;/code&gt; 与 JT&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;3. 插入组件&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;① 路径在 Resource 目录下 ② 文件为 &lt;strong&gt;.cojt&lt;/strong&gt; ③ 失败常见原因：&lt;strong&gt;加密 / 格式不对 / 路径不对&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;4. 另存为&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;按项目规范命名；我习惯用 Git 管 PS 工程，方便追溯&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;拿到外部数据时 &lt;strong&gt;先看格式&lt;/strong&gt;，格式一致才能导入。电气侧还要对照 &lt;strong&gt;电气原理图&lt;/strong&gt;；气路侧对照 &lt;strong&gt;气路图 / CAD&lt;/strong&gt;，传感器落位前必须知道检测对象、位置、数量：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/weixin-2025-11-25-113554-944.png"
+width="2331"
+height="1279"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/weixin-2025-11-25-113554-944_hu_5118321757ec16f2.png 480w, https://2004ccf.github.io/io/p/lan-nov24-env/weixin-2025-11-25-113554-944_hu_ab8fadb3c64a3f18.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="182"
+data-flex-basis="437px"
+&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="五落位拾取坐标与包络体"&gt;五、落位、拾取、坐标与包络体
+&lt;/h2&gt;&lt;h3 id="51-四个高频功能课堂关键词"&gt;5.1 四个高频功能（课堂关键词）
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;编号&lt;/th&gt;
+&lt;th&gt;功能&lt;/th&gt;
+&lt;th&gt;我理解的用途&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;2&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;拾取 / 选取&lt;/td&gt;
+&lt;td&gt;定抓取关系、选参照&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;4&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;放置&lt;/td&gt;
+&lt;td&gt;把工件/设备摆到目标位&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;5&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;重定位&lt;/td&gt;
+&lt;td&gt;改坐标、几何中心；&lt;strong&gt;要练熟&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;拾取方式 &lt;strong&gt;1～4 选项含义不同&lt;/strong&gt;，不能混用；具体以当时 PS 对话框为准（课上未全记完，以软件截图为准）。&lt;/p&gt;
+&lt;h3 id="52-建模模式"&gt;5.2 建模模式
+&lt;/h3&gt;&lt;p&gt;要改变模型 &lt;strong&gt;位置与形态&lt;/strong&gt;，必须进入 &lt;strong&gt;建模模式&lt;/strong&gt;；改完 &lt;strong&gt;退出建模&lt;/strong&gt;，否则容易误改。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;路径&lt;/strong&gt;：打开文件后看窗口 &lt;strong&gt;最下方路径栏&lt;/strong&gt;，确保 Resource 路径正确。&lt;/p&gt;
+&lt;h3 id="53-落位布局"&gt;5.3 落位布局
+&lt;/h3&gt;&lt;p&gt;结合 PD 布局做 PS 落位：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251125155810.png"
+width="2635"
+height="1511"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251125155810_hu_b178bc246511bffa.png 480w, https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251125155810_hu_1cc9719c76ffe432.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="174"
+data-flex-basis="418px"
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;创建坐标系&lt;/strong&gt;：地脚图、找脚边、六值相对地图坐标系&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;问题记录&lt;/strong&gt;：定位一个后再定位另一个，之前的可能 &lt;strong&gt;偏移&lt;/strong&gt; —— 往往要把前一个 &lt;strong&gt;固定&lt;/strong&gt; 或检查约束&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;包络体&lt;/strong&gt;：安全包络体覆盖运动范围，仿真时防撞&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="六运动学编辑器实战直线机构--夹爪"&gt;六、运动学编辑器实战（直线机构 / 夹爪）
+&lt;/h2&gt;&lt;p&gt;下午重点：&lt;strong&gt;运动学编辑器&lt;/strong&gt; + &lt;strong&gt;姿态编辑器（Close / Open）&lt;/strong&gt;。下面按课堂截图顺序记步骤。&lt;/p&gt;
+&lt;h3 id="61-创建与方体"&gt;6.1 创建与方体
+&lt;/h3&gt;&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/0074d0335fb983d9315b246756698889.jpg"
+width="1706"
+height="1279"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/0074d0335fb983d9315b246756698889_hu_fcdeaa28b635c25e.jpg 480w, https://2004ccf.github.io/io/p/lan-nov24-env/0074d0335fb983d9315b246756698889_hu_13eb1f6246093e50.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="320px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/5263ac299af7d0e8ccb3bdde0736b86a.jpg"
+width="3528"
+height="2491"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/5263ac299af7d0e8ccb3bdde0736b86a_hu_48f51172040b8b83.jpg 480w, https://2004ccf.github.io/io/p/lan-nov24-env/5263ac299af7d0e8ccb3bdde0736b86a_hu_f354f0b227e11795.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="141"
+data-flex-basis="339px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/9a88d3e3253d39184b710aed882f19bf.jpg"
+width="3367"
+height="1642"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/9a88d3e3253d39184b710aed882f19bf_hu_45636e3901578c47.jpg 480w, https://2004ccf.github.io/io/p/lan-nov24-env/9a88d3e3253d39184b710aed882f19bf_hu_1547434116d0ff2b.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="205"
+data-flex-basis="492px"
+&gt;&lt;/p&gt;
+&lt;p&gt;题目要求：&lt;strong&gt;两个方体（一大一小 box）&lt;/strong&gt;，并 &lt;strong&gt;确定量程&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/ee8fec6ace24dd9903e44c7df6b70e6b.jpg"
+width="2619"
+height="1968"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/ee8fec6ace24dd9903e44c7df6b70e6b_hu_32ee5ad9b632e083.jpg 480w, https://2004ccf.github.io/io/p/lan-nov24-env/ee8fec6ace24dd9903e44c7df6b70e6b_hu_d0c4c63e8d542a72.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="319px"
+&gt;&lt;/p&gt;
+&lt;h3 id="62-连杆与关节"&gt;6.2 连杆与关节
+&lt;/h3&gt;&lt;p&gt;在 &lt;strong&gt;对象树&lt;/strong&gt; 选 box 的上一级 → &lt;strong&gt;运动学编辑器&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/a3f794d8061fc8b90ecf645d5b25257c.jpg"
+width="3864"
+height="1996"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/a3f794d8061fc8b90ecf645d5b25257c_hu_a94b876f361448ac.jpg 480w, https://2004ccf.github.io/io/p/lan-nov24-env/a3f794d8061fc8b90ecf645d5b25257c_hu_a70d8489c228403c.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="193"
+data-flex-basis="464px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/97c2868b41e9b93716acfd975b905f50.jpg"
+width="4080"
+height="3060"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/97c2868b41e9b93716acfd975b905f50_hu_8401ba1d5aaf8a7b.jpg 480w, https://2004ccf.github.io/io/p/lan-nov24-env/97c2868b41e9b93716acfd975b905f50_hu_11094f802f0badd.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="320px"
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;点 &lt;strong&gt;创建连杆&lt;/strong&gt; → 在对象树选元素 → 生成 &lt;strong&gt;lnk1&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;再建 &lt;strong&gt;lnk2&lt;/strong&gt; → 把 lnk1 拖到 lnk2 出现箭头&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;关节属性&lt;/strong&gt;：定 &lt;strong&gt;平移/旋转&lt;/strong&gt;、零点（关节树里 &lt;strong&gt;定义为零的位置&lt;/strong&gt;）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/da8fa74556e93ccb6c3fa394f873b369.jpg"
+width="3328"
+height="2496"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/da8fa74556e93ccb6c3fa394f873b369_hu_b364737f0a9df16e.jpg 480w, https://2004ccf.github.io/io/p/lan-nov24-env/da8fa74556e93ccb6c3fa394f873b369_hu_40f0d08412fba133.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="320px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/7ca0188edc472a7e74c78b3613b1313e.jpg"
+width="2552"
+height="2194"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/7ca0188edc472a7e74c78b3613b1313e_hu_ed072b02b0b48ac5.jpg 480w, https://2004ccf.github.io/io/p/lan-nov24-env/7ca0188edc472a7e74c78b3613b1313e_hu_d93e0fe5c0bb6e01.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="116"
+data-flex-basis="279px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/f82e2dff0553a76a9bc7f05199068fad.jpg"
+width="2509"
+height="1884"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/f82e2dff0553a76a9bc7f05199068fad_hu_afca880d29d7ce26.jpg 480w, https://2004ccf.github.io/io/p/lan-nov24-env/f82e2dff0553a76a9bc7f05199068fad_hu_f47e1a692dbe99f4.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="319px"
+&gt;&lt;/p&gt;
+&lt;h3 id="63-姿态-close--open"&gt;6.3 姿态 Close / Open
+&lt;/h3&gt;&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/f8029fc6422f16c8e51d65d3b1fe220b.jpg"
+width="4000"
+height="3000"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/f8029fc6422f16c8e51d65d3b1fe220b_hu_303dc9de7734caac.jpg 480w, https://2004ccf.github.io/io/p/lan-nov24-env/f8029fc6422f16c8e51d65d3b1fe220b_hu_d1714ae578b919ad.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="320px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;姿态编辑器&lt;/strong&gt;：新建 &lt;strong&gt;Close&lt;/strong&gt;（夹紧）与 &lt;strong&gt;Open&lt;/strong&gt;（松开）：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/743cfac340ee283bc0670e636f91819e.jpg"
+width="2930"
+height="2201"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/743cfac340ee283bc0670e636f91819e_hu_695989107b2a0990.jpg 480w, https://2004ccf.github.io/io/p/lan-nov24-env/743cfac340ee283bc0670e636f91819e_hu_3f98453004ca0bcd.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="319px"
+&gt;&lt;/p&gt;
+&lt;h3 id="64-equipmentprototypeep--pe"&gt;6.4 EquipmentPrototype（EP / PE）
+&lt;/h3&gt;&lt;p&gt;对象树 &lt;strong&gt;新建资源&lt;/strong&gt; → 类型 &lt;strong&gt;EquipmentPrototype (PE)&lt;/strong&gt; → 把 clamp 拖进 PE：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/3b61e60f11a91d5b908e04378b44651a.jpg"
+width="3668"
+height="2780"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/3b61e60f11a91d5b908e04378b44651a_hu_9d9f7f4df95e63cc.jpg 480w, https://2004ccf.github.io/io/p/lan-nov24-env/3b61e60f11a91d5b908e04378b44651a_hu_5f8b5e643662a9b3.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="131"
+data-flex-basis="316px"
+&gt;&lt;/p&gt;
+&lt;p&gt;选 EP → &lt;strong&gt;运动编辑模式&lt;/strong&gt; → 运动学编辑器里建两个 lnk 并连接 → 姿态编辑器里编 Open/Close，即可控制 EP 下工具姿态：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/937bcdd85bce72bdbf8546e110e30e4c.jpg"
+width="2828"
+height="2120"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/937bcdd85bce72bdbf8546e110e30e4c_hu_c461b96f45abb481.jpg 480w, https://2004ccf.github.io/io/p/lan-nov24-env/937bcdd85bce72bdbf8546e110e30e4c_hu_99b0723170b7d2db.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="320px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;我总结的下午一句&lt;/strong&gt;：路径要对、文件名要知道在软件里干什么；很多结构软件生成后已固定，我要搞懂 &lt;strong&gt;Resource 树里每个节点的作用&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义类型补充&lt;/strong&gt;：新建 &lt;strong&gt;E-P&lt;/strong&gt; 资源，把设备文件收进 EP，形成大集合，再进运动学编辑器 —— 上面 PE 步骤就是这套。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="七vc-设计操作对象流与仿真模式"&gt;七、VC 设计：操作、对象流与仿真模式
+&lt;/h2&gt;&lt;p&gt;机械设计要给的资料：&lt;strong&gt;布局、工艺流程&lt;/strong&gt;（含上件位置/产品/次序/数量、合件位置与时机）。VC 设计内容概览：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251127091627.png"
+width="946"
+height="935"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251127091627_hu_daa8e6887ad86413.png 480w, https://2004ccf.github.io/io/p/lan-nov24-env/Pasted%20image%2020251127091627_hu_7bc87789cceb7d48.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="101"
+data-flex-basis="242px"
+&gt;&lt;/p&gt;
+&lt;p&gt;最后要 &lt;strong&gt;播放验证&lt;/strong&gt;。按功能拆成不同 &lt;strong&gt;操作（Operation）&lt;/strong&gt;。&lt;/p&gt;
+&lt;h3 id="71-操作界面与命名"&gt;7.1 操作界面与命名
+&lt;/h3&gt;&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/ffc87713ff9a95a263c36083d47adc06.jpg"
+width="3060"
+height="4080"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/ffc87713ff9a95a263c36083d47adc06_hu_c790bfccb951dac7.jpg 480w, https://2004ccf.github.io/io/p/lan-nov24-env/ffc87713ff9a95a263c36083d47adc06_hu_320291946589a8b5.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="75"
+data-flex-basis="180px"
+&gt;&lt;/p&gt;
+&lt;p&gt;菜单路径：&lt;strong&gt;文件 → 新建操作 → 新文件夹 → 新建对象操作&lt;/strong&gt; → 命名 → 对象树选实体（FUB 里作对象）、范围与路径。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;命名标准&lt;/strong&gt;（课堂白板）：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/c2ea856cb97d9fe46d6f2bf46f39e54e.jpg"
+width="4080"
+height="3060"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/c2ea856cb97d9fe46d6f2bf46f39e54e_hu_88a7c0bb45a6b7d5.jpg 480w, https://2004ccf.github.io/io/p/lan-nov24-env/c2ea856cb97d9fe46d6f2bf46f39e54e_hu_fb8b489f98833c9.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="320px"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;参考流程&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/0da01ff0de26b15d4385f4291c882bc1.jpg"
+width="4080"
+height="3060"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/0da01ff0de26b15d4385f4291c882bc1_hu_f03ffabb5f87eb89.jpg 480w, https://2004ccf.github.io/io/p/lan-nov24-env/0da01ff0de26b15d4385f4291c882bc1_hu_3bd2e52bd35c6e68.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="320px"
+&gt;&lt;/p&gt;
+&lt;h3 id="72-推荐顺序我按老师讲的记"&gt;7.2 推荐顺序（我按老师讲的记）
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;先看 &lt;strong&gt;布局&lt;/strong&gt;，定 &lt;strong&gt;工艺流程&lt;/strong&gt; → 写指南书&lt;/li&gt;
+&lt;li&gt;PS 里建 &lt;strong&gt;复合操作&lt;/strong&gt;（项目命名如 &lt;strong&gt;Loadpart&lt;/strong&gt;）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;新建对象流&lt;/strong&gt; → 导入 3D → 按规则命名&lt;/li&gt;
+&lt;li&gt;对象流内：取名 → 选实体 → &lt;strong&gt;拾取坐标选自身&lt;/strong&gt;，坐标选 &lt;strong&gt;实体原点（第 4 项）&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src="https://2004ccf.github.io/io/p/lan-nov24-env/ad36ac61496a0876d061625faf3ac86a.jpg"
+width="1080"
+height="1440"
+srcset="https://2004ccf.github.io/io/p/lan-nov24-env/ad36ac61496a0876d061625faf3ac86a_hu_a97b3ce0b4654b8e.jpg 480w, https://2004ccf.github.io/io/p/lan-nov24-env/ad36ac61496a0876d061625faf3ac86a_hu_e018bb855d04bef3.jpg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="75"
+data-flex-basis="180px"
+&gt;&lt;/p&gt;
+&lt;ol start="5"&gt;
+&lt;li&gt;&lt;strong&gt;标准模式&lt;/strong&gt; 下先选好上件/下件模型 → &lt;strong&gt;另存为&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;切 &lt;strong&gt;生产线仿真模式&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;工件 &lt;strong&gt;生成外观&lt;/strong&gt; → 操作加到 &lt;strong&gt;路径编辑器&lt;/strong&gt; → &lt;strong&gt;重定位&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;放置&lt;/strong&gt; 到起点，让工件在线体「光幕/传感器」外&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;序列编辑器&lt;/strong&gt; 排序；&lt;strong&gt;信号查看器&lt;/strong&gt; 查 IO&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;：几何中心 vs 车身坐标系要统一；编辑位置时 &lt;strong&gt;几何中心&lt;/strong&gt; 非常关键，重定位要练熟。&lt;/p&gt;
+&lt;h3 id="73-物料流与信号"&gt;7.3 物料流与信号
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;生产模式下 &lt;strong&gt;信号触发&lt;/strong&gt; 物料流&lt;/li&gt;
+&lt;li&gt;仿真里可有 PE 函数，如 &lt;code&gt;LP_START_BUTTON&lt;/code&gt;，取名 A，标 &lt;strong&gt;上升沿&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;我当时的顺序草稿：&lt;strong&gt;序列编辑器 → 信号查看器写逻辑 → 操作树工件进仿真面板 → 播放&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;虚拟传感器&lt;/strong&gt;：放置前查气路图/电气图，确认检测对象、位置、数量&lt;/li&gt;
+&lt;li&gt;接近开关例：&lt;code&gt;LIG_FUB_030_LF1_LC1&lt;/code&gt; —— 信号编辑器会自动带出&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;信号编辑器必须在生产线仿真模式下&lt;/strong&gt; 才能正确检查&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;物料流完整流程图我课上 &lt;strong&gt;还没练熟&lt;/strong&gt;，后面在 &lt;a class="link" href="https://2004ccf.github.io/io/p/lan-virtual-sim-design/" &gt;虚拟仿真环境设计&lt;/a&gt; 里按六块补步骤。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="八今日-ps-操作清单复习用"&gt;八、今日 PS 操作清单（复习用）
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;类别&lt;/th&gt;
+&lt;th&gt;内容&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;规范&lt;/td&gt;
+&lt;td&gt;打开软件 → 设置 → 区分各 &lt;strong&gt;编辑器&lt;/strong&gt;（建模 / 运动学 / 姿态 / 路径 / 序列）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;安全&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;干涉模式&lt;/strong&gt;、路径复位、动态轨迹无碰撞&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;对象树&lt;/td&gt;
+&lt;td&gt;移动机器人坐标、看清 Resource 路径&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;数据&lt;/td&gt;
+&lt;td&gt;格式一致再导入；&lt;code&gt;.cojt&lt;/code&gt; + &lt;code&gt;TuneData.xml&lt;/code&gt; + &lt;code&gt;portTable.xml&lt;/code&gt; / &lt;code&gt;gmPlc.xml&lt;/code&gt;（视组件而定）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2 id="九和-fmtp-博图工程的衔接"&gt;九、和 FMTP 博图工程的衔接
+&lt;/h2&gt;&lt;p&gt;环境在 PS 里搭好后，才轮到 &lt;code&gt;集合蓝精灵&lt;/code&gt; 里 &lt;strong&gt;HJ_FMTP_V18_xxx_左3_虚拟&lt;/strong&gt; 的 PLC/HMI：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;顺序&lt;/th&gt;
+&lt;th&gt;项目&lt;/th&gt;
+&lt;th&gt;与环境搭建的关系&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;前期&lt;/td&gt;
+&lt;td&gt;5～9&lt;/td&gt;
+&lt;td&gt;单机/工位逻辑，先有 IO 概念&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;联调&lt;/td&gt;
+&lt;td&gt;10～11&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;虚拟环境&lt;/strong&gt;里下程序、对信号&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;现场&lt;/td&gt;
+&lt;td&gt;12&lt;/td&gt;
+&lt;td&gt;环境以 &lt;strong&gt;现场为准&lt;/strong&gt;，虚拟仅作预验证&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;博图按钮 → PDPS 信号查看器 → LB 逻辑块，我在 &lt;a class="link" href="https://2004ccf.github.io/io/p/lan-projects-summary/" &gt;所有项目的总结集合&lt;/a&gt; 里记过一遍，和本篇 &lt;strong&gt;环境 + 信号&lt;/strong&gt; 是同一根线。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="十相关笔记"&gt;十、相关笔记
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;笔记&lt;/th&gt;
+&lt;th&gt;链接&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;虚拟调试总框架&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="https://2004ccf.github.io/io/p/lan-virtual-debug-intro/" &gt;/p/lan-virtual-debug-intro/&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VC 六模块步骤&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="https://2004ccf.github.io/io/p/lan-virtual-sim-design/" &gt;/p/lan-virtual-sim-design/&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;PS 基础&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="https://2004ccf.github.io/io/p/lan-ps-basics/" &gt;/p/lan-ps-basics/&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;西门子 PDPS 介绍&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="https://2004ccf.github.io/io/p/ccf-siemens-pdps/" &gt;/p/ccf-siemens-pdps/&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;FMTP 博图程序&lt;/td&gt;
+&lt;td&gt;&lt;a class="link" href="https://2004ccf.github.io/io/p/lan-fmtp-botu/" &gt;/p/lan-fmtp-botu/&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;根据 2025-11-24 课堂笔记与 BaiduSync 原文整理；配图 27 张已放入本站文章目录。本地工程路径：&lt;code&gt;深圳公司面试\集合蓝精灵\PDPS虚拟联调&lt;/code&gt;。&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,231 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Markdown 语法速查与 Obsidian 增强功能：标题、列表、链接、表格、代码、双链、公式与 Callout 等。"><title>Markdown 语法</title><link rel=canonical href=https://2004ccf.github.io/io/p/markdown-yufa/><link rel=stylesheet href=https://2004ccf.github.io/io/scss/style.min.c91073e1bef24baf3131464aee14e30bb1335275cee51563e55fb2a5e03eca69.css><meta property='og:title' content="Markdown 语法"><meta property='og:description' content="Markdown 语法速查与 Obsidian 增强功能：标题、列表、链接、表格、代码、双链、公式与 Callout 等。"><meta property='og:url' content='https://2004ccf.github.io/io/p/markdown-yufa/'><meta property='og:site_name' content='陈乘峰'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='Markdown'><meta property='article:tag' content='Obsidian'><meta property='article:tag' content='学习笔记'><meta property='article:tag' content='陈乘峰'><meta property='article:published_time' content='2026-06-30T19:00:00+08:00'><meta property='article:modified_time' content='2026-06-30T19:00:00+08:00'><meta name=twitter:title content="Markdown 语法"><meta name=twitter:description content="Markdown 语法速查与 Obsidian 增强功能：标题、列表、链接、表格、代码、双链、公式与 Callout 等。"><link rel="shortcut icon" href=https://2004ccf.github.io/io/favicon.ico></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切换菜单>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=https://2004ccf.github.io/io/><img src=https://2004ccf.github.io/io/img/avatar_hu_dee33d711e2a3510.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>👨‍🎓</span></figure><div class=site-meta><h1 class=site-name><a href=https://2004ccf.github.io/io/>陈乘峰</a></h1><h2 class=site-description>欢迎来到我的网站</h2></div></header><ol class=menu-social><li><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://twitter.com target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=https://2004ccf.github.io/io/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>主页</span></a></li><li><a href=https://2004ccf.github.io/io/%E5%85%B3%E4%BA%8E/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>关于</span></a></li><li><a href=https://2004ccf.github.io/io/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=https://2004ccf.github.io/io/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=https://2004ccf.github.io/io/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span></a></li><li class=menu-bottom-section><ol class=menu><li id=i18n-switch><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg>
+<select name=language title=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://2004ccf.github.io/io/en/>English</option><option value=https://2004ccf.github.io/io/ selected>简体中文</option><option value=https://2004ccf.github.io/io/ar/>عربي</option></select></li><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>暗色模式</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目录</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#我为什么学-markdown>我为什么学 Markdown</a></li></ol><ol><li><a href=#标题-2>标题 2</a><ol><li><a href=#标题-3>标题 3</a><ol><li><a href=#标题-4>标题 4</a></li></ol></li></ol></li><li><a href=#文本>文本</a></li><li><a href=#列表>列表</a></li><li><a href=#段落>段落</a></li><li><a href=#链接>链接</a></li><li><a href=#脚注>脚注</a></li><li><a href=#图片>图片</a></li><li><a href=#表格>表格</a></li><li><a href=#代码>代码</a></li></ol><ol><li><a href=#双链>双链</a></li><li><a href=#标签>标签</a></li><li><a href=#数学与公式>数学与公式</a></li><li><a href=#引用块-callouts>引用块 (Callouts)</a><ol><li><a href=#markdown语法><strong>Markdown语法</strong></a></li><li><a href=#markdown的应用场景><strong>Markdown的应用场景</strong></a></li><li><a href=#相关工具><strong>相关工具</strong></a><ol><li><a href=#编辑器-editors><strong>编辑器 (Editors)</strong></a></li><li><a href=#格式转换与处理><strong>格式转换与处理</strong></a></li><li><a href=#专业化与特定用途工具><strong>专业化与特定用途工具</strong></a></li></ol></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=https://2004ccf.github.io/io/categories/skill/>Skill
+</a><a href=https://2004ccf.github.io/io/categories/%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%B8%93%E4%B8%9A%E8%83%BD%E5%8A%9B/>学习与专业能力
+</a><a href=https://2004ccf.github.io/io/categories/%E9%80%9A%E7%94%A8%E5%86%B7%E7%9F%A5%E8%AF%86/>通用冷知识</a></header><div class=article-title-wrapper><h2 class=article-title><a href=https://2004ccf.github.io/io/p/markdown-yufa/>Markdown 语法</a></h2><h3 class=article-subtitle>Markdown 语法速查与 Obsidian 增强功能：标题、列表、链接、表格、代码、双链、公式与 Callout 等。</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Jun 30, 2026</time></div></footer></div></header><section class=article-content><h2 id=我为什么学-markdown>我为什么学 Markdown</h2><p>写博客、做 Obsidian 笔记、跟 AI 协作时，到处都要用 Markdown。我第一次在 Obsidian 里写双链、Callout，在 Hugo 里发文章，发现 <strong>语法不熟就排版很丑、链接也跳不准</strong>。这篇是我跟着 B 站教程和官方文档整理的速查笔记，下面表格和示例大多可以直接复制到 Obsidian 或 Hugo 里试。</p><p>视频参考：<a class=link href="https://www.bilibili.com/video/BV1V4gVzBEGT/?spm_id_from=333.1007.tianma.1-2-2.click&amp;vd_source=795601e8fe7a44a3895f813db6868516" target=_blank rel=noopener>Markdown 入门教程（B 站）</a></p><p><strong>语法速查表</strong></p><div class=table-wrapper><table><thead><tr><th style=text-align:left>功能 (Feature)</th><th style=text-align:left>Markdown 语法 (Syntax)</th><th style=text-align:left>效果预览 (Result)</th></tr></thead><tbody><tr><td style=text-align:left>一级标题</td><td style=text-align:left><code># 标题内容</code></td><td style=text-align:left>最大的标题</td></tr><tr><td style=text-align:left>二级标题</td><td style=text-align:left><code>## 标题内容</code></td><td style=text-align:left></td></tr><tr><td style=text-align:left>三级标题</td><td style=text-align:left><code>### 标题内容</code></td><td style=text-align:left>(依此类推，可到六级)</td></tr><tr><td style=text-align:left><strong>加粗</strong></td><td style=text-align:left><code>**需要加粗的文字**</code></td><td style=text-align:left><strong>需要加粗的文字</strong></td></tr><tr><td style=text-align:left><em>斜体</em></td><td style=text-align:left><code>*需要倾斜的文字*</code></td><td style=text-align:left><em>需要倾斜的文字</em></td></tr><tr><td style=text-align:left><em><strong>加粗并斜体</strong></em></td><td style=text-align:left><code>***又粗又斜的文字***</code></td><td style=text-align:left><em><strong>又粗又斜的文字</strong></em></td></tr><tr><td style=text-align:left><del>删除线</del></td><td style=text-align:left><code>~~被删除的文字~~</code></td><td style=text-align:left><del>被删除的文字</del></td></tr><tr><td style=text-align:left>无序列表</td><td style=text-align:left><code>- 列表项</code> 或 <code>* 列表项</code></td><td style=text-align:left>• 列表项</td></tr><tr><td style=text-align:left>有序列表</td><td style=text-align:left><code>1. 列表项一</code><br><code>2. 列表项二</code></td><td style=text-align:left>1. 列表项一<br>2. 列表项二</td></tr><tr><td style=text-align:left>任务列表（待办）</td><td style=text-align:left><code>- [ ] 未完成的任务</code><br><code>- [x] 已完成的任务</code></td><td style=text-align:left>☐ 未完成的任务<br>☑ 已完成的任务</td></tr><tr><td style=text-align:left>> 引用</td><td style=text-align:left><code>> 这是一段引用的文字</code></td><td style=text-align:left>> 这是一段引用的文字</td></tr><tr><td style=text-align:left><code>行内代码</code></td><td style=text-align:left><code>`code`</code></td><td style=text-align:left>用于突出显示单个变量或命令</td></tr><tr><td style=text-align:left>代码块</td><td style=text-align:left><code>```python `&lt;br>`print("Hello, World!")`&lt;br>` ```</code></td><td style=text-align:left>用于显示多行代码片段</td></tr><tr><td style=text-align:left>链接</td><td style=text-align:left><code>[链接显示的文字](https://obsidian.md)</code></td><td style=text-align:left><a class=link href=https://obsidian.md target=_blank rel=noopener>链接显示的文字</a></td></tr><tr><td style=text-align:left>图片</td><td style=text-align:left><code>![图片的替代文字](图片链接或路径)</code></td><td style=text-align:left>(在笔记中会直接显示图片)</td></tr><tr><td style=text-align:left>水平分割线</td><td style=text-align:left><code>---</code> 或 <code>***</code></td><td style=text-align:left>一条横跨整个页面的线</td></tr></tbody></table></div><blockquote><p>[!note]+ 标题</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>注意：所有符号都是英文输入法下的符号
+</span></span><span class=line><span class=cl>井号加空格，几个井号就是几级标题，一级标题字体最大。
+</span></span><span class=line><span class=cl># 一级标题
+</span></span><span class=line><span class=cl>## 二级标题
+</span></span></code></pre></td></tr></table></div></div></blockquote><h1 id=标题-1>标题 1</h1><h2 id=标题-2>标题 2</h2><h3 id=标题-3>标题 3</h3><h4 id=标题-4>标题 4</h4><h5 id=标题-5>标题 5</h5><h6 id=标题-6>标题 6</h6><hr><blockquote><p>[!note]+ 文本</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>注意：所有符号都是英文输入法下的符号
+</span></span><span class=line><span class=cl>两个星号是加粗：**我是加粗字体**
+</span></span><span class=line><span class=cl>一个型号是斜体：*我是斜体*
+</span></span><span class=line><span class=cl>三个星号，或者三个下划线是粗斜体：***我是粗斜体***，___我是粗斜体___
+</span></span><span class=line><span class=cl>两个等号是高亮：==我是高亮==
+</span></span><span class=line><span class=cl>两个波浪线是删除：~~我是删除~~
+</span></span></code></pre></td></tr></table></div></div></blockquote><h2 id=文本>文本</h2><p>普通文本</p><p><strong>段落粗体文本</strong></p><p><em>段落斜体文本</em></p><p>==高亮==</p><p><del>删除</del></p><p><em><strong>粗斜体</strong></em>
+<em><strong>粗斜体</strong></em>
+<del>删除</del></p><hr><blockquote><p>[!note]+ 列表</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>注意：所有符号都是英文输入法下的符号
+</span></span><span class=line><span class=cl>无序列表：减号/加号/星号 + 空格，三个符号哪个都可以，但是建议用减号。 - 列表项1
+</span></span><span class=line><span class=cl>有序列表：数字+点+空格：1. 列表项
+</span></span><span class=line><span class=cl>输入完一个列表项后，打回车可以继续下一个列表项
+</span></span><span class=line><span class=cl>列表嵌套：使用tab可以让列表缩进，使用shift+tab可以取消缩进。
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>任务列表：方括号里面一个空格或者叉，空格代表未完成，叉代表已完成。
+</span></span><span class=line><span class=cl>[x] 任务 1
+</span></span><span class=line><span class=cl>[ ] 任务 2
+</span></span><span class=line><span class=cl>Task插件可以使已完成的任务后面自动显示完成时间。
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>任务列表并非原始的、John Gruber 定义的 Markdown 标准语法。然而，它已经成为一种被广泛接受和支持的 Markdown 扩展语法，许多现代的 Markdown 编辑器和笔记应用也都采纳了这种任务列表语法，因为它非常直观和实用。
+</span></span></code></pre></td></tr></table></div></div></blockquote><h2 id=列表>列表</h2><p><strong>无序列表</strong></p><ul><li>列表项 1</li><li>列表项 2<ul><li>列表项 2.1</li><li>列表项 2.2</li></ul></li><li>列表项 3</li></ul><p><strong>有序列表</strong></p><ol><li>列表项 a</li><li>列表项 b<ol><li>列表项 b1</li><li>列表项 b2</li></ol></li><li>列表项 c</li></ol><p><strong>任务列表</strong></p><ul><li><input disabled type=checkbox> 任务 1</li><li><input disabled type=checkbox> 任务 2<ul><li><input disabled type=checkbox> 嵌套任务 2.1</li><li><input disabled type=checkbox> 嵌套任务 2.2</li></ul></li><li><input disabled type=checkbox> 任务 3</li></ul><hr><h2 id=段落>段落</h2><blockquote><p>[!note]+ 段落</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>注意：所有符号都是英文输入法下的符号
+</span></span><span class=line><span class=cl>引用：大于号+空格：&gt; 我是引用
+</span></span><span class=line><span class=cl>嵌套引用：多个大于号，每多一个大于号，代表深一层嵌套
+</span></span><span class=line><span class=cl>分割线：三个减号然后回车：---
+</span></span><span class=line><span class=cl>强制换行 (Soft Break / Line Break)：在同一段落内强制开始一个新行，而不是开始一个新段落。使用方法：在一行的末尾输入两个或更多的空格，然后按回车键。
+</span></span><span class=line><span class=cl>备选方法：(如果 Markdown 解析器支持 HTML)：直接使用 HTML 的 &lt;br&gt; 标签。
+</span></span></code></pre></td></tr></table></div></div></blockquote><p>引用语法：</p><blockquote><p>引用了一段名人名言</p><blockquote><p>嵌套引用</p><blockquote><p>俄罗斯套娃</p></blockquote></blockquote></blockquote><p>强制换行：</p><pre><code>这是第一行文字（假设末尾有两个空格）   
+第二行
+</code></pre><p>分割线：</p><hr><blockquote><p>[!note]+ 链接</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>注意：所有符号都是英文输入法下的符号
+</span></span><span class=line><span class=cl>[普通链接](https://www.bing.com/)
+</span></span><span class=line><span class=cl>[普通链接带标题](https://www.bing.com/ &#34;普通链接带标题&#34;)
+</span></span><span class=line><span class=cl>直接链接：&lt;https://github.com&gt;
+</span></span><span class=line><span class=cl>锚点链接：1. 在文稿起草阶段，还没确定具体网址，但可以先给出网址标题。2. 同一篇文章需要重复出现同一个网址时.
+</span></span><span class=line><span class=cl>使用方法：[网址标题][网址名]
+</span></span><span class=line><span class=cl>然后在其他地方（一般是文章最后）给出网址名的地址：[网址名]:https://www.bing.com/
+</span></span><span class=line><span class=cl>[锚点链接][anchor-id]
+</span></span><span class=line><span class=cl>[anchor-id]: http://www.this-anchor-link.com/
+</span></span></code></pre></td></tr></table></div></div></blockquote><h2 id=链接>链接</h2><p><a class=link href=https://www.bing.com/ target=_blank rel=noopener>普通链接</a></p><p>直接链接：<a class=link href=https://github.com target=_blank rel=noopener>https://github.com</a></p><p><a class=link href=http://www.this-anchor-link.com/ target=_blank rel=noopener>锚点链接</a></p><hr><blockquote><p>[!note]+ 脚注</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>注意：所有符号都是英文输入法下的符号
+</span></span><span class=line><span class=cl>方括号内，上箭头，外加脚注名称（一般为标号）
+</span></span><span class=line><span class=cl>本句话要加脚注[^01]
+</span></span><span class=line><span class=cl>[^01]:这是解释脚注 01的内容
+</span></span></code></pre></td></tr></table></div></div></blockquote><h2 id=脚注>脚注</h2><ol><li>要添加脚注的话<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup></li><li>第二个要添加脚注的话<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup></li></ol><hr><blockquote><p>[!note]+ 图片</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>注意：所有符号都是英文输入法下的符号
+</span></span><span class=line><span class=cl>图片语法与链接类似，只是在前面多一个感叹号!。
+</span></span><span class=line><span class=cl>示例：![替代文本](图片路径 &#34;可选的图片标题&#34;)
+</span></span><span class=line><span class=cl>替代文本：当图片无法显示时展示的文字，也有助于屏幕阅读器。
+</span></span><span class=line><span class=cl>图片路径：可以是网络图片的 URL，也可以是本地文件的相对或绝对路径。
+</span></span><span class=line><span class=cl>可选的图片标题：鼠标悬停在图片上时显示的提示文字。
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>带链接的图片 (Clickable Images)：
+</span></span><span class=line><span class=cl>使用方法：将图片的 Markdown 语法作为链接的“链接文本”部分。
+</span></span><span class=line><span class=cl>[![替代文本](图片路径)](链接地址)
+</span></span><span class=line><span class=cl>[![可爱的猫咪](/assets/obsidian.jpg)](https://www.bing.com/)
+</span></span><span class=line><span class=cl>点击即可跳转到bing.com，哪怕图片找不到，点击依然跳转到链接。
+</span></span></code></pre></td></tr></table></div></div></blockquote><h2 id=图片>图片</h2><p><img src=https://obsidian.md/images/obsidian-logo-gradient.svg loading=lazy alt="Obsidian Logo"></p><p><a class=link href=https://www.bing.com/ target=_blank rel=noopener><img src=https://2004ccf.github.io/io/assets/obsidian.jpg loading=lazy alt=可爱的猫咪></a></p><hr><blockquote><p>[!note]+ 表格</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>注意：所有符号都是英文输入法下的符号
+</span></span><span class=line><span class=cl>表头： 用竖线 | 分隔单元格内容。
+</span></span><span class=line><span class=cl>分隔行： 用竖线 | 分隔，并使用至少三个减号 - 来创建每个单元格的分隔线。可以通过在减号前后添加冒号 : 来控制该列的对齐方式：
+</span></span><span class=line><span class=cl>左对齐 (默认)：:--- (或 :-)
+</span></span><span class=line><span class=cl>居中对齐：:---: (或 :-:)
+</span></span><span class=line><span class=cl>右对齐：---: (或 -:)
+</span></span><span class=line><span class=cl>内容行 (Content Rows): 用竖线 | 分隔单元格内容。
+</span></span><span class=line><span class=cl>最外层的竖线 | 是可选的，但为了美观和清晰，建议加上。
+</span></span></code></pre></td></tr></table></div></div></blockquote><h2 id=表格>表格</h2><div class=table-wrapper><table><thead><tr><th>名字</th><th>姓氏</th><th>电子邮件</th></tr></thead><tbody><tr><td>John</td><td>Doe</td><td><a class=link href=mailto:john.doe@example.com>john.doe@example.com</a></td></tr><tr><td>Muffin</td><td>Poppies</td><td><a class=link href=mailto:muffin.poppies@example.com>muffin.poppies@example.com</a></td></tr><tr><td>Jane</td><td>Doe</td><td><a class=link href=mailto:jane.doe@example.com>jane.doe@example.com</a></td></tr></tbody></table></div><div class=table-wrapper><table><thead><tr><th style=text-align:left>左对齐</th><th style=text-align:center>居中对齐</th><th style=text-align:right>右对齐</th></tr></thead><tbody><tr><td style=text-align:left>AAA</td><td style=text-align:center>BBB</td><td style=text-align:right>CCC</td></tr></tbody></table></div><hr><blockquote><p>[!note]+ 代码</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>注意：所有符号都是英文输入法下的符号
+</span></span><span class=line><span class=cl>行内代码用一个点包裹，代码块用三个点包裹，点是键盘上数字1左边的点。
+</span></span><span class=line><span class=cl>代码块可以指定代码语言，比如python、javascript，直接加在三个点后面即可。
+</span></span><span class=line><span class=cl>对于 Markdown 中的语言标识符（例如 javascript），通常不区分大小写。这意味着 javascript、JavaScript 和 JAVASCRIPT 应该产生相同的语法高亮效果。不过，最佳实践是使用小写形式。但这也可能取决于具体的 Markdown 解析器。
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Mermaid代码可以生成各种图标，感兴趣的可以单独学习Mermaid语法。
+</span></span></code></pre></td></tr></table></div></div></blockquote><h2 id=代码>代码</h2><p><strong>行内代码</strong>
+变量 <code>myvar</code> 被设置为值 <code>100</code>。</p><p><strong>代码块</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>numpy</span> <span class=k>as</span> <span class=nn>np</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>calc</span><span class=p>(</span><span class=n>a</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=n>np</span><span class=o>.</span><span class=n>sqrt</span><span class=p>(</span><span class=n>a</span><span class=p>)</span><span class=o>*</span><span class=mi>3</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>test</span> <span class=o>=</span> <span class=n>calc</span><span class=p>(</span><span class=mi>12</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>Mermaid代码：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>graph TD
+</span></span><span class=line><span class=cl>    A[开始] --&gt; B(处理);
+</span></span><span class=line><span class=cl>    B --&gt; C{条件?};
+</span></span><span class=line><span class=cl>    C -- 是 --&gt; D[操作1];
+</span></span><span class=line><span class=cl>    C -- 否 --&gt; E[操作2];
+</span></span><span class=line><span class=cl>    D --&gt; F[结束];
+</span></span><span class=line><span class=cl>    E --&gt; F;
+</span></span></code></pre></td></tr></table></div></div><h1 id=obsidian特有或增强的markdown-功能>Obsidian特有或增强的Markdown 功能</h1><blockquote><p>[!note]+ 双链</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>注意：所有符号都是英文输入法下的符号
+</span></span><span class=line><span class=cl>1. 笔记文件名：链接到仓库内的另一篇笔记。使用方法：用双层方括号 [[]] 包裹笔记的文件名 (无需 .md 后缀)。示例：我的待办事项
+</span></span><span class=line><span class=cl>2. 笔记文件名#标题名：链接到另一篇笔记中的特定标题。使用方法：在文件名后加 # 和目标标题的文本。示例：Markdown 语法详解#10. 表格
+</span></span><span class=line><span class=cl>3. 自定义显示文本：链接到另一篇笔记，但显示自定义的链接文字。使用方法：在文件名后加 | 和希望显示的文本。示例： 昨天的日记
+</span></span><span class=line><span class=cl>4. !笔记文件名：将另一篇笔记的全部内容嵌入到当前笔记中。使用方法：与图片嵌入类似，但使用双层方括号，并以 ! 开头。示例： !常用代码片段
+</span></span><span class=line><span class=cl>5. !笔记文件名#标题名：将另一篇笔记中特定标题下的内容嵌入。使用方法：在文件名后跟特定标题。示例： !会议记录#行动项
+</span></span><span class=line><span class=cl>6. !笔记文件名#^块ID：嵌入笔记中被 \^块ID 标记的特定块（段落、列表项等）。使用方法：先在源笔记中，在我要引用的段落或列表项末尾添加块引用 ID，格式为 `^yourBlockID`（例如 `^task123`）。然后在目标笔记中用 `!源笔记文件名#^yourBlockID` 嵌入。示例：在「任务列表.md」中写 `- [ ] 完成报告 ^reportTask`，在当前笔记中嵌入：`!任务列表#^reportTask`
+</span></span></code></pre></td></tr></table></div></div></blockquote><h2 id=双链>双链</h2><p>注意：这里使用反斜杠，是为了让Obsidian不把他识别为一个双链，否则Dashboard就会被认为是一个双链，从而在关系图谱中看到这个Dashboard节点。
+内部链接: \Dashboard</p><hr><blockquote><p>[!note]+ 标签</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>注意：所有符号都是英文输入法下的符号
+</span></span><span class=line><span class=cl>以井号 # 开头，后跟标签名称。标签名不能包含空格，可以用 - 或 _ 连接多词标签 (如 #读书笔记 或 #project-alpha)。标签可以放在笔记的任意位置，包括 YAML Frontmatter 中的 tags 字段。
+</span></span></code></pre></td></tr></table></div></div></blockquote><h2 id=标签>标签</h2><p>标签: #dashboard #notes</p><hr><blockquote><p>[!note]+ 数学与公式</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>注意：所有符号都是英文输入法下的符号
+</span></span><span class=line><span class=cl>Obsidian 内置了对 KaTeX 的支持，用于渲染 LaTeX 数学公式。
+</span></span><span class=line><span class=cl>$行内数学公式$：将公式嵌入到文本行中。
+</span></span><span class=line><span class=cl>使用方法：用一对美元符号 $ 包裹 LaTeX 公式。
+</span></span><span class=line><span class=cl>$$块级数学公式$$：将公式在单独的块中居中显示。
+</span></span><span class=line><span class=cl>使用方法：两对美元符号包裹
+</span></span></code></pre></td></tr></table></div></div></blockquote><h2 id=数学与公式>数学与公式</h2><p>$$g=g_0 \frac{R^2}{\left( R + z \right)^2} = \frac{g_0}{\left(1 + z/R \right)^2} $$</p><p>其中,
+$g$ = 指定距离处的相对引力。
+$g_0$ = \物体的表面引力。
+$R$ = 物体的半径。(通常是物体的赤道半径)。
+$z$ = 物体表面以上的距离。</p><hr><blockquote><p>[!note]+ 引用块</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>注意：所有符号都是英文输入法下的符号
+</span></span><span class=line><span class=cl>使用方法: 引用块 (&gt;) 之后紧跟 [!类型]。类型可以是 note, abstract, info, todo, tip, success, question, warning, failure, danger, bug, example, quote 等。
+</span></span><span class=line><span class=cl>可选标题**: 在 [!类型] 后可以添加自定义标题文本。
+</span></span><span class=line><span class=cl>可折叠**: 在类型后加减号 - (如 [!INFO]-) 可使标注默认折叠，加加号 + (如 [!INFO]+) 可使其默认展开 (通常默认就是展开)。
+</span></span></code></pre></td></tr></table></div></div></blockquote><h2 id=引用块-callouts>引用块 (Callouts)</h2><blockquote><p>[!note]+ 笔记引用块
+这是一个笔记引用块&mldr;</p></blockquote><blockquote><p>[!warning]- 警示引用块
+这是一个警示引用块&mldr;</p></blockquote><p>Markdown是一种轻量级标记语言，由约翰·格鲁伯（John Gruber）与亚伦·斯沃茨（Aaron Swartz）于2004年共同创造。其核心设计哲学是“易读易写”，即便是未被渲染的纯文本格式，也应具备极高的可读性。</p><p>它并非HTML的替代品，而是一种更易于编写的“HTML预处理器”。Markdown文档最终会被解析器转换为HTML，因此它天然兼容HTML，允许在文档中直接插入HTML代码以实现更复杂的格式。</p><p><strong>核心优势</strong></p><ul><li><strong>专注内容</strong>: 将内容与格式分离，让创作者专注于写作本身，而非频繁操作排版工具。</li><li><strong>平台无关</strong>: 文件为纯文本（.md），具有极强的可移植性，内容可以被任何文本编辑器打开，易于长期保存和迁移。</li><li><strong>学习成本低</strong>: 核心语法简洁，易于快速上手并长期受益。</li><li><strong>应用广泛</strong>: 已成为技术写作、在线内容创作和知识管理领域事实上的标准之一。</li></ul><h3 id=markdown语法><strong>Markdown语法</strong></h3><p>关于Markdown的具体语法规则，请见：Markdown语法</p><h3 id=markdown的应用场景><strong>Markdown的应用场景</strong></h3><ol><li><strong>知识管理与笔记</strong><ul><li><strong>应用</strong>: 构建个人知识库，撰写学习笔记、会议纪要、项目文档等。</li><li><strong>软件</strong>: Obsidian, Notion, Joplin, Bear等主流知识管理软件都以Markdown为核心或提供良好支持。其结构化的特性（标题、列表）和链接语法是构建网状知识的基础。</li></ul></li><li><strong>内容创作与发布</strong><ul><li><strong>应用</strong>: 撰写博客、微信公众号文章、产品说明书、书籍或论文初稿。</li><li><strong>工作流</strong>: 实现“一次编写，多处发布”。例如，使用特定工具（如mdnice）可将Markdown内容带样式复制到微信公众号。通过Pandoc可将.md文件转换为格式规范的PDF或Word文档。</li></ul></li><li><strong>与AI高效协作</strong><ul><li><strong>AI提示词(Prompt)</strong>: 在向../使用Ai的工具集合下达复杂指令时，使用Markdown的标题、列表和代码块可以清晰地组织指令结构（如背景、任务、要求、示例），../使用Ai的工具集合能更准确地理解意图。</li><li><strong>AI的输出</strong>: 大多数大语言模型的默认输出格式即为Markdown。当要求../使用Ai的工具集合生成表格、代码或结构化报告时，它返回的就是Markdown源码，这证明了其作为信息结构载体的通用性。</li></ul></li></ol><h3 id=相关工具><strong>相关工具</strong></h3><h4 id=编辑器-editors><strong>编辑器 (Editors)</strong></h4><ul><li><strong>跨平台/桌面端</strong>:<ul><li><strong>Typora</strong>: 经典的所见即所得（WYSIWYG）编辑器，体验流畅。</li><li><strong>MarkText</strong>: 开源的类Typora编辑器。</li><li><strong>Zettlr</strong>: 面向学者和研究人员的Markdown编辑器，注重引文和知识管理。</li></ul></li><li><strong>特定平台</strong>:<ul><li><strong>Ulysses</strong>: (macOS/iOS) 强大的写作应用，提供库管理和发布功能。</li><li><strong>iA Writer</strong>: (macOS/iOS/Windows) 专注、无干扰的写作体验。</li></ul></li><li><strong>在线编辑器</strong>:<ul><li><strong>StackEdit</strong>: 功能全面的在线编辑器，支持云同步。</li><li><strong>Dillinger</strong>: 简洁高效的在线Markdown编辑器。</li><li><strong>HackMD</strong>: 支持实时协作的Markdown笔记和文档工具。</li></ul></li></ul><h4 id=格式转换与处理><strong>格式转换与处理</strong></h4><ul><li><strong>Pandoc</strong>: 被誉为格式转换的“瑞士军刀”。一个强大的命令行工具，可以在数十种文档格式之间自由转换，如 Markdown -> PDF/Word/HTML/EPUB/PPTX 等。</li><li><strong>mdnice</strong>: 微信公众号排版工具，可将Markdown内容转换为精美的、带CSS样式的文章，以便粘贴到公众号后台。</li><li><strong>CloudConvert</strong>: 提供Markdown格式转换的在线服务网站。</li></ul><h4 id=专业化与特定用途工具><strong>专业化与特定用途工具</strong></h4><ul><li><strong>演示文稿 (Presentations)</strong>:<ul><li><strong>Marp</strong>: VS Code插件或独立应用，用Markdown语法直接编写幻灯片。</li><li><strong>Remark.js</strong>: 一个JavaScript库，可在浏览器中渲染Markdown格式的幻灯片。</li></ul></li><li><strong>图表与绘图 (Diagrams)</strong>:<ul><li><strong>Mermaid.js</strong>: 使用文本和代码创建图表和流程图。许多Markdown编辑器（包括Obsidian）已原生支持Mermaid语法。</li><li><strong>PlantUML</strong>: 另一款通过文本描述生成UML图表的工具。</li></ul></li><li><strong>笔记与复习 (Notes & Flashcards)</strong>:<ul><li><strong>md2card</strong>: 将Markdown笔记（特别是问答格式）一键转换为Anki记忆卡片的工具，打通了学习笔记到主动复习的链路。</li></ul></li><li><strong>静态网站生成器 (Static Site Generators)</strong>:<ul><li><strong>Hugo, Jekyll, Hexo, VuePress</strong>: 许多个人博客和项目文档网站都基于此类工具构建，它们的核心就是将Markdown文件转换为完整的静态网站。</li></ul></li></ul><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><p>脚注内容一&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:2><p>脚注内容二&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></div></section><footer class=article-footer><section class=article-tags><a href=https://2004ccf.github.io/io/tags/markdown/>Markdown</a>
+<a href=https://2004ccf.github.io/io/tags/obsidian/>Obsidian</a>
+<a href=https://2004ccf.github.io/io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/>学习笔记</a>
+<a href=https://2004ccf.github.io/io/tags/%E9%99%88%E4%B9%98%E5%B3%B0/>陈乘峰</a></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css integrity=sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js integrity=sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8 crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}],ignoredClasses:["gist"]})})</script></article><aside class=related-content--wrapper><h2 class=section-title>相关文章</h2><div class=related-content><div class="flex article-list--tile"><article><a href=https://2004ccf.github.io/io/p/obsidian-gui-ze/><div class=article-details><h2 class=article-title>Obsidian 完整格式功能指南</h2></div></a></article><article><a href=https://2004ccf.github.io/io/p/wo-yu-ji-suan-ji-de-dui-bi/><div class=article-details><h2 class=article-title>我与计算机的对比与比较</h2></div></a></article><article><a href=https://2004ccf.github.io/io/p/masike-di-yi-xing-yuan-li/><div class=article-details><h2 class=article-title>马斯克：第一性原理底层逻辑</h2></div></a></article><article><a href=https://2004ccf.github.io/io/p/pid-kongzhi-lunwen-biji/><div class=article-details><h2 class=article-title>PID 控制论文笔记：Give us PID controllers and we can control the world</h2></div></a></article><article><a href=https://2004ccf.github.io/io/p/shi-yong-ai-gongju-jihe/><div class=article-details><h2 class=article-title>使用 AI 的工具集合</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2026 陈乘峰博客</section><section class=powerby></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=https://2004ccf.github.io/io/ts/main.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cursor on 陈乘峰</title><link>https://2004ccf.github.io/io/tags/cursor/</link><description>Recent content in Cursor on 陈乘峰</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>陈乘峰博客</copyright><lastBuildDate>Tue, 30 Jun 2026 16:30:00 +0800</lastBuildDate><atom:link href="https://2004ccf.github.io/io/tags/cursor/index.xml" rel="self" type="application/rss+xml"/><item><title>使用 AI 的工具集合</title><link>https://2004ccf.github.io/io/p/shi-yong-ai-gongju-jihe/</link><pubDate>Tue, 30 Jun 2026 16:30:00 +0800</pubDate><guid>https://2004ccf.github.io/io/p/shi-yong-ai-gongju-jihe/</guid><description>&lt;h2 id="我为什么写这篇"&gt;我为什么写这篇
+&lt;/h2&gt;&lt;p&gt;2026 年初我开始用 Cursor 写代码、整理笔记，界面里同时出现 Prompt、Agent、Skill、MCP 这些词，和网页版 ChatGPT 的「对话框」完全不是一回事。我查了很多教程，有的只讲 Prompt 技巧，有的直接跳到 Agent，看完仍然对不上号——不知道哪个管「怎么说」，哪个管「自己干」，哪个管「接 GitHub」。&lt;/p&gt;
+&lt;p&gt;后来我把笔记里的「开公司」比喻反复读了几遍，又对照 Cursor 里的实际功能试了一遍，才慢慢理顺。这篇是我按自己的理解整理的，方便以后给领导展示学习成果时，也能说清我在用什么、为什么这么用。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="用开公司对照人规章工具权限"&gt;用「开公司」对照：人、规章、工具、权限
+&lt;/h2&gt;&lt;p&gt;我把 GPT、Claude、DeepSeek、Gemini 这类大模型想成&lt;strong&gt;刚入职的高能力员工&lt;/strong&gt;：脑子快，读文档、写代码都行，但不了解我平时的写法、项目结构和习惯。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Prompt&lt;/strong&gt; 是我站在工位旁口头交代：「参考上次 A 客户的版本写方案，语言精简。」说完就结束，不会自动写进制度，明天再开一个新对话，它也不记得今天这句。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Agent&lt;/strong&gt; 是我只给目标：「做一份竞品分析。」它自己拆步骤、搜资料、调工具、改稿、检查。我不用每一步都下指令。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Skill&lt;/strong&gt; 是我提前写好的 SOP：标准步骤、模板、参考案例、注意事项。Agent 干活时翻这份手册，而不是每次靠我临场口述。输出会稳很多，也更像我自己的风格。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;MCP&lt;/strong&gt;（Model Context Protocol，模型上下文协议）像统一的门禁卡。GitHub、Notion、搜索引擎、Slack 等外部系统，用同一套协议接进来，AI 才能安全、规范地去拿真实数据。Skill 解决「怎么干」，MCP 解决「数据从哪来」——一个是方法论，一个是权限和接口。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;IDE&lt;/strong&gt;（Cursor、Trae、Windsurf 等）是带 AI 的办公室：编辑器里就有补全、Agent、Skill 配置、MCP 插件，我日常写代码基本都在这里。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Claude Code / OpenCode&lt;/strong&gt; 更像终端里的专项人员：不依赖图形界面，直接在命令行读写仓库、跑脚本。Claude Code 绑 Claude 系列；OpenCode 开源，可多模型切换。适合「就地在仓库里硬改」的批量任务。&lt;/p&gt;
+&lt;p&gt;压成一句：&lt;strong&gt;LLM&lt;/strong&gt; 是能力底座；&lt;strong&gt;Prompt&lt;/strong&gt; 是一次性交代；&lt;strong&gt;Skill&lt;/strong&gt; 是可复用的干法；&lt;strong&gt;Agent&lt;/strong&gt; 是自主执行；&lt;strong&gt;MCP&lt;/strong&gt; 是接外部系统；&lt;strong&gt;IDE / 终端&lt;/strong&gt;只是工作地点不同。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="prompt-在-2026-年没消失只是退到幕后"&gt;Prompt 在 2026 年：没消失，只是退到幕后
+&lt;/h2&gt;&lt;p&gt;网上常说「Prompt 已死」，我的体会是：手工写很长 Prompt 的需求在减少，但 Prompt 并没有退场。Agent 每一步行动背后仍在生成 Prompt；Skill 本质上也是一组设计好的 Prompt 片段加流程。重点从「雕句式」转向「设计 Skill 和流程」，让系统在合适节点自动生成对的指令。&lt;/p&gt;
+&lt;p&gt;当大模型能力、Agent 自主性、Skill 方法论、MCP 接入这四块配在一起时，有些原本要两三天的整理或选型，可能压到几十分钟——前提是我会搭组合，而不是只会单次问答。真正的红利，在我看来，不是多背几个模型参数，而是会用这些组件重新设计写文档、改代码、做分析的方式。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="我整理过程中搞清的几个问题"&gt;我整理过程中搞清的几个问题
+&lt;/h2&gt;&lt;h3 id="这些概念到底怎么分实战怎么配"&gt;这些概念到底怎么分？实战怎么配？
+&lt;/h3&gt;&lt;p&gt;我现在的用法是：日常开发在 &lt;strong&gt;Cursor&lt;/strong&gt; 里，把它当办公室；配好写文档、重构代码的 &lt;strong&gt;Skill&lt;/strong&gt;，用 &lt;strong&gt;MCP&lt;/strong&gt; 接 GitHub 和搜索；开 &lt;strong&gt;Agent&lt;/strong&gt; 模式时给目标让它自己跑。需要大批量改仓库、脚本驱动时，再开 &lt;strong&gt;Claude Code&lt;/strong&gt; 或 &lt;strong&gt;OpenCode&lt;/strong&gt; 在终端处理。两者可以配合，不必二选一——我在 Cursor 里看清结构、小步修改，在终端里做跨目录的大改，这样分工比较顺。&lt;/p&gt;
+&lt;h3 id="agent-自带-skill-和我自己写的有什么区别"&gt;Agent 自带 Skill 和我自己写的有什么区别？
+&lt;/h3&gt;&lt;p&gt;Agent 自带的是通用能力：写代码、总结、翻译、简单分析，不针对我的业务和文风。我写的 Skill 是「本公司手册」——固定步骤、输出格式、用词习惯、案例。没有自定义 Skill 时也能用，但结果时好时坏；加载我的 Skill 后，Agent 会优先按 SOP 走，可控性明显提高。&lt;/p&gt;
+&lt;p&gt;我打算把最常做的三类活——写技术报告、整理访谈、做选型比较——分别写成独立 Skill，标题结构、列点习惯也固定下来，让不同工具里的 Agent 尽量按同一套标准输出。&lt;/p&gt;
+&lt;h3 id="claude-code-是不是操作系统助手cursor-算哪一类"&gt;Claude Code 是不是「操作系统助手」？Cursor 算哪一类？
+&lt;/h3&gt;&lt;p&gt;都不是操作系统层。Claude Code、OpenCode 是&lt;strong&gt;终端里的开发助手&lt;/strong&gt;，跑在 Windows / macOS / Linux 之上；&lt;strong&gt;Cursor&lt;/strong&gt; 是 &lt;strong&gt;AI IDE&lt;/strong&gt;，和 VS Code、JetBrains 同一层。我记楼层：最底是 OS，中间是终端、IDE、浏览器，Claude Code 偏终端特种兵，Cursor 偏图形办公室。&lt;/p&gt;
+&lt;p&gt;写 Skill 时我也在考虑：同一套 SOP 是否分别写「Cursor 版」和「终端版」，因为有的任务适合可视化翻项目树，有的适合脚本批量处理。&lt;/p&gt;
+&lt;h3 id="ai大模型llm-怎么套"&gt;AI、大模型、LLM 怎么套？
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;AI&lt;/strong&gt; 范围最大；&lt;strong&gt;大模型&lt;/strong&gt;是 AI 里用海量数据训练出来的子集，不限语言；&lt;strong&gt;LLM&lt;/strong&gt;（大语言模型）专指处理自然语言的那一类，如 GPT、Claude 的语言部分。集合关系：&lt;strong&gt;LLM ⊂ 大模型 ⊂ AI&lt;/strong&gt;。日常说「用大模型」，多数时候就是在用 LLM。&lt;/p&gt;
+&lt;h3 id="除了-mcp-和-skill还有哪些给-ai-加功能的路子"&gt;除了 MCP 和 Skill，还有哪些给 AI 加功能的路子？
+&lt;/h3&gt;&lt;p&gt;我按 2026 年能查到的资料，归纳了六条主线（很多产品是组合使用）：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. 检索增强生成（RAG）&lt;/strong&gt;&lt;br&gt;
+让模型回答前先检索外部知识库，再生成答案，解决「模型不知道我本地私有资料」的问题。企业知识库问答、本地化 AI 库常用「向量库 + RAG」。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. 工具调用 / 函数调用（Tool Use / Function Calling）&lt;/strong&gt;&lt;br&gt;
+让 LLM 在推理中主动调 API、数据库、代码解释器。代表思路包括 Toolformer、ReAct、PAL 等；GPT、Claude 的 tools 能力都在这条线上，MCP 则进一步统一工具生态的协议。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. 多步骤推理与规划（CoT / ToT / ReAct 式 Agent）&lt;/strong&gt;&lt;br&gt;
+把复杂任务拆成多步，逐步规划与验证。Cursor Agent、各类 Coding Agent 背后广泛用到这类思路。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. 多智能体（Multi-Agent）&lt;/strong&gt;&lt;br&gt;
+多个不同角色的 Agent 协作，如写代码 + 测试 + 文档。框架有 AutoGen、Swarm 等。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;5. 工作流编排（Workflow / Agent Graph）&lt;/strong&gt;&lt;br&gt;
+用流程图、状态机把 Agent 和工具串成可复用流水线。LangGraph、Coze 工作流等属于这一类。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;6. 知识结构增强（GraphRAG / Markdown 知识图谱）&lt;/strong&gt;&lt;br&gt;
+用图谱或 Markdown 双链让 Agent 沿结构检索，而不是乱翻长文档。我自己的 Obsidian 笔记库，其实已经在往这个方向靠——主题划分 + 问答区，再接 RAG 或 Agent 时，希望它先沿我画好的结构走。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="各块单独记一笔方便复习"&gt;各块单独记一笔（方便复习）
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;大模型与天才员工比喻&lt;/strong&gt;：后面所有概念都在回答「怎么把这个高能力新人变成自己人」。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Prompt&lt;/strong&gt;：临时口头交代；2026 年对手写长 Prompt 的依赖下降，但系统内部仍大量存在。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Agent&lt;/strong&gt;：给目标不盯过程；和「问一句答一句」差别最大。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Skill&lt;/strong&gt;：SOP 手册；库越厚，AI 越像老员工。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;MCP&lt;/strong&gt;：统一门禁；Skill 管方法，MCP 管去哪拿数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;IDE&lt;/strong&gt;：智能办公室；关键不是有没有补全广告，而是 Agent 能否可靠地读、改、测代码。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Claude Code / OpenCode&lt;/strong&gt;：终端特种兵；OpenCode 更开放、可多模型。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;四齿轮提效&lt;/strong&gt;：LLM + Agent + Skill + MCP 同时转起来，工作方式才会变，而不是快一点点。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;笔记整理于 2026 年，术语以当时 Cursor / Claude 生态为准。&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

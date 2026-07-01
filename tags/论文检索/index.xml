@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>论文检索 on 陈乘峰</title><link>https://2004ccf.github.io/io/tags/%E8%AE%BA%E6%96%87%E6%A3%80%E7%B4%A2/</link><description>Recent content in 论文检索 on 陈乘峰</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>陈乘峰博客</copyright><lastBuildDate>Fri, 22 May 2026 23:30:00 +0800</lastBuildDate><atom:link href="https://2004ccf.github.io/io/tags/%E8%AE%BA%E6%96%87%E6%A3%80%E7%B4%A2/index.xml" rel="self" type="application/rss+xml"/><item><title>前沿论文网站</title><link>https://2004ccf.github.io/io/p/qianyan-lunwen-wangzhan/</link><pubDate>Fri, 22 May 2026 23:30:00 +0800</pubDate><guid>https://2004ccf.github.io/io/p/qianyan-lunwen-wangzhan/</guid><description>&lt;h2 id="我为什么整理这份清单"&gt;我为什么整理这份清单
+&lt;/h2&gt;&lt;p&gt;写课程作业、跟课题查文献时，我经常不知道先去哪个网站。知网、Google Scholar、arXiv、IEEE 名字都听过，但各自负责什么、什么时候用哪一个，一开始对不上号。我把常用平台按用途归成七类，共 &lt;strong&gt;33 个&lt;/strong&gt;，每个附上官方链接和一句话定位，方便自己以后查，也方便向老师说明文献来源是否正规。&lt;/p&gt;
+&lt;p&gt;2025 年 1 月前后我核对过链接；隔几个月建议自己再点一下。Google Scholar、ResearchGate 等在国外站上，国内访问有时不稳定，学校图书馆远程或 VPN 会更稳妥。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="我平时查文献的顺序"&gt;我平时查文献的顺序
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;要全文时&lt;/strong&gt;，我大致按这个顺序试：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;学校图书馆&lt;/strong&gt;：看有没有 Web of Science、Elsevier、Springer 等机构订阅——能走正规渠道优先走这里。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;OA 平台&lt;/strong&gt;：PMC、DOAJ、CORE 等开放获取，下载合规、无版权风险。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;预印本&lt;/strong&gt;：arXiv、bioRxiv 等，很多直接给全文。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;联系作者&lt;/strong&gt;：发邮件给第一作者或通讯作者，不少人愿意分享。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ResearchGate / Academia.edu&lt;/strong&gt;：在学术社交平台上向作者请求全文。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;追某个方向的新进展&lt;/strong&gt;，我会组合用：预印本订 RSS 或邮件；Google Scholar 设关键词提醒；Nature、Science 看 Latest；ResearchGate 关注领域里的研究者。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;判断论文质量&lt;/strong&gt;，我目前会看：WoS 的 JCR 分区和影响因子；Scholar、Semantic Scholar 的引用；作者单位和 h 指数；做 ML 的可看 Papers with Code 有没有代码复现。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;中英文文献&lt;/strong&gt;，我习惯双轨：中文用知网、万方、维普；英文用 Scholar、WoS 和学科库（医学 PubMed、工科 IEEE）；两边都想搜时，百度学术当入口。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="一全球顶级综合型引文数据库2-个"&gt;一、全球顶级综合型引文数据库（2 个）
+&lt;/h2&gt;&lt;p&gt;学术评价、引文分析常用的「金标准」平台。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a class="link" href="https://www.webofscience.com" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Web of Science Core Collection&lt;/strong&gt;&lt;/a&gt;&lt;br&gt;
+SCI/SSCI/A&amp;amp;HCI/ESCI 官方索引，全球学术评价核心依据，提供引文数据、期刊分区和影响力评估。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a class="link" href="https://www.scopus.com" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Scopus&lt;/strong&gt;&lt;/a&gt;&lt;br&gt;
+Elsevier 旗下大规模摘要与引文库，全学科覆盖，新兴交叉学科和非英语期刊收录相对更全。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id="二国际顶刊出版社官方全文平台4-个"&gt;二、国际顶刊出版社官方全文平台（4 个）
+&lt;/h2&gt;&lt;p&gt;录用后常比纸刊早 1–3 个月上线，是读顶刊正式论文的主渠道。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.nature.com" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Nature Portfolio&lt;/strong&gt;&lt;/a&gt; — Nature 主刊及子刊官方平台。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.science.org" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Science / AAAS&lt;/strong&gt;&lt;/a&gt; — Science 主刊及子刊。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.sciencedirect.com" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Elsevier ScienceDirect&lt;/strong&gt;&lt;/a&gt; — 超 5000 种期刊，Article in Press 优先上线。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://link.springer.com" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;SpringerLink&lt;/strong&gt;&lt;/a&gt; — Springer Nature 官方全文，OA 期刊数量在出版社里偏多。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id="三全球前沿预印本平台7-个"&gt;三、全球前沿预印本平台（7 个）
+&lt;/h2&gt;&lt;p&gt;无长审稿周期，成果完成即可发布，比正式刊出常快 3–12 个月，多数免费开放。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a class="link" href="https://arxiv.org" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;arXiv&lt;/strong&gt;&lt;/a&gt; — 物理、数学、CS、统计等，基础科学预印本标杆。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.biorxiv.org" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;bioRxiv&lt;/strong&gt;&lt;/a&gt; — 生命科学。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.medrxiv.org" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;medRxiv&lt;/strong&gt;&lt;/a&gt; — 临床医学、公卫。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.ssrn.com" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;SSRN&lt;/strong&gt;&lt;/a&gt; — 经济、金融、社科。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.researchsquare.com" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Research Square&lt;/strong&gt;&lt;/a&gt; — 多学科，与 Nature、Wiley 等有合作。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://chemrxiv.org" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;ChemRxiv&lt;/strong&gt;&lt;/a&gt; — 化学（2025 年更新补充）。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://psyarxiv.com" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;PsyArXiv&lt;/strong&gt;&lt;/a&gt; — 心理学（2025 年更新补充）。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id="四学科专属权威旗舰平台6-个"&gt;四、学科专属权威旗舰平台（6 个）
+&lt;/h2&gt;&lt;p&gt;细分领域专业度通常高于综合平台。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a class="link" href="https://pubmed.ncbi.nlm.nih.gov" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;PubMed&lt;/strong&gt;&lt;/a&gt; — 生物医学检索。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://pmc.ncbi.nlm.nih.gov" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;PubMed Central (PMC)&lt;/strong&gt;&lt;/a&gt; — 生物医学 OA 全文。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://ieeexplore.ieee.org" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;IEEE Xplore&lt;/strong&gt;&lt;/a&gt; — 电气、自动化、通信、CS；我做工科相关课题时会优先想到它。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://pubs.acs.org" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;ACS Publications&lt;/strong&gt;&lt;/a&gt; — 化学、材料。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://pubs.rsc.org" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;RSC Publishing&lt;/strong&gt;&lt;/a&gt; — 化学、材料。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.jstor.org" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;JSTOR&lt;/strong&gt;&lt;/a&gt; — 人文社科，期刊回溯完整。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id="五中文核心学术平台4-个"&gt;五、中文核心学术平台（4 个）
+&lt;/h2&gt;&lt;p&gt;国内学位论文、职称、课题结项常绕不开这几家。&lt;strong&gt;请走学校或单位图书馆的正规入口&lt;/strong&gt;，遵守版权和使用规范。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.cnki.net" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;中国知网（CNKI）&lt;/strong&gt;&lt;/a&gt; — 中文核心期刊、硕博论文收录最全，国内学术生态核心基础设施。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.wanfangdata.com.cn" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;万方数据&lt;/strong&gt;&lt;/a&gt; — 理工、医药等方向文献较全。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.cqvip.com" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;维普网（CQVIP）&lt;/strong&gt;&lt;/a&gt; — 工程技术期刊回溯完整。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.ncpssd.org" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;国家哲学社会科学文献中心&lt;/strong&gt;&lt;/a&gt; — 社科类 OA，免费开放。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;我体会是：写中文综述、查国内标准与行业报告，知网几乎是刚需；查英文前沿，则要靠 Scholar 和预印本。两边都要时，百度学术能当「统一搜索框」，但全文往往还要回各平台解决。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="六合规权威开放获取-oa-平台2-个"&gt;六、合规权威开放获取 OA 平台（2 个）
+&lt;/h2&gt;&lt;p&gt;免费全文、合规引用，适合个人预算有限或机构订阅覆盖不到时。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a class="link" href="https://doaj.org" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;DOAJ&lt;/strong&gt;&lt;/a&gt; — 开放获取期刊目录，可用来筛掠夺性期刊。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://core.ac.uk" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;CORE&lt;/strong&gt;&lt;/a&gt; — 全球最大 OA 论文聚合之一，体量很大。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id="七全球学术检索与智能辅助平台6-个"&gt;七、全球学术检索与智能辅助平台（6 个）
+&lt;/h2&gt;&lt;p&gt;多作检索入口，帮助定位全文渠道。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a class="link" href="https://scholar.google.com" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Google Scholar&lt;/strong&gt;&lt;/a&gt; — 覆盖面广的免费检索，我常作英文文献第一站。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.semanticscholar.org" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Semantic Scholar&lt;/strong&gt;&lt;/a&gt; — AI 辅助的检索与脉络分析。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://xueshu.baidu.com" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;百度学术&lt;/strong&gt;&lt;/a&gt; — 中英文整合检索。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://paperswithcode.com" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Papers with Code&lt;/strong&gt;&lt;/a&gt; — ML 论文 + 代码复现（2025 年更新补充）。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.researchgate.net" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;ResearchGate&lt;/strong&gt;&lt;/a&gt; — 学术社交与全文请求（2025 年更新补充）。&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.academia.edu" target="_blank" rel="noopener"
+&gt;&lt;strong&gt;Academia.edu&lt;/strong&gt;&lt;/a&gt; — 成果展示与传播（2025 年更新补充）。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id="平台对比速查表"&gt;平台对比速查表
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;平台类型&lt;/th&gt;
+&lt;th&gt;推荐平台&lt;/th&gt;
+&lt;th&gt;优势&lt;/th&gt;
+&lt;th&gt;适用场景&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;权威索引&lt;/td&gt;
+&lt;td&gt;Web of Science、Scopus&lt;/td&gt;
+&lt;td&gt;全球公认、影响因子权威&lt;/td&gt;
+&lt;td&gt;学术评价、职称评审&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;预印本&lt;/td&gt;
+&lt;td&gt;arXiv、bioRxiv&lt;/td&gt;
+&lt;td&gt;更新快、免费开放&lt;/td&gt;
+&lt;td&gt;追踪最新前沿&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;OA 全文&lt;/td&gt;
+&lt;td&gt;PMC、DOAJ、CORE&lt;/td&gt;
+&lt;td&gt;免费下载、无版权风险&lt;/td&gt;
+&lt;td&gt;个人研究、预算有限&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;学科专属&lt;/td&gt;
+&lt;td&gt;PubMed、IEEE、ACS&lt;/td&gt;
+&lt;td&gt;专业度高、覆盖全面&lt;/td&gt;
+&lt;td&gt;特定领域深入研究&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;综合检索&lt;/td&gt;
+&lt;td&gt;Google Scholar、百度学术&lt;/td&gt;
+&lt;td&gt;覆盖面广、免费使用&lt;/td&gt;
+&lt;td&gt;日常文献检索&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;学术社交&lt;/td&gt;
+&lt;td&gt;ResearchGate、Academia&lt;/td&gt;
+&lt;td&gt;获取全文、建立网络&lt;/td&gt;
+&lt;td&gt;学术交流、成果展示&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AI/ML&lt;/td&gt;
+&lt;td&gt;Papers with Code&lt;/td&gt;
+&lt;td&gt;代码复现、方法对比&lt;/td&gt;
+&lt;td&gt;AI 研究、算法实现&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2 id="使用提醒我自己的备忘"&gt;使用提醒（我自己的备忘）
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;链接最后验证：2025 年 1 月，建议每季度复查。&lt;/li&gt;
+&lt;li&gt;优先 OA 与机构订阅，&lt;strong&gt;不要使用非法下载站点&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;可注册 ResearchGate、Academia.edu，便于要全文和关注领域动态。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;追最新前沿&lt;/strong&gt;：arXiv、bioRxiv、medRxiv、ChemRxiv、PsyArXiv。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;免费全文&lt;/strong&gt;：DOAJ、CORE、PMC。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;中文检索&lt;/strong&gt;：知网、万方、维普。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;工科垂直&lt;/strong&gt;：IEEE（自动化、电气）、ACS/RSC（化学材料）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;学习笔记，平台介绍综合自个人整理与公开资料；访问政策以各站最新规定为准。&lt;/em&gt;&lt;/p&gt;</description></item></channel></rss>

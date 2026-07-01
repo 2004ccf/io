@@ -1,0 +1,1161 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>SLAM on 陈乘峰</title><link>https://2004ccf.github.io/io/tags/slam/</link><description>Recent content in SLAM on 陈乘峰</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>陈乘峰博客</copyright><lastBuildDate>Thu, 30 Apr 2026 22:30:00 +0800</lastBuildDate><atom:link href="https://2004ccf.github.io/io/tags/slam/index.xml" rel="self" type="application/rss+xml"/><item><title>用大白话搞懂 SLAM 与具身智能</title><link>https://2004ccf.github.io/io/p/ccf-slam-jushen/</link><pubDate>Thu, 30 Apr 2026 22:30:00 +0800</pubDate><guid>https://2004ccf.github.io/io/p/ccf-slam-jushen/</guid><description>&lt;h2 id="我为什么整理这篇"&gt;我为什么整理这篇
+&lt;/h2&gt;&lt;p&gt;SLAM、VLA、FluxVLA、VLN 这些词我老混在一起。so我整理的大白话笔记，和 &lt;a class="link" href="https://2004ccf.github.io/io/p/ccf-zhuji-dongli/" &gt;逐际动力&lt;/a&gt;、&lt;a class="link" href="https://2004ccf.github.io/io/p/ccf-robot-lingjian/" &gt;人形零部件与五层架构&lt;/a&gt;、&lt;a class="link" href="https://2004ccf.github.io/io/p/ai-geng-de-lai-shi-lu/" &gt;AI Agent 来时路&lt;/a&gt; 对照看。&lt;/p&gt;
+&lt;h2 id="一核心基础概念"&gt;一、核心基础概念
+&lt;/h2&gt;&lt;h3 id="1-上游感知基座模型ai-的眼睛和大脑"&gt;1. 上游感知基座模型（AI 的「眼睛」和「大脑」）
+&lt;/h3&gt;&lt;h4 id="llm大语言模型-large-language-model"&gt;LLM（大语言模型）— Large Language Model
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：就像 ChatGPT 那种只会&lt;strong&gt;读文字、写文字&lt;/strong&gt;的 AI。我问它「今天吃什么」，它能回答，但它&lt;strong&gt;看不见&lt;/strong&gt;我家厨房里的锅碗瓢盆。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Large Language Model（大语言模型）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;它干什么&lt;/strong&gt;：理解语言、推理、做任务规划，但&lt;strong&gt;只输出文字&lt;/strong&gt;，碰不到真实世界。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="lvm大视觉模型-large-vision-model"&gt;LVM（大视觉模型）— Large Vision Model
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：只会&lt;strong&gt;看图片/视频&lt;/strong&gt;的 AI。给它一张照片，它能认出「这是猫」「这是红绿灯」，但它&lt;strong&gt;不会说话、不会动&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Large Vision Model（大视觉模型）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;它干什么&lt;/strong&gt;：图像分类、目标检测、理解场景，&lt;strong&gt;只输出视觉识别结果&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="vlm视觉-语言模型-vision-language-model"&gt;VLM（视觉-语言模型）— Vision-Language Model
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：&lt;strong&gt;既能看又能说&lt;/strong&gt;的 AI。我给它一张图，问「图里几个人？」，它能用文字回答。但它还是&lt;strong&gt;动不了手&lt;/strong&gt;——只能聊天，不能帮机器人抓杯子。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Vision-Language Model（视觉-语言模型）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;它干什么&lt;/strong&gt;：看图问答、图文推理，&lt;strong&gt;输出文字&lt;/strong&gt;，不输出动作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="agi通用人工智能-artificial-general-intelligence"&gt;AGI（通用人工智能）— Artificial General Intelligence
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：理想中的「&lt;strong&gt;什么都会一点的超级 AI&lt;/strong&gt;」，像人一样能跨领域学习、推理。现在还远没完全实现，但&lt;strong&gt;人形机器人 + VLA&lt;/strong&gt; 被认为是让 AGI 真正「走进物理世界」的重要方向。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Artificial General Intelligence（通用人工智能）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="2-slam-通用基础机器人怎么认路"&gt;2. SLAM 通用基础（机器人怎么「认路」）
+&lt;/h3&gt;&lt;h4 id="slam同步定位与地图构建-simultaneous-localization-and-mapping"&gt;SLAM（同步定位与地图构建）— Simultaneous Localization and Mapping
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：机器人第一次去一个陌生房间，一边走一边&lt;strong&gt;搞清楚两件事&lt;/strong&gt;：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;我在哪？&lt;/strong&gt;（定位 — Localization）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;周围长什么样？&lt;/strong&gt;（建地图 — Mapping）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;就像我蒙眼进陌生房间，一边摸墙一边在脑子里画地图，还要随时知道自己走到哪了。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Simultaneous Localization and Mapping（同步定位与地图构建）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;核心逻辑&lt;/strong&gt;：传感器采集环境 → 对比前后画面推算位置 → 拼出地图 → 用地图修正定位误差 → 循环往复。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;核心模块（我记这几个就够）&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;前端里程计&lt;/strong&gt; — Front-end Odometry：边走边算「我走了多远、转了多少」&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;后端优化&lt;/strong&gt; — Back-end Optimization：把前面算的结果再精修一遍&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;回环检测&lt;/strong&gt; — Loop Closure Detection：发现「咦，这地方我来过」→ 修正累计误差&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;重定位&lt;/strong&gt; — Relocalization：跟丢了以后重新找自己在地图上的位置&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;地图构建&lt;/strong&gt; — Map Building：把看到的东西拼成一张地图&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;核心特性（容易出问题的点）&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;位姿漂移&lt;/strong&gt; — Pose Drift：越走越偏，像手机导航偶尔飘&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;累计误差&lt;/strong&gt; — Accumulated Error：小误差叠加大误差&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;尺度漂移&lt;/strong&gt; — Scale Drift：不知道真实距离是 1 米还是 10 米&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;尺度恢复&lt;/strong&gt; — Scale Recovery：想办法找回真实尺寸&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;退化场景&lt;/strong&gt; — Degenerate Scene：白墙、长走廊、大空地——&lt;strong&gt;没什么特征可认&lt;/strong&gt;，传感器容易「瞎」&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="紧耦合-vs-松耦合--tight-coupling-vs-loose-coupling"&gt;紧耦合 vs 松耦合 — Tight Coupling vs Loose Coupling
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;紧耦合&lt;/strong&gt; — Tight Coupling（我理解为「一起算」）：
+&lt;ul&gt;
+&lt;li&gt;多个传感器（相机、激光、IMU）的数据&lt;strong&gt;塞进同一个公式里一起算&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;像多个证人&lt;strong&gt;同时开会&lt;/strong&gt;对口径 → 结果更准、更稳，但实现复杂。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;松耦合&lt;/strong&gt; — Loose Coupling（我理解为「各算各的再平均」）：
+&lt;ul&gt;
+&lt;li&gt;每个传感器先自己算一遍，最后&lt;strong&gt;加权合并&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;像各证人&lt;strong&gt;分开写报告再汇总&lt;/strong&gt; → 简单省算力，但精度差一点。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="3-视觉-slamvslam用摄像头认路"&gt;3. 视觉 SLAM（vSLAM）——用摄像头认路
+&lt;/h3&gt;&lt;h4 id="vslam--visual-slam"&gt;vSLAM — Visual SLAM
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：SLAM 里&lt;strong&gt;主要靠摄像头&lt;/strong&gt;完成定位和建图的那一支。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Visual SLAM（视觉同步定位与地图构建）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="三种常见摄像头方案"&gt;三种常见摄像头方案
+&lt;/h4&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;方案&lt;/th&gt;
+&lt;th&gt;英文全称&lt;/th&gt;
+&lt;th&gt;我怎么说&lt;/th&gt;
+&lt;th&gt;优缺点&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;单目 vSLAM&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Monocular Visual SLAM&lt;/td&gt;
+&lt;td&gt;一个摄像头，像手机单摄&lt;/td&gt;
+&lt;td&gt;最便宜最小，但&lt;strong&gt;不知道真实距离&lt;/strong&gt;，常要配 IMU 补&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;双目 vSLAM&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Stereo Visual SLAM&lt;/td&gt;
+&lt;td&gt;两个摄像头，像人两只眼&lt;/td&gt;
+&lt;td&gt;能算真实深度，有真实尺度，更准&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;RGB-D vSLAM&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;RGB-Depth Visual SLAM&lt;/td&gt;
+&lt;td&gt;深度相机（如 Kinect）&lt;/td&gt;
+&lt;td&gt;直接给每个像素的距离，建图快，但&lt;strong&gt;看得不远&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id="技术方法知道名字就行"&gt;技术方法（知道名字就行）
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;特征点法&lt;/strong&gt; — Feature-based Method：找图像里「角点、边缘」当路标&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;直接法&lt;/strong&gt; — Direct Method：不找特征点，直接比像素亮度&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;稀疏直接法&lt;/strong&gt; — Sparse Direct Method：直接法的轻量版&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;点云配准&lt;/strong&gt; — Point Cloud Registration：把两帧 3D 点云对齐（激光 SLAM 常用）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="地图类型"&gt;地图类型
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;稀疏特征地图&lt;/strong&gt; — Sparse Feature Map：只存关键点，省内存&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;稠密点云地图&lt;/strong&gt; — Dense Point Cloud Map：密密麻麻的 3D 点，细节多&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;占用栅格地图&lt;/strong&gt; — Occupancy Grid Map：把空间划成格子，标记「能走/不能走」&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;语义地图&lt;/strong&gt; — Semantic Map：不仅知道「这里有块区域」，还知道「这是桌子、那是门」&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="4-语义-slam--semantic-slam"&gt;4. 语义 SLAM — Semantic SLAM
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：普通 SLAM 画出来的地图像&lt;strong&gt;毛坯房平面图&lt;/strong&gt;——只有墙和空位；语义 SLAM 像&lt;strong&gt;带家具标注的平面图&lt;/strong&gt;——「这里是桌子、那里是水杯、那是门」。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Semantic SLAM（语义同步定位与地图构建）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;为什么重要&lt;/strong&gt;：这是 SLAM 和&lt;strong&gt;大模型、VLA&lt;/strong&gt; 对接的桥梁——机器人不仅知道「在哪」，还知道「周围是什么东西」。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="5-e2e端到端-end-to-end"&gt;5. E2E（端到端）— End-to-End
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：&lt;strong&gt;输入直接到输出，中间不拆很多手工模块&lt;/strong&gt;。
+&lt;ul&gt;
+&lt;li&gt;传统做法：看 → 识别 → 规划 → 控制（四五个模块串起来）&lt;/li&gt;
+&lt;li&gt;端到端：看 + 听指令 → &lt;strong&gt;直接出动作&lt;/strong&gt;（一个模型搞定）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：End-to-End（端到端）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;好处&lt;/strong&gt;：少人工设计、泛化强、误差不会一层层叠加。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;坏处&lt;/strong&gt;：像黑盒，不好解释；需要大量训练数据。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;典型应用&lt;/strong&gt;：端到端 VLA、端到端 SLAM、端到端机器人控制。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="6-vln视觉语言导航-vision-language-navigation"&gt;6. VLN（视觉语言导航）— Vision-Language Navigation
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：我对机器人说「&lt;strong&gt;去厨房拿红色杯子&lt;/strong&gt;」，它&lt;strong&gt;自己看路、自己走过去&lt;/strong&gt;——这就是 VLN。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Vision-Language Navigation（视觉语言导航）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;输入&lt;/strong&gt;：我说的话 + 机器人第一视角看到的画面。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;输出&lt;/strong&gt;：前进、左转、右转、停下……一串导航动作。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;R2R（Room-to-Room）&lt;/strong&gt; — Room-to-Room：VLN 领域常用的&lt;strong&gt;考试题库&lt;/strong&gt;——在虚拟房间里测机器人能不能听懂指令找到目标。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;和 SLAM 的关系&lt;/strong&gt;：SLAM 是&lt;strong&gt;底层认路&lt;/strong&gt;；VLN 是在认路之上加了&lt;strong&gt;听懂人话、按语义找目标&lt;/strong&gt;的能力。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="7-vla视觉-语言-动作模型-vision-language-action"&gt;7. VLA（视觉-语言-动作模型）— Vision-Language-Action
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：VLM 只能「看+说」，VLA 更进一步——&lt;strong&gt;看 + 听懂 + 真的动手动脚&lt;/strong&gt;。
+&lt;ul&gt;
+&lt;li&gt;输入：画面 + 我的指令（比如「把杯子递给我」）&lt;/li&gt;
+&lt;li&gt;输出：关节怎么转、手怎么张、底盘怎么动……&lt;strong&gt;全套动作参数&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Vision-Language-Action（视觉-语言-动作）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;能力范围&lt;/strong&gt;：能导航，也能抓东西；能控制全身人形机器人；&lt;strong&gt;包含 VLN 的能力&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="loco-manipulation全身移动操作-locomotion--manipulation"&gt;Loco-Manipulation（全身移动操作）— Locomotion + Manipulation
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：人形机器人&lt;strong&gt;一边走一边干活&lt;/strong&gt;，不是「先走到地方 → 停下来 → 再伸手」。
+&lt;ul&gt;
+&lt;li&gt;比如：边走向桌子边伸手拿杯子。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Loco-Manipulation（Locomotion 移动 + Manipulation 操作）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;为什么重要&lt;/strong&gt;：这是衡量人形机器人&lt;strong&gt;成不成熟&lt;/strong&gt;的核心标志之一。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="8-baseline基线基准方案-baseline"&gt;8. Baseline（基线/基准方案）— Baseline
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：行业里的**「标准答案/参照物」**——新算法出来，要和它比谁更好；做项目也常从它改起。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Baseline（基线/基准方案）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;常见 Baseline（我查资料时对照这些）&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;视觉 SLAM：&lt;strong&gt;ORB-SLAM3&lt;/strong&gt; — Oriented FAST and Rotated BRIEF SLAM 3&lt;/li&gt;
+&lt;li&gt;视觉惯性里程计：&lt;strong&gt;VINS-Mono&lt;/strong&gt; — Visual-Inertial Navigation System Mono&lt;/li&gt;
+&lt;li&gt;激光 LIO：&lt;strong&gt;FAST-LIO2&lt;/strong&gt; — Fast LiDAR-Inertial Odometry 2&lt;/li&gt;
+&lt;li&gt;VLN：&lt;strong&gt;R2R 数据集上的经典模型&lt;/strong&gt; — Room-to-Room Dataset&lt;/li&gt;
+&lt;li&gt;VLA：&lt;strong&gt;OpenVLA&lt;/strong&gt; — Open Vision-Language-Action；&lt;strong&gt;Google RT-1&lt;/strong&gt; — Robotics Transformer 1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="9-技术层级递进关系我画的一条线"&gt;9. 技术层级递进关系（我画的一条线）
+&lt;/h3&gt;&lt;p&gt;从「只会想」到「真的会动」：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;span class="lnt"&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;LLM + LVM（文字/视觉基座）
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;VLM（看图 + 对话）
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;SLAM（知道自己在哪、周围什么样）
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;VLN（听懂指令 + 自己走过去）
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;VLA（听懂指令 + 全身动手做）
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;我的一句话总结&lt;/strong&gt;：越往下，越接近「真机器人能在物理世界里干活」。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="二主流-slam-算法与方案"&gt;二、主流 SLAM 算法与方案
+&lt;/h2&gt;&lt;h3 id="一核心基础算法术语我用生活例子记"&gt;（一）核心基础算法术语（我用生活例子记）
+&lt;/h3&gt;&lt;h4 id="里程计--odometry"&gt;里程计 — Odometry
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：机器人自己的「&lt;strong&gt;计步器&lt;/strong&gt;」——根据传感器增量数据，推算「走了多远、转了多少」。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Odometry（里程计）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;分类&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;视觉里程计 — Visual Odometry（靠摄像头）&lt;/li&gt;
+&lt;li&gt;激光里程计 — LiDAR Odometry（靠激光）&lt;/li&gt;
+&lt;li&gt;惯性里程计 — Inertial Odometry（靠 IMU）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="vio视觉惯性里程计-visual-inertial-odometry"&gt;VIO（视觉惯性里程计）— Visual-Inertial Odometry
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：&lt;strong&gt;摄像头 + IMU（惯性单元）绑在一起算&lt;/strong&gt;，像「眼睛看路 + 内耳感知平衡」配合，比单摄像头稳。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Visual-Inertial Odometry（视觉惯性里程计）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="lio激光惯性里程计-lidar-inertial-odometry"&gt;LIO（激光惯性里程计）— LiDAR-Inertial Odometry
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：&lt;strong&gt;激光雷达 + IMU 绑在一起算&lt;/strong&gt;，激光负责精确测距，IMU 负责快速运动时不丢。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：LiDAR-Inertial Odometry（激光惯性里程计）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="光束法平差ba-bundle-adjustment"&gt;光束法平差（BA）— Bundle Adjustment
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：视觉 SLAM 的「&lt;strong&gt;精修环节&lt;/strong&gt;」——同时调整相机位置和地图上的点，让「3D 点投影到照片上」和「实际看到的点」尽量重合。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Bundle Adjustment（光束法平差）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="图优化--graph-optimization"&gt;图优化 — Graph Optimization
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：把 SLAM 问题画成&lt;strong&gt;一张网&lt;/strong&gt;：每个节点是一个位置，每条边是一个约束，然后整体找最优解。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Graph Optimization（图优化）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我记&lt;/strong&gt;：后端优化的主流做法。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="词袋模型bow-bag-of-words"&gt;词袋模型（BoW）— Bag of Words
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：像「&lt;strong&gt;视觉版的关键词匹配&lt;/strong&gt;」——判断「这地方我来过吗？」通过比较两帧图像的特征相似度。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Bag of Words（词袋模型）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;用途&lt;/strong&gt;：回环检测 — Loop Closure Detection（发现回到老地方）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="imu-预积分--imu-pre-integration"&gt;IMU 预积分 — IMU Pre-integration
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：IMU 数据更新很快（几百 Hz），如果每次都从头积分太慢；&lt;strong&gt;预积分&lt;/strong&gt;就是提前算好一段，后面直接用，省计算。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：IMU Pre-integration（IMU 预积分）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我记&lt;/strong&gt;：VIO 里的提速技巧。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="esikf--error-state-iterated-kalman-filter"&gt;ESIKF — Error State Iterated Kalman Filter
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：一种&lt;strong&gt;高效滤波算法&lt;/strong&gt;，激光/多传感器融合 SLAM 里常用——算得快、数值不容易崩。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Error State Iterated Kalman Filter（误差状态迭代卡尔曼滤波）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="视觉重投影误差--visual-reprojection-error"&gt;视觉重投影误差 — Visual Reprojection Error
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：3D 地图点「投影」到照片上，和实际特征点差几个像素——&lt;strong&gt;差越小越好&lt;/strong&gt;，这是视觉 SLAM 优化的核心指标。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Visual Reprojection Error（视觉重投影误差）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="点云配准--point-cloud-registration"&gt;点云配准 — Point Cloud Registration
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：激光 SLAM 里，把&lt;strong&gt;前后两帧 3D 点云对齐&lt;/strong&gt;，算出机器人动了多少。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Point Cloud Registration（点云配准）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="sim2real仿真到真机迁移-simulation-to-reality"&gt;Sim2Real（仿真到真机迁移）— Simulation to Reality
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：先在&lt;strong&gt;电脑仿真环境&lt;/strong&gt;里大量训练（便宜、安全、可重复），再搬到&lt;strong&gt;真机器人&lt;/strong&gt;上用——降低 VLA、SLAM 的训练成本。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Simulation to Reality（仿真到真机迁移，简称 Sim2Real）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="二纯视觉视觉惯性-slam"&gt;（二）纯视觉/视觉惯性 SLAM
+&lt;/h3&gt;&lt;h4 id="1-orb-slam-系列--oriented-fast-and-rotated-brief-slam"&gt;1. ORB-SLAM 系列 — Oriented FAST and Rotated BRIEF SLAM
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;谁做的&lt;/strong&gt;：西班牙萨拉戈萨大学 Raul Mur-Artal 团队。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Oriented FAST and Rotated BRIEF SLAM&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ORB 特征&lt;/strong&gt; — Oriented FAST and Rotated BRIEF：从图像里找「&lt;strong&gt;好认的角点&lt;/strong&gt;」当路标。
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;FAST&lt;/strong&gt; — Features from Accelerated Segment Test（加速段测试特征）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;BRIEF&lt;/strong&gt; — Binary Robust Independent Elementary Features（二进制鲁棒独立基本特征）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;版本&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;ORB-SLAM2&lt;/strong&gt;：支持单目/双目/RGB-D，&lt;strong&gt;最经典的入门 Baseline&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ORB-SLAM3&lt;/strong&gt;：加了 IMU、多地图、鱼眼相机，更稳更准。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;优点&lt;/strong&gt;：纯视觉就能跑，回环检测好，长时间漂移小。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;缺点&lt;/strong&gt;：白墙、快速运动容易跟丢。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我记&lt;/strong&gt;：特征点法视觉 SLAM 的&lt;strong&gt;行业标杆&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="2-vins-系列--visual-inertial-navigation-system"&gt;2. VINS 系列 — Visual-Inertial Navigation System
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;谁做的&lt;/strong&gt;：港科大沈劭劼团队。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Visual-Inertial Navigation System（视觉惯性导航系统）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：&lt;strong&gt;相机 + IMU 紧耦合&lt;/strong&gt;的标杆，解决单目相机「不知道真实距离、容易丢」的问题。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;怎么工作&lt;/strong&gt;：前端提取视觉特征 + IMU 预积分 → 后端滑动窗口优化 — Sliding Window Optimization → 让视觉误差和 IMU 误差一起最小。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;版本&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;VINS-Mono&lt;/strong&gt;：单目 + IMU，经典 VIO，能恢复真实尺度。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;VINS-Fusion&lt;/strong&gt;：支持双目、GPS 等，扩展更强。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;常见用途&lt;/strong&gt;：人形机器人、无人机、AR/VR — Augmented Reality / Virtual Reality（增强现实/虚拟现实）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="3-cartographer--cartographer"&gt;3. Cartographer — Cartographer
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;谁做的&lt;/strong&gt;：谷歌 — Google&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Cartographer（制图者，谷歌开源激光 SLAM 框架名）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：开源&lt;strong&gt;激光 SLAM 框架&lt;/strong&gt;，工程成熟、稳定，支持 ROS/ROS2，2D/3D 都能建。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;常见场景&lt;/strong&gt;：仓储 AGV — Automated Guided Vehicle（自动导引车）、服务机器人、室内巡检。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="三激光与多传感器融合-slam"&gt;（三）激光与多传感器融合 SLAM
+&lt;/h3&gt;&lt;h4 id="1-fast-lio-系列--fast-lidar-inertial-odometry"&gt;1. FAST-LIO 系列 — Fast LiDAR-Inertial Odometry
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;谁做的&lt;/strong&gt;：香港大学 MaRS 实验室张富教授团队。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Fast LiDAR-Inertial Odometry（快速激光惯性里程计）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：&lt;strong&gt;激光雷达 + IMU 紧耦合&lt;/strong&gt;的工业级标杆——快、稳、算力要求相对低。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;地位&lt;/strong&gt;：R3LIVE、FAST-LIVO、LVI-SAM 等方案的&lt;strong&gt;底层 LIO 底座&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我记版本&lt;/strong&gt;：&lt;strong&gt;FAST-LIO2&lt;/strong&gt; 是行业通用 Baseline。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="2-r3live--robust-real-time-rgb-colored-lidar-inertial-visual-tightly-coupled-state-estimation"&gt;2. R3LIVE — Robust, Real-time, RGB-colored, LiDAR-Inertial-Visual tightly-coupled state Estimation
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Robust, Real-time, RGB-colored, LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping（鲁棒实时彩色激光-惯性-视觉紧耦合状态估计与建图）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;谁做的&lt;/strong&gt;：港大 MaRS 团队。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：&lt;strong&gt;激光 + IMU + 相机&lt;/strong&gt;三个传感器一起算，输出&lt;strong&gt;带颜色的稠密 3D 地图&lt;/strong&gt;，精度高。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;架构&lt;/strong&gt;：LIO 子系统（FAST-LIO，负责定位）+ VIO 子系统（相机补颜色）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;优点&lt;/strong&gt;：快速运动、光线剧变也能扛。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;缺点&lt;/strong&gt;：算力吃得比较多。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;用途&lt;/strong&gt;：工业巡检、三维重建 — 3D Reconstruction、高精度机器人。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="3-lvi-sam--lidar-visual-inertial-smoothing-and-mapping"&gt;3. LVI-SAM — LiDAR-Visual-Inertial Smoothing and Mapping
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：LiDAR-Visual-Inertial Smoothing and Mapping（激光-视觉-惯性平滑与建图）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：激光 + 视觉 + IMU 紧耦合，基于 FAST-LIO 和 VINS 框架搭的。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我记&lt;/strong&gt;：多传感器融合 SLAM 的&lt;strong&gt;对比基准&lt;/strong&gt;，常用来和 R3LIVE、FAST-LIVO2 比性能。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="4-fast-livo--fast-lidar-inertial-visual-odometry"&gt;4. FAST-LIVO — Fast LiDAR-Inertial-Visual Odometry
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;谁做的&lt;/strong&gt;：港大 MaRS 团队。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Fast LiDAR-Inertial-Visual Odometry（快速激光-惯性-视觉里程计）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：R3LIVE 的&lt;strong&gt;轻量版&lt;/strong&gt;——给嵌入式/移动端用的，ARM 芯片也能实时跑。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;特点&lt;/strong&gt;：视觉用稀疏直接法，ESIKF 统一融合框架。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="5-fast-livo2--fast-lidar-inertial-visual-odometry-2"&gt;5. FAST-LIVO2 — Fast LiDAR-Inertial-Visual Odometry 2
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;谁做的&lt;/strong&gt;：港大 MaRS 团队，论文发在 &lt;em&gt;IEEE Transactions on Robotics&lt;/em&gt;（IEEE 机器人汇刊），还拿了傅京孙纪念最佳论文奖 — Fu King-Sun Memorial Best Paper Award。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Fast LiDAR-Inertial-Visual Odometry 2&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：目前&lt;strong&gt;工业落地性很强&lt;/strong&gt;的轻量化多传感器融合方案——比 R3LIVE、LVI-SAM 更准，还更快更省内存。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;五大升级（知道方向就行）&lt;/strong&gt;：
+&lt;ol&gt;
+&lt;li&gt;ESIKF 顺序更新 → 快速运动更稳&lt;/li&gt;
+&lt;li&gt;激光平面先验 — LiDAR Plane Prior → 视觉对齐更准&lt;/li&gt;
+&lt;li&gt;动态更新参考补丁 — Dynamic Reference Patch Update → 减少对齐误差&lt;/li&gt;
+&lt;li&gt;在线曝光估计 — Online Exposure Time Estimation → 光线变化不怕&lt;/li&gt;
+&lt;li&gt;体素光线投射 — Voxel Raycasting → 补激光近距盲区&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;性能数据&lt;/strong&gt;：单帧耗时降 33%，内存降 47%。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="四slam-配套增强工具"&gt;（四）SLAM 配套增强工具
+&lt;/h3&gt;&lt;h4 id="m-detector--motion-detector"&gt;M-detector — Motion Detector
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;谁做的&lt;/strong&gt;：港大 MaRS 团队，论文发在《Nature Communications》（自然·通讯）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Motion Detector（运动检测器）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：激光雷达的「&lt;strong&gt;动态物体过滤器&lt;/strong&gt;」——逐点判断「这个点是静止的墙，还是那个在走的人」，把动的东西滤掉，SLAM 只建静态环境的图。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;为什么重要&lt;/strong&gt;：人流、车流多的场景，普通 SLAM 容易被「动的东西」搞乱；M-detector 延迟只有微秒级，实时性很好。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;常搭配&lt;/strong&gt;：FAST-LIO 系列一起用。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="三传感器与硬件平台"&gt;三、传感器与硬件平台
+&lt;/h2&gt;&lt;h3 id="1-视觉类传感器"&gt;1. 视觉类传感器
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;传感器&lt;/th&gt;
+&lt;th&gt;英文全称&lt;/th&gt;
+&lt;th&gt;我怎么说&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;单目相机&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Monocular Camera&lt;/td&gt;
+&lt;td&gt;一个镜头，最便宜最小，但不知道真实距离&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;双目相机&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Stereo Camera / Binocular Camera&lt;/td&gt;
+&lt;td&gt;两个镜头像人眼，能算真实深度&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;RGB-D 深度相机&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;RGB-Depth Camera&lt;/td&gt;
+&lt;td&gt;直接给每个像素的距离（结构光 — Structured Light / TOF — Time of Flight 飞行时间法），看得不远&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;鱼眼相机&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Fisheye Camera&lt;/td&gt;
+&lt;td&gt;超广角，适合大范围建图&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;头部位姿相机&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Head-mounted Pose Camera&lt;/td&gt;
+&lt;td&gt;人形机器人头上那路相机——&lt;strong&gt;同时给 SLAM 定位和 VLA 视觉感知用&lt;/strong&gt;，一机两用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="2-雷达类传感器"&gt;2. 雷达类传感器
+&lt;/h3&gt;&lt;h4 id="radar毫米波雷达-radio-detection-and-ranging"&gt;RADAR（毫米波雷达）— Radio Detection and Ranging
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：发无线电波测距测速，&lt;strong&gt;雨雾天也能用&lt;/strong&gt;，能穿透，但&lt;strong&gt;分辨率低&lt;/strong&gt;——不适合做主 SLAM，主要做&lt;strong&gt;障碍物检测和备份感知&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Radio Detection and Ranging（无线电探测与测距）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="lidar激光雷达-light-detection-and-ranging"&gt;LiDAR（激光雷达）— Light Detection and Ranging
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：发激光束，&lt;strong&gt;测距超准、点云超清晰&lt;/strong&gt;，高精度 SLAM 的核心传感器，就是&lt;strong&gt;比较贵&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Light Detection and Ranging（光探测与测距）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="3-惯性与本体传感器"&gt;3. 惯性与本体传感器
+&lt;/h3&gt;&lt;h4 id="imu惯性测量单元-inertial-measurement-unit"&gt;IMU（惯性测量单元）— Inertial Measurement Unit
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：机器人里的「&lt;strong&gt;内耳&lt;/strong&gt;」——测三轴加速度 + 三轴角速度，帮摄像头/激光在快速运动、短暂遮挡时不丢。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Inertial Measurement Unit（惯性测量单元）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="关节编码器--joint-encoder"&gt;关节编码器 — Joint Encoder
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：人形机器人每个关节上的「&lt;strong&gt;角度传感器&lt;/strong&gt;」，告诉系统「这个关节现在转了多少度」，辅助视觉 SLAM 恢复真实尺度。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Joint Encoder（关节编码器）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="33-维本体状态--33-dimensional-proprioceptive-state"&gt;33 维本体状态 — 33-Dimensional Proprioceptive State
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：机器人&lt;strong&gt;当前全身状态&lt;/strong&gt;的一个数字打包——典型是 31 个关节位置 + 左右手开/合标志，共 33 个数。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：33-Dimensional Proprioceptive State（33 维本体感知状态）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="42-维全身动作指令--42-dimensional-whole-body-action-command"&gt;42 维全身动作指令 — 42-Dimensional Whole-body Action Command
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：告诉机器人&lt;strong&gt;下一步怎么动&lt;/strong&gt;的数字打包——31 个关节目标位置 + 底盘 &lt;code&gt;base_link&lt;/code&gt; 的位置和旋转 + 双手开合，共 42 个数。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：42-Dimensional Whole-body Action Command（42 维全身动作指令）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="base_link--base-link"&gt;base_link — Base Link
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：机器人身体的**「根坐标系」**——其他部位的位置都相对它来说的，像「以躯干为中心描述全身」。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Base Link（基座链接坐标系，ROS 标准坐标系名称）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="4-人形机器人硬件平台"&gt;4. 人形机器人硬件平台
+&lt;/h3&gt;&lt;h4 id="limx-oli--limx-oli"&gt;LimX Oli — LimX Oli
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：逐际动力 — LimX Dynamics 做的&lt;strong&gt;全尺寸人形机器人&lt;/strong&gt;，FluxVLA Engine 的配套真机——可以在上面跑&lt;strong&gt;全身移动操作（Loco-Manipulation）&lt;/strong&gt; 的真机推理。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：LimX Oli（逐际动力人形机器人产品名）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="四工程框架与开发环境"&gt;四、工程框架与开发环境
+&lt;/h2&gt;&lt;h3 id="1-ros-系列机器人中间件"&gt;1. ROS 系列机器人中间件
+&lt;/h3&gt;&lt;h4 id="ros1第一代机器人操作系统-robot-operating-system"&gt;ROS1（第一代机器人操作系统）— Robot Operating System
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：机器人界的「&lt;strong&gt;Windows XP&lt;/strong&gt;」——经典、生态大，但老了。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Robot Operating System（机器人操作系统）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;rospy&lt;/strong&gt; — ROS Python：用 &lt;strong&gt;Python&lt;/strong&gt; 写 ROS 程序的接口，适合快速写传感器读取、逻辑控制。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;常用工具&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;RViz&lt;/strong&gt; — ROS Visualization（ROS 可视化工具）：3D 可视化，看地图、看机器人&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Gazebo&lt;/strong&gt; — Gazebo Simulator（Gazebo 仿真器）：机器人仿真环境，先在电脑里跑&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;缺点&lt;/strong&gt;：不支持硬实时 — Hard Real-time、只能单机、稳定性一般 → 逐渐被 ROS2 替代。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="ros2第二代机器人操作系统-robot-operating-system-2"&gt;ROS2（第二代机器人操作系统）— Robot Operating System 2
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：机器人界的「&lt;strong&gt;Windows 11&lt;/strong&gt;」——现在做 SLAM 真机落地，&lt;strong&gt;基本都用它&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Robot Operating System 2（第二代机器人操作系统）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;核心升级&lt;/strong&gt;：底层换成 &lt;strong&gt;DDS 通信协议&lt;/strong&gt; — Data Distribution Service（数据分发服务）→ 支持硬实时、多机协同、跨平台。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;标准消息类型&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;sensor_msgs&lt;/code&gt; — Sensor Messages（传感器消息格式）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;geometry_msgs&lt;/code&gt; — Geometry Messages（几何/位姿消息格式）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;对我有什么用（5 点）&lt;/strong&gt;：
+&lt;ol&gt;
+&lt;li&gt;传感器接入标准化，不用每个硬件单独写驱动&lt;/li&gt;
+&lt;li&gt;发布-订阅机制 — Publish-Subscribe，模块之间松耦合，换算法不用重写整个系统&lt;/li&gt;
+&lt;li&gt;有 RViz2、rqt — ROS Qt GUI Toolkit 调试工具，调 SLAM 方便&lt;/li&gt;
+&lt;li&gt;对接 &lt;strong&gt;Nav2 导航栈&lt;/strong&gt; — Navigation2 → 建图-定位-导航-运动一条龙&lt;/li&gt;
+&lt;li&gt;支持分布式、多机器人协同&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;WebSocket JSON 协议&lt;/strong&gt; — WebSocket + JSON（JavaScript Object Notation，JavaScript 对象表示法）：LimX Oli 人形机器人的控制指令下发方式。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="2-fluxvla-engine-具身智能工程底座--fluxvla-engine"&gt;2. FluxVLA Engine 具身智能工程底座 — FluxVLA Engine
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;谁做的&lt;/strong&gt;：逐际动力 — LimX Dynamics。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：FluxVLA Engine（Flux 视觉-语言-动作引擎）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：一个&lt;strong&gt;开源 VLA 工程工具箱&lt;/strong&gt;——从准备数据 → 训练模型 → 部署到真机，&lt;strong&gt;全流程打通&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;四大能力&lt;/strong&gt;：多策略训练、仿真评测、推理加速、奖励建模 — Reward Modeling。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;详细配套（查资料时对照）&lt;/strong&gt;：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;关键词&lt;/th&gt;
+&lt;th&gt;英文全称&lt;/th&gt;
+&lt;th&gt;我怎么说&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;LeRobot v2.1 / v3.x&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;LeRobot Dataset v2.1 / v3.x&lt;/td&gt;
+&lt;td&gt;主流机器人数据集格式，FluxVLA 直接兼容&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;FSDP&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Fully Sharded Data Parallel（全分片数据并行）&lt;/td&gt;
+&lt;td&gt;多卡分布式训练方式&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;DDP&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Distributed Data Parallel（分布式数据并行）&lt;/td&gt;
+&lt;td&gt;多卡分布式训练方式&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;LoRA&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Low-Rank Adaptation（低秩适配）&lt;/td&gt;
+&lt;td&gt;轻量化微调，省算力&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;RTC&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Real-Time Chunking（实时分块推理）&lt;/td&gt;
+&lt;td&gt;降低真机延迟&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;ZMQ&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;ZeroMQ（零消息队列）&lt;/td&gt;
+&lt;td&gt;远程服务部署的通信方式&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Triton&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;NVIDIA Triton Inference Server（英伟达 Triton 推理服务器）&lt;/td&gt;
+&lt;td&gt;推理加速引擎&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;LIBERO&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Lifelong Benchmark for Robot Learning（机器人终身学习基准）&lt;/td&gt;
+&lt;td&gt;机器人仿真环境&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;RoboCasa&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;RoboCasa（机器人家庭仿真环境）&lt;/td&gt;
+&lt;td&gt;机器人仿真环境&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;奖励建模&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Reward Modeling（奖励建模）&lt;/td&gt;
+&lt;td&gt;训练时给机器人行为打分&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;docs/oli_whole_body.md&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Oli Whole Body Deployment Documentation&lt;/td&gt;
+&lt;td&gt;人形全身部署快速上手指南&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h3 id="3-代码与模型托管平台"&gt;3. 代码与模型托管平台
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;平台&lt;/th&gt;
+&lt;th&gt;英文全称&lt;/th&gt;
+&lt;th&gt;我怎么说&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;GitHub&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;GitHub（全球最大代码托管平台）&lt;/td&gt;
+&lt;td&gt;FluxVLA 代码在这&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Hugging Face&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Hugging Face（全球最大 AI 模型社区）&lt;/td&gt;
+&lt;td&gt;FluxVLA 模型文件官方在这&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;ModelScope（魔搭）&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;ModelScope（魔搭，阿里 AI 模型社区）&lt;/td&gt;
+&lt;td&gt;FluxVLA 国内镜像，&lt;strong&gt;国内访问更快&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h3 id="4-本地开发环境工具"&gt;4. 本地开发环境工具
+&lt;/h3&gt;&lt;h4 id="wsl2windows-linux-子系统-2-windows-subsystem-for-linux-2"&gt;WSL2（Windows Linux 子系统 2）— Windows Subsystem for Linux 2
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：在 Windows 里&lt;strong&gt;嵌一个 Linux&lt;/strong&gt;——秒开、省资源、和 Windows 文件互通，适合&lt;strong&gt;编译代码、轻量开发&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Windows Subsystem for Linux 2（Windows Linux 子系统 2）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;缺点&lt;/strong&gt;：RViz、Gazebo 等 3D 可视化&lt;strong&gt;性能差&lt;/strong&gt;，硬件直通一般 → 适合编译，不适合重度仿真。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="vm-虚拟机软件--virtual-machine"&gt;VM 虚拟机软件 — Virtual Machine
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;代表&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;VMware Workstation&lt;/strong&gt; — VMware 工作站虚拟机&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;VirtualBox&lt;/strong&gt; — Oracle VirtualBox 虚拟盒&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Parallels Desktop&lt;/strong&gt; — Parallels 桌面虚拟机（Mac 常用）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：Virtual Machine（虚拟机）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：在电脑里&lt;strong&gt;虚拟出一台完整电脑&lt;/strong&gt;，装完整 Linux 系统——功能全、隔离好、能 USB 直通、能快照回滚 — Snapshot。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;缺点&lt;/strong&gt;：占资源多、启动慢。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;适合&lt;/strong&gt;：完整 Linux 桌面、Gazebo 重型仿真、接外接硬件调试。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;我选哪个&lt;/strong&gt;：日常编译用 WSL2；要跑 Gazebo 仿真、接硬件用 VM。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="五企业与赛道价值"&gt;五、企业与赛道价值
+&lt;/h2&gt;&lt;h3 id="1-逐际动力limx-dynamics-limx-dynamics"&gt;1. 逐际动力（LimX Dynamics）— LimX Dynamics
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;英文全称&lt;/strong&gt;：LimX Dynamics（逐际动力）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;核心产品&lt;/strong&gt;：全尺寸通用人形机器人 — Full-size General-purpose Humanoid Robot（如 LimX Oli）、双足机器人 — Biped Robot 等。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;三大核心技术&lt;/strong&gt;：
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;本体硬件&lt;/strong&gt; — Embodied Hardware：机器人身体的设计制造&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;大小脑融合&lt;/strong&gt; — Brain-Cerebellum Fusion：「大脑」AI + 「小脑」运动控制配合&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;具身 Agentic OS&lt;/strong&gt; — Embodied Agentic Operating System：给机器人用的智能操作系统&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;方向&lt;/strong&gt;：科研、制造、商业、家庭等场景的&lt;strong&gt;具身智能&lt;/strong&gt; — Embodied Intelligence 落地。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="2-slam-与深度学习融合路线"&gt;2. SLAM 与深度学习融合路线
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;我的一句话&lt;/strong&gt;：&lt;strong&gt;不是互相取代，是互补&lt;/strong&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;几何 SLAM — Geometric SLAM → 保证&lt;strong&gt;精度、稳定、物理约束&lt;/strong&gt;（系统下限）&lt;/li&gt;
+&lt;li&gt;深度学习 — Deep Learning → 补&lt;strong&gt;语义理解、泛化、极端场景&lt;/strong&gt;（突破上限）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;四个主流方向&lt;/strong&gt;：&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;方向&lt;/th&gt;
+&lt;th&gt;英文全称&lt;/th&gt;
+&lt;th&gt;我怎么说&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;前端增强&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Front-end Enhancement&lt;/td&gt;
+&lt;td&gt;用 AI 找特征点，替代手工规则&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;动态优化&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Dynamic Object Filtering / Optimization&lt;/td&gt;
+&lt;td&gt;AI 识别并过滤「在动的人/车」&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;回环升级&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Loop Closure Upgrade&lt;/td&gt;
+&lt;td&gt;AI 识别场景，替代词袋模型&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;语义 SLAM&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Semantic SLAM&lt;/td&gt;
+&lt;td&gt;地图不只标位置，还标「这是什么物体」&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h3 id="3-赛道价值逻辑"&gt;3. 赛道价值逻辑
+&lt;/h3&gt;&lt;h4 id="传统-slam--traditional-slam"&gt;传统 SLAM — Traditional SLAM
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：已经是&lt;strong&gt;成熟刚需&lt;/strong&gt;——扫地机器人、仓储 AGV、无人机都要用，支撑千亿级市场，稳定赚钱。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="slam--深度学习之后--slam--deep-learning"&gt;SLAM + 深度学习之后 — SLAM + Deep Learning
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我怎么说&lt;/strong&gt;：想象空间&lt;strong&gt;大很多&lt;/strong&gt;：
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;场景更广&lt;/strong&gt;：从室内结构化 — Structured Indoor → 室外复杂动态环境 — Complex Dynamic Outdoor&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;定位升级&lt;/strong&gt;：从「导航工具」→ 人形机器人/具身智能的&lt;strong&gt;空间感知底座&lt;/strong&gt; — Spatial Perception Foundation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;对接新市场&lt;/strong&gt;：直接支撑 VLA、通用人形机器人 — General-purpose Humanoid Robot 等&lt;strong&gt;万亿级新赛道&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="关键词速查表"&gt;关键词速查表
+&lt;/h2&gt;&lt;h3 id="基础概念类"&gt;基础概念类
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;中文/缩写&lt;/th&gt;
+&lt;th&gt;英文全称&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;SLAM&lt;/td&gt;
+&lt;td&gt;Simultaneous Localization and Mapping（同步定位与地图构建）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;vSLAM&lt;/td&gt;
+&lt;td&gt;Visual SLAM（视觉同步定位与地图构建）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;语义 SLAM&lt;/td&gt;
+&lt;td&gt;Semantic SLAM（语义同步定位与地图构建）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;E2E&lt;/td&gt;
+&lt;td&gt;End-to-End（端到端）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VLN&lt;/td&gt;
+&lt;td&gt;Vision-Language Navigation（视觉语言导航）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VLA&lt;/td&gt;
+&lt;td&gt;Vision-Language-Action（视觉-语言-动作）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Loco-Manipulation&lt;/td&gt;
+&lt;td&gt;Locomotion + Manipulation（移动操作/全身移动操作）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Baseline&lt;/td&gt;
+&lt;td&gt;Baseline（基线/基准方案）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LLM&lt;/td&gt;
+&lt;td&gt;Large Language Model（大语言模型）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LVM&lt;/td&gt;
+&lt;td&gt;Large Vision Model（大视觉模型）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VLM&lt;/td&gt;
+&lt;td&gt;Vision-Language Model（视觉-语言模型）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AGI&lt;/td&gt;
+&lt;td&gt;Artificial General Intelligence（通用人工智能）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Sim2Real&lt;/td&gt;
+&lt;td&gt;Simulation to Reality（仿真到真机迁移）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="算法方案类"&gt;算法方案类
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;中文/缩写&lt;/th&gt;
+&lt;th&gt;英文全称&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ORB-SLAM 系列&lt;/td&gt;
+&lt;td&gt;Oriented FAST and Rotated BRIEF SLAM&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ORB 特征&lt;/td&gt;
+&lt;td&gt;Oriented FAST and Rotated BRIEF&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;FAST&lt;/td&gt;
+&lt;td&gt;Features from Accelerated Segment Test&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;BRIEF&lt;/td&gt;
+&lt;td&gt;Binary Robust Independent Elementary Features&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VINS 系列&lt;/td&gt;
+&lt;td&gt;Visual-Inertial Navigation System（视觉惯性导航系统）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VINS-Mono&lt;/td&gt;
+&lt;td&gt;Visual-Inertial Navigation System Mono&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VINS-Fusion&lt;/td&gt;
+&lt;td&gt;Visual-Inertial Navigation System Fusion&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;FAST-LIO 系列&lt;/td&gt;
+&lt;td&gt;Fast LiDAR-Inertial Odometry（快速激光惯性里程计）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;FAST-LIO2&lt;/td&gt;
+&lt;td&gt;Fast LiDAR-Inertial Odometry 2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;R3LIVE&lt;/td&gt;
+&lt;td&gt;Robust Real-time RGB-colored LiDAR-Inertial-Visual Estimation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LVI-SAM&lt;/td&gt;
+&lt;td&gt;LiDAR-Visual-Inertial Smoothing and Mapping&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;FAST-LIVO&lt;/td&gt;
+&lt;td&gt;Fast LiDAR-Inertial-Visual Odometry&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;FAST-LIVO2&lt;/td&gt;
+&lt;td&gt;Fast LiDAR-Inertial-Visual Odometry 2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;M-detector&lt;/td&gt;
+&lt;td&gt;Motion Detector（运动检测器）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Cartographer&lt;/td&gt;
+&lt;td&gt;Cartographer（谷歌开源激光 SLAM 框架）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="技术术语类"&gt;技术术语类
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;中文/缩写&lt;/th&gt;
+&lt;th&gt;英文全称&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;紧耦合&lt;/td&gt;
+&lt;td&gt;Tight Coupling&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;松耦合&lt;/td&gt;
+&lt;td&gt;Loose Coupling&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;BA&lt;/td&gt;
+&lt;td&gt;Bundle Adjustment（光束法平差）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;图优化&lt;/td&gt;
+&lt;td&gt;Graph Optimization&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;词袋模型&lt;/td&gt;
+&lt;td&gt;Bag of Words（BoW）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;IMU 预积分&lt;/td&gt;
+&lt;td&gt;IMU Pre-integration&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ESIKF&lt;/td&gt;
+&lt;td&gt;Error State Iterated Kalman Filter（误差状态迭代卡尔曼滤波）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VIO&lt;/td&gt;
+&lt;td&gt;Visual-Inertial Odometry（视觉惯性里程计）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LIO&lt;/td&gt;
+&lt;td&gt;LiDAR-Inertial Odometry（激光惯性里程计）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;点云配准&lt;/td&gt;
+&lt;td&gt;Point Cloud Registration&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;回环检测&lt;/td&gt;
+&lt;td&gt;Loop Closure Detection&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;重定位&lt;/td&gt;
+&lt;td&gt;Relocalization&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;位姿漂移&lt;/td&gt;
+&lt;td&gt;Pose Drift&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;里程计&lt;/td&gt;
+&lt;td&gt;Odometry&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;视觉重投影误差&lt;/td&gt;
+&lt;td&gt;Visual Reprojection Error&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;前端里程计&lt;/td&gt;
+&lt;td&gt;Front-end Odometry&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;后端优化&lt;/td&gt;
+&lt;td&gt;Back-end Optimization&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="硬件参数类"&gt;硬件参数类
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;中文/缩写&lt;/th&gt;
+&lt;th&gt;英文全称&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;33 维本体状态&lt;/td&gt;
+&lt;td&gt;33-Dimensional Proprioceptive State&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;42 维全身动作指令&lt;/td&gt;
+&lt;td&gt;42-Dimensional Whole-body Action Command&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;base_link&lt;/td&gt;
+&lt;td&gt;Base Link（基座链接坐标系）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;头部位姿相机&lt;/td&gt;
+&lt;td&gt;Head-mounted Pose Camera&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RADAR&lt;/td&gt;
+&lt;td&gt;Radio Detection and Ranging（无线电探测与测距）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LiDAR&lt;/td&gt;
+&lt;td&gt;Light Detection and Ranging（光探测与测距）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;IMU&lt;/td&gt;
+&lt;td&gt;Inertial Measurement Unit（惯性测量单元）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;关节编码器&lt;/td&gt;
+&lt;td&gt;Joint Encoder&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LimX Oli&lt;/td&gt;
+&lt;td&gt;LimX Oli（逐际动力人形机器人）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RGB-D&lt;/td&gt;
+&lt;td&gt;Red Green Blue - Depth（彩色+深度）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;TOF&lt;/td&gt;
+&lt;td&gt;Time of Flight（飞行时间法）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="工程工具类"&gt;工程工具类
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;中文/缩写&lt;/th&gt;
+&lt;th&gt;英文全称&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ROS1&lt;/td&gt;
+&lt;td&gt;Robot Operating System（机器人操作系统）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ROS2&lt;/td&gt;
+&lt;td&gt;Robot Operating System 2（第二代机器人操作系统）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;rospy&lt;/td&gt;
+&lt;td&gt;ROS Python（ROS 的 Python 接口）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DDS&lt;/td&gt;
+&lt;td&gt;Data Distribution Service（数据分发服务）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RViz&lt;/td&gt;
+&lt;td&gt;ROS Visualization（ROS 可视化工具）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Gazebo&lt;/td&gt;
+&lt;td&gt;Gazebo Simulator（Gazebo 仿真器）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Nav2&lt;/td&gt;
+&lt;td&gt;Navigation2（第二代导航栈）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;WebSocket JSON&lt;/td&gt;
+&lt;td&gt;WebSocket + JSON（JavaScript Object Notation）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;WSL2&lt;/td&gt;
+&lt;td&gt;Windows Subsystem for Linux 2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VMware&lt;/td&gt;
+&lt;td&gt;VMware Workstation（虚拟机软件）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;VirtualBox&lt;/td&gt;
+&lt;td&gt;Oracle VirtualBox（虚拟盒）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;AGV&lt;/td&gt;
+&lt;td&gt;Automated Guided Vehicle（自动导引车）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="fluxvla-专属"&gt;FluxVLA 专属
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;中文/缩写&lt;/th&gt;
+&lt;th&gt;英文全称&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;LeRobot v2.1/v3.x&lt;/td&gt;
+&lt;td&gt;LeRobot Dataset v2.1 / v3.x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;FSDP&lt;/td&gt;
+&lt;td&gt;Fully Sharded Data Parallel（全分片数据并行）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;DDP&lt;/td&gt;
+&lt;td&gt;Distributed Data Parallel（分布式数据并行）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LoRA&lt;/td&gt;
+&lt;td&gt;Low-Rank Adaptation（低秩适配）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RTC&lt;/td&gt;
+&lt;td&gt;Real-Time Chunking（实时分块推理）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ZMQ&lt;/td&gt;
+&lt;td&gt;ZeroMQ（零消息队列）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Triton&lt;/td&gt;
+&lt;td&gt;NVIDIA Triton Inference Server&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;LIBERO&lt;/td&gt;
+&lt;td&gt;Lifelong Benchmark for Robot Learning&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RoboCasa&lt;/td&gt;
+&lt;td&gt;RoboCasa（机器人家庭仿真环境）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;奖励建模&lt;/td&gt;
+&lt;td&gt;Reward Modeling&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;oli_whole_body.md&lt;/td&gt;
+&lt;td&gt;Oli Whole Body Deployment Documentation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="平台与企业"&gt;平台与企业
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;中文/缩写&lt;/th&gt;
+&lt;th&gt;英文全称&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub&lt;/td&gt;
+&lt;td&gt;GitHub（代码托管平台）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hugging Face&lt;/td&gt;
+&lt;td&gt;Hugging Face（AI 模型社区）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ModelScope&lt;/td&gt;
+&lt;td&gt;ModelScope（魔搭，阿里 AI 模型社区）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;逐际动力&lt;/td&gt;
+&lt;td&gt;LimX Dynamics&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;三大核心技术&lt;/td&gt;
+&lt;td&gt;Embodied Hardware / Brain-Cerebellum Fusion / Agentic OS&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;大小脑融合&lt;/td&gt;
+&lt;td&gt;Brain-Cerebellum Fusion&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Agentic OS&lt;/td&gt;
+&lt;td&gt;Agentic Operating System（智能体操作系统）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;具身智能&lt;/td&gt;
+&lt;td&gt;Embodied Intelligence / Embodied AI&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;OpenVLA&lt;/td&gt;
+&lt;td&gt;Open Vision-Language-Action&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RT-1&lt;/td&gt;
+&lt;td&gt;Robotics Transformer 1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;R2R&lt;/td&gt;
+&lt;td&gt;Room-to-Room（房间到房间导航数据集）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;</description></item></channel></rss>
