@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>亲友理财模拟娱乐沙盘展示站</title>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+  <style>
+    :root {
+      --bg: #f3f1eb;
+      --ink: #1c1c1c;
+      --muted: #5c5c5c;
+      --card: #fffdf8;
+      --line: #d9d2c5;
+      --green: #1f7a4c;
+      --red: #c0392b;
+      --gray: #7a7a7a;
+      --accent: #2c5f4e;
+      --shadow: 0 8px 24px rgba(28, 28, 28, 0.06);
+      --radius: 14px;
+      --font: "Source Han Sans SC", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 500px at 10% -10%, #e7efe8 0%, transparent 55%),
+        radial-gradient(900px 400px at 100% 0%, #efe6d8 0%, transparent 50%),
+        var(--bg);
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 16px; }
+    .slogan {
+      margin: 14px 0 10px;
+      padding: 10px 14px;
+      background: #fff8e8;
+      border: 1px solid #e2c58a;
+      border-radius: 10px;
+      font-weight: 700;
+      color: #6a4a12;
+      text-align: center;
+    }
+    .announce {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+      margin-bottom: 14px;
+    }
+    .announce .meta { color: var(--muted); font-size: .85rem; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+    .card .label { color: var(--ink); font-size: .95rem; font-weight: 800; }
+    .card .hint {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: .78rem;
+      line-height: 1.4;
+      font-weight: 400;
+    }
+    .card .value {
+      margin-top: 8px;
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      color: #111;
+    }
+    .card .value.pos { color: var(--green); }
+    .card .value.neg { color: var(--red); }
+    .sec-hint {
+      margin: -4px 0 10px;
+      color: var(--muted);
+      font-size: .82rem;
+      line-height: 1.45;
+    }
+    .kv .item .hint {
+      display: block;
+      margin-top: 4px;
+      font-size: .72rem;
+      color: var(--muted);
+      font-weight: 400;
+      line-height: 1.35;
+    }
+    th .hint {
+      display: block;
+      font-size: .72rem;
+      font-weight: 400;
+      color: #8a8478;
+      margin-top: 2px;
+    }
+    .tab-hint {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr 1.15fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+    .panel h2 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+      border-left: 4px solid var(--accent);
+      padding-left: 8px;
+    }
+    .chart { width: 100%; height: 320px; }
+    .btc-wrap {
+      width: 100%;
+      height: 320px;
+      margin-top: 4px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .query-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    input[type="text"], select, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font: inherit;
+      background: #fff;
+    }
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      background: var(--accent);
+      color: #fff;
+      white-space: nowrap;
+    }
+    button.ghost {
+      background: #ece7dc;
+      color: var(--ink);
+    }
+    .kv {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .kv .item {
+      background: #f7f4ee;
+      border-radius: 10px;
+      padding: 10px;
+    }
+    .kv .item b { display: block; font-size: .8rem; color: var(--muted); font-weight: 600; }
+    .kv .item span { font-size: 1.1rem; font-weight: 800; }
+    .table-wrap { overflow: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .88rem;
+      min-width: 640px;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 8px 6px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { color: var(--muted); font-weight: 700; background: #f7f4ee; position: sticky; top: 0; }
+    .pos { color: var(--green); font-weight: 700; }
+    .neg { color: var(--red); font-weight: 700; }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .tabs button.active { outline: 2px solid #c47b2d; }
+    .rules {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 14px 0;
+    }
+    .rules .item {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .rules h3 { margin: 0 0 6px; font-size: .95rem; }
+    .rules p { margin: 0; color: var(--muted); font-size: .88rem; }
+    .footer-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: .82rem;
+      padding: 18px 8px 28px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #e8f2ec;
+      color: var(--green);
+      font-size: .78rem;
+      font-weight: 700;
+    }
+    .badge.off { background: #f3e8e7; color: var(--red); }
+    .badge.wait { background: #fff3e0; color: #c47b2d; }
+    .thumb {
+      width: 42px; height: 42px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line);
+      background: #eee;
+    }
+    .empty { color: var(--muted); font-size: .85rem; }
+    @media (max-width: 1100px) {
+      .cards { grid-template-columns: repeat(2, 1fr); }
+      .layout { grid-template-columns: 1fr; }
+      .rules { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .cards { grid-template-columns: 1fr; }
+      .kv { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="slogan" id="slogan">熟人小额理财模拟娱乐看板，仅用于记账对账，不存在募资理财行为</div>
+
+    <section class="announce" id="announceBox">
+      <div class="meta" id="announceMeta">公告加载中…</div>
+      <h2 id="announceTitle" style="margin:6px 0 4px;font-size:1.1rem;"></h2>
+      <p id="announceContent" style="margin:0;color:var(--muted);"></p>
+    </section>
+
+    <section class="cards" id="summaryCards">
+      <div class="card">
+        <div class="label">总娱乐本金</div>
+        <div class="hint">所有玩伴线下凑进来的本金加总。<br />公式：每人出资金额相加。钱还在「大家一共出了多少」这一层。</div>
+        <div class="value" id="totalCapital">—</div>
+      </div>
+      <div class="card">
+        <div class="label">当前总资产</div>
+        <div class="hint">系统自动算：持有中市值 + 池内现金。<br />现金 = 总本金 − 持有中投入 + 已了结盈亏 − <b>已转账</b>分红（仅管理员勾选已转账后才出池）。</div>
+        <div class="value" id="totalAssets">—</div>
+      </div>
+      <div class="card">
+        <div class="label">累计盈亏</div>
+        <div class="hint">池内还剩的赚亏：浮动 + 已实现 − 已转账分红。<br />也等于「当前总资产 − 总娱乐本金」。勾选已转账后数字会下降。</div>
+        <div class="value" id="totalPnL">—</div>
+        <div class="hint" id="pnlBreakdown" style="margin-top:6px;"></div>
+      </div>
+      <div class="card">
+        <div class="label">沙盘净值</div>
+        <div class="hint">按池内剩余总资产自动核算（已转账分红会降低净值）。<br />公式：当前总资产 ÷ 总娱乐本金。1.00=不赚不亏；&gt;1 池内仍有盈利。</div>
+        <div class="value" id="navValue">—</div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <!-- 左侧可视化 -->
+      <div class="panel">
+        <h2>沙盘仓位与资金投向</h2>
+        <p class="sec-hint">外圈：谁出了多少钱（仓位占比）。内圈：钱投去了哪一类（彼特B / 长期利息 / 体育）。鼠标悬停可看明细。</p>
+        <div id="donutChart" class="chart"></div>
+        <h2 style="margin-top:8px;">比特币公开行情 · BTC/USDT</h2>
+        <p class="sec-hint">外面交易所公开的比特币价格走势，给大家看市场参考。<b>不是</b>上面「沙盘净值」，也不等于你们账本盈亏。需联网加载。</p>
+        <div id="btcWrap" class="btc-wrap">
+          <div class="tradingview-widget-container" style="height:100%;width:100%">
+            <div class="tradingview-widget-container__widget" style="height:calc(100% - 28px);width:100%"></div>
+            <div class="tradingview-widget-copyright" style="font-size:.75rem;text-align:center;color:var(--muted);padding-top:4px;">
+              <a href="https://cn.tradingview.com/symbols/BTCUSDT/?exchange=BINANCE" rel="noopener nofollow" target="_blank" style="color:var(--accent);">BTCUSDT</a>
+              行情 by TradingView
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 中部：个人仓位查询 -->
+      <div class="panel">
+        <h2>个人仓位查询</h2>
+        <p class="sec-hint">输入自己的名字，看「我出了多少、占多少份、现在值多少、赚亏多少」。不用注册登录。</p>
+        <div class="query-row">
+          <input type="text" id="queryName" list="memberList" placeholder="输入玩伴姓名，如：阿陈" />
+          <datalist id="memberList"></datalist>
+          <button type="button" id="btnQuery">查询</button>
+        </div>
+        <div class="kv" id="personResult">
+          <div class="item">
+            <b>个人娱乐本金</b>
+            <span id="pCapital">—</span>
+            <i class="hint">你自己线下转进来的那笔本金。</i>
+          </div>
+          <div class="item">
+            <b>模拟仓位占比</b>
+            <span id="pShare">—</span>
+            <i class="hint">你的本金 ÷ 总娱乐本金。占比越大，赚亏分到的也越多。</i>
+          </div>
+          <div class="item">
+            <b>持仓市值</b>
+            <span id="pMv">—</span>
+            <i class="hint">按你的仓位，摊到的「当前总资产」份额。≈ 总资产 × 你的占比。</i>
+          </div>
+          <div class="item">
+            <b>浮动盈亏</b>
+            <span id="pPnL">—</span>
+            <i class="hint">按仓位摊到的整体盈亏。还没正式分红前的账面赚亏。</i>
+          </div>
+          <div class="item">
+            <b>已结算分红</b>
+            <span id="pSettled">—</span>
+            <i class="hint">管理员已经结算过、记到你名下的分红累计。</i>
+          </div>
+          <div class="item">
+            <b>其中已转账 / 待转账</b>
+            <span id="pPaid">—</span>
+            <i class="hint">线下微信/支付宝是否已打到你账上（管理员勾选）。</i>
+          </div>
+          <div class="item">
+            <b>待分配收益</b>
+            <span id="pPending">—</span>
+            <i class="hint">账面浮动盈利里、示意「还可能分」的部分；实际以管理员结算为准。</i>
+          </div>
+        </div>
+        <p id="queryTip" class="empty" style="margin-top:12px;"></p>
+      </div>
+
+      <!-- 右侧：公共投资台账 -->
+      <div class="panel">
+        <h2>公共投资台账</h2>
+        <p class="sec-hint">大家的钱具体投了哪些方向：什么时候投、投了多少、现在值多少、赚亏多少。一人一本公开账。</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>投资时间<span class="hint">哪天投出去的</span></th>
+                <th>投向品类<span class="hint">钱去了哪一类</span></th>
+                <th>投入金额<span class="hint">当时投进去的本金</span></th>
+                <th>当前市值<span class="hint">现在这笔值多少</span></th>
+                <th>盈亏金额<span class="hint">市值 − 投入</span></th>
+                <th>盈亏比例<span class="hint">赚亏百分之几</span></th>
+                <th>持有状态<span class="hint">还在拿着 / 已卖掉</span></th>
+                <th>凭证<span class="hint">截图证明，可无</span></th>
+              </tr>
+            </thead>
+            <tbody id="investBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 底部流水 -->
+    <section class="panel" style="margin-bottom:14px;">
+      <h2>流水分区</h2>
+      <p class="sec-hint">记录「钱怎么进出」：谁交钱进来、谁拿到分红、谁加钱或退伙。点下面三个按钮切换查看。分红页可看「是否已转账」。</p>
+      <div class="tabs">
+        <button type="button" class="active" data-tab="deposits" title="谁第一次把本金转进来">入金记录</button>
+        <button type="button" data-tab="dividends" title="结算后分给谁多少钱">分红提现记录</button>
+        <button type="button" data-tab="adjustments" title="中途加本金或退出减本金">追加/退伙记录</button>
+      </div>
+      <p class="tab-hint" id="flowTabHint">入金记录：玩伴把娱乐本金转进来时的记账（线下转账后登记）。</p>
+      <div class="table-wrap">
+        <table>
+          <thead id="flowHead">
+            <tr>
+              <th>时间<span class="hint">哪天发生</span></th>
+              <th>人员<span class="hint">哪位玩伴</span></th>
+              <th>金额<span class="hint">多少钱</span></th>
+              <th>转账状态<span class="hint">分红是否已打款</span></th>
+              <th>备注<span class="hint">一句话说明</span></th>
+              <th>凭证预览<span class="hint">转账截图，可无</span></th>
+            </tr>
+          </thead>
+          <tbody id="flowBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 合规规则说明 -->
+    <section>
+      <h2 style="font-size:1.1rem;margin:0 0 4px;">系统内置合规规则说明</h2>
+      <p class="sec-hint">参与范围、怎么分赚亏、钱怎么转、人数约定等，方便大家对齐规则。</p>
+      <div class="rules" id="rulesGrid"></div>
+    </section>
+
+    <div class="footer-note">
+      亲友理财模拟娱乐沙盘展示站 · 私人熟人记账看板 · 只读展示 · 无充值/支付/开户/招募入口<br />
+      数据更新时间：<span id="updatedAt">—</span>
+      · 本页不提供任何后台入口
+    </div>
+  </div>
+
+  <script>
+    /** 资金金额统一：内部按分四舍五入，展示固定两位小数 */
+    const ROUND2 = (n) => Math.round((Number(n) || 0) * 100) / 100;
+    const MONEY = (n) => ROUND2(n).toLocaleString("zh-CN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+    const PCT = (n) => (Number(n || 0) * 100).toFixed(2) + "%";
+
+    let DATA = null;
+    let currentFlowTab = "deposits";
+    let donutChart;
+    let btcWidgetLoaded = false;
+
+    /** 沙盘指标自动核算（与后台同一套）
+     * B2：现金/池内盈亏只扣「已转账」分红；待转账仍留在池内。
+     * 现金 = 总本金 − 持有中投入 + 已实现 − 已转账分红
+     */
+    function calc(data) {
+      const totalCapital = ROUND2(data.members.reduce((s, m) => s + Number(m.capital || 0), 0));
+      const list = data.investments || [];
+      const holding = list.filter((i) => i.status === "持有中");
+      const closed = list.filter((i) => i.status === "已了结");
+      const divs = (data.flows && data.flows.dividends) || [];
+      const investedPrincipal = ROUND2(holding.reduce((s, i) => s + Number(i.principal || 0), 0));
+      const holdingMV = ROUND2(holding.reduce((s, i) => s + Number(i.marketValue || 0), 0));
+      const floatingPnL = ROUND2(holdingMV - investedPrincipal);
+      const realizedPnL = ROUND2(closed.reduce(
+        (s, i) => s + (Number(i.marketValue || 0) - Number(i.principal || 0)), 0
+      ));
+      const dividendsPaid = ROUND2(divs.filter((r) => r.paid).reduce((s, r) => s + Number(r.amount || 0), 0));
+      const dividendsSettled = ROUND2(divs.reduce((s, r) => s + Number(r.amount || 0), 0));
+      const dividendsUnpaid = ROUND2(dividendsSettled - dividendsPaid);
+      const cash = ROUND2(totalCapital - investedPrincipal + realizedPnL - dividendsPaid);
+      const totalAssets = ROUND2(holdingMV + cash);
+      const totalPnL = ROUND2(floatingPnL + realizedPnL - dividendsPaid);
+      const nav = totalCapital > 0 ? totalAssets / totalCapital : 1;
+      // 每人已分红以流水为准（不依赖可能过期的 settledDividend 字段）
+      const settledMap = {};
+      divs.forEach((r) => {
+        settledMap[r.name] = ROUND2((settledMap[r.name] || 0) + Number(r.amount || 0));
+      });
+      const members = data.members.map((m) => {
+        const share = totalCapital > 0 ? Number(m.capital || 0) / totalCapital : 0;
+        const mv = ROUND2(totalAssets * share);
+        const pnl = ROUND2(totalPnL * share);
+        const pending = ROUND2(Math.max(0, pnl));
+        const settledDividend = ROUND2(settledMap[m.name] || 0);
+        return { ...m, capital: ROUND2(m.capital), settledDividend, share, mv, pnl, pending };
+      });
+      const assetMap = {};
+      holding.forEach((i) => {
+        assetMap[i.category] = ROUND2((assetMap[i.category] || 0) + Number(i.marketValue || 0));
+      });
+      const assetsLive = Object.keys(assetMap).map((k) => ({ category: k, amount: assetMap[k] }));
+      return {
+        totalCapital, totalAssets, totalPnL, nav, members,
+        investedPrincipal, holdingMV, cash, floatingPnL, realizedPnL,
+        dividendsOut: dividendsPaid, dividendsPaid, dividendsSettled, dividendsUnpaid, assetsLive
+      };
+    }
+
+    function renderSummary(c) {
+      document.getElementById("totalCapital").textContent = "¥" + MONEY(c.totalCapital);
+      document.getElementById("totalAssets").textContent = "¥" + MONEY(c.totalAssets);
+      const pnlEl = document.getElementById("totalPnL");
+      pnlEl.textContent = (c.totalPnL >= 0 ? "+" : "") + "¥" + MONEY(c.totalPnL);
+      pnlEl.className = "value " + (c.totalPnL >= 0 ? "pos" : "neg");
+      const br = document.getElementById("pnlBreakdown");
+      if (br) {
+        const f = (c.floatingPnL >= 0 ? "+" : "") + "¥" + MONEY(c.floatingPnL);
+        const r = (c.realizedPnL >= 0 ? "+" : "") + "¥" + MONEY(c.realizedPnL);
+        const d = "¥" + MONEY(c.dividendsPaid || 0);
+        const u = "¥" + MONEY(c.dividendsUnpaid || 0);
+        br.textContent = `浮动 ${f} · 已实现 ${r} · 已转账 −${d}` +
+          (c.dividendsUnpaid > 0 ? ` · 待转账 ${u}（仍在池内）` : "");
+      }
+      document.getElementById("navValue").textContent = c.nav.toFixed(4);
+    }
+
+    function renderAnnounce(data) {
+      document.getElementById("slogan").textContent = data.meta.slogan;
+      document.getElementById("announceMeta").textContent = "公告 · " + (data.announcement.publishedAt || "");
+      document.getElementById("announceTitle").textContent = data.announcement.title || "";
+      document.getElementById("announceContent").textContent = data.announcement.content || "";
+      document.getElementById("updatedAt").textContent = data.meta.updatedAt || "—";
+    }
+
+    function renderRules(data) {
+      const map = [
+        ["参与限制", data.rules.participation],
+        ["收益规则", data.rules.profit],
+        ["资金规则", data.rules.funds],
+        ["金额约束", data.rules.limits],
+        ["传播约束", data.rules.spread],
+        ["投向约束", data.rules.scope],
+        ["留存规则", data.rules.retention],
+        ["退伙机制", data.rules.exit]
+      ];
+      document.getElementById("rulesGrid").innerHTML = map.map(([t, p]) =>
+        `<div class="item"><h3>${t}</h3><p>${p}</p></div>`
+      ).join("");
+    }
+
+    function loadBtcWidget() {
+      if (btcWidgetLoaded) return;
+      btcWidgetLoaded = true;
+      const s = document.createElement("script");
+      s.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+      s.async = true;
+      s.text = JSON.stringify({
+        autosize: true,
+        symbol: "BINANCE:BTCUSDT",
+        interval: "D",
+        timezone: "Asia/Shanghai",
+        theme: "light",
+        style: "1",
+        locale: "zh_CN",
+        backgroundColor: "rgba(255, 253, 248, 1)",
+        hide_top_toolbar: false,
+        hide_legend: false,
+        allow_symbol_change: false,
+        save_image: false,
+        calendar: false,
+        support_host: "https://www.tradingview.com",
+        withdateranges: true,
+        range: "1M"
+      });
+      const box = document.querySelector("#btcWrap .tradingview-widget-container");
+      if (box) box.appendChild(s);
+    }
+
+    function renderCharts(data, c) {
+      if (!donutChart) donutChart = echarts.init(document.getElementById("donutChart"));
+      loadBtcWidget();
+
+      const outer = c.members.map((m) => ({
+        name: m.name,
+        value: m.capital,
+        itemStyle: { color: m.color || undefined }
+      }));
+      const colorOf = (name, fallback) => fallback || (
+        name.includes("彼特") ? "#2F6F4E" :
+        name.includes("利息") ? "#3D7EA6" :
+        name.includes("体育") ? "#C47B2D" : undefined
+      );
+      const innerSrc = (c.assetsLive && c.assetsLive.length) ? c.assetsLive : (data.assets || []);
+      const inner = innerSrc.map((a) => ({
+        name: a.category,
+        value: a.amount,
+        itemStyle: {
+          color: colorOf(a.category, a.color)
+        }
+      }));
+
+      donutChart.setOption({
+        tooltip: {
+          trigger: "item",
+          formatter: (p) => {
+            if (p.seriesName === "仓位占比") {
+              const m = c.members.find((x) => x.name === p.name);
+              if (!m) return p.name;
+              return [
+                `<b>${m.name}</b>`,
+                `娱乐本金：¥${MONEY(m.capital)}`,
+                `持仓占比：${PCT(m.share)}`,
+                `浮动盈亏：¥${MONEY(m.pnl)}`
+              ].join("<br/>");
+            }
+            return `${p.name}<br/>金额：¥${MONEY(p.value)}（${Number(p.percent).toFixed(2)}%）`;
+          }
+        },
+        legend: { bottom: 0, type: "scroll" },
+        series: [
+          {
+            name: "仓位占比",
+            type: "pie",
+            radius: ["58%", "78%"],
+            center: ["50%", "46%"],
+            itemStyle: { borderRadius: 4, borderColor: "#fff", borderWidth: 2 },
+            label: { formatter: "{b}\n{d}%" },
+            data: outer
+          },
+          {
+            name: "资金投向",
+            type: "pie",
+            radius: ["28%", "48%"],
+            center: ["50%", "46%"],
+            label: { position: "inner", fontSize: 11, formatter: "{b}" },
+            data: inner
+          }
+        ]
+      });
+    }
+
+    function voucherCell(url) {
+      if (!url) return '<span class="empty">无</span>';
+      return `<a href="${url}" target="_blank" rel="noopener"><img class="thumb" src="${url}" alt="凭证" /></a>`;
+    }
+
+    function pnlPctText(principal, marketValue) {
+      const p = Number(principal || 0);
+      if (!(p > 0)) return "—";
+      const pct = ((Number(marketValue || 0) - p) / p) * 100;
+      return (pct >= 0 ? "+" : "") + pct.toFixed(2) + "%";
+    }
+    function renderInvest(data) {
+      const body = document.getElementById("investBody");
+      body.innerHTML = (data.investments || []).map((i) => {
+        const pnl = Number(i.marketValue) - Number(i.principal);
+        const cls = pnl >= 0 ? "pos" : "neg";
+        return `<tr>
+          <td>${i.date}</td>
+          <td>${i.category}</td>
+          <td>¥${MONEY(i.principal)}</td>
+          <td>¥${MONEY(i.marketValue)}</td>
+          <td class="${cls}">${pnl >= 0 ? "+" : ""}¥${MONEY(pnl)}</td>
+          <td class="${cls}">${pnlPctText(i.principal, i.marketValue)}</td>
+          <td><span class="badge ${i.status === "持有中" ? "" : "off"}">${i.status}</span></td>
+          <td>${voucherCell(i.voucher)}</td>
+        </tr>`;
+      }).join("") || `<tr><td colspan="8" class="empty">暂无台账</td></tr>`;
+    }
+
+    function paidBadge(paid) {
+      if (paid) return `<span class="badge">已转账</span>`;
+      return `<span class="badge wait">待转账</span>`;
+    }
+    function renderFlows(data) {
+      const rows = (data.flows && data.flows[currentFlowTab]) || [];
+      const isDiv = currentFlowTab === "dividends";
+      document.getElementById("flowBody").innerHTML = rows.map((r) => {
+        const payCell = isDiv ? paidBadge(!!r.paid) : `<span class="empty">—</span>`;
+        return `<tr>
+          <td>${r.date}</td>
+          <td>${r.name}</td>
+          <td>¥${MONEY(r.amount)}</td>
+          <td>${payCell}</td>
+          <td>${r.note || ""}</td>
+          <td>${voucherCell(r.voucher)}</td>
+        </tr>`;
+      }).join("") || `<tr><td colspan="6" class="empty">暂无记录</td></tr>`;
+    }
+
+    function fillMemberList(c) {
+      document.getElementById("memberList").innerHTML = c.members
+        .map((m) => `<option value="${m.name}"></option>`).join("");
+    }
+
+    function queryPerson() {
+      if (!DATA) return;
+      const c = calc(DATA);
+      const name = document.getElementById("queryName").value.trim();
+      const m = c.members.find((x) => x.name === name);
+      const tip = document.getElementById("queryTip");
+      if (!m) {
+        tip.textContent = "未找到该玩伴。请确认姓名与协议名单一致（区分大小写/空格）。";
+        ["pCapital","pShare","pMv","pPnL","pSettled","pPaid","pPending"].forEach((id) => {
+          document.getElementById(id).textContent = "—";
+          document.getElementById(id).className = "";
+        });
+        return;
+      }
+      const myDivs = ((DATA.flows && DATA.flows.dividends) || []).filter((r) => r.name === m.name);
+      const paidSum = ROUND2(myDivs.filter((r) => r.paid).reduce((s, r) => s + Number(r.amount || 0), 0));
+      const unpaidSum = ROUND2(myDivs.filter((r) => !r.paid).reduce((s, r) => s + Number(r.amount || 0), 0));
+      tip.textContent = `已按仓位占比自动核算：个人出资 ÷ 总娱乐本金 = ${PCT(m.share)}` +
+        (unpaidSum > 0 ? `；尚有 ¥${MONEY(unpaidSum)} 分红待管理员确认转账。` : "");
+      document.getElementById("pCapital").textContent = "¥" + MONEY(m.capital);
+      document.getElementById("pShare").textContent = PCT(m.share);
+      document.getElementById("pMv").textContent = "¥" + MONEY(m.mv);
+      const pnlEl = document.getElementById("pPnL");
+      pnlEl.textContent = (m.pnl >= 0 ? "+" : "") + "¥" + MONEY(m.pnl);
+      pnlEl.className = m.pnl >= 0 ? "pos" : "neg";
+      document.getElementById("pSettled").textContent = "¥" + MONEY(m.settledDividend || 0);
+      document.getElementById("pPaid").textContent = `已转 ¥${MONEY(paidSum)} · 待转 ¥${MONEY(unpaidSum)}`;
+      document.getElementById("pPending").textContent = "¥" + MONEY(m.pending);
+    }
+
+    function paint(data) {
+      DATA = data;
+      const c = calc(data);
+      renderAnnounce(data);
+      renderSummary(c);
+      renderCharts(data, c);
+      renderInvest(data);
+      renderFlows(data);
+      renderRules(data);
+      fillMemberList(c);
+    }
+
+    async function loadData() {
+      // 默认读同域 JSON；仅当 URL 带 ?preview=1 时才用管理端写入的 localStorage
+      const usePreview = new URLSearchParams(location.search).get("preview") === "1"
+        && localStorage.getItem("sandbox_dashboard_preview") === "1";
+      if (usePreview) {
+        try {
+          const local = localStorage.getItem("sandbox_dashboard_data");
+          if (local) {
+            paint(JSON.parse(local));
+            return;
+          }
+        } catch (e) {}
+      }
+      try {
+        const res = await fetch("./data/sandbox.json?_=" + Date.now(), { cache: "no-store" });
+        if (!res.ok) throw new Error("fetch fail");
+        paint(await res.json());
+      } catch (e) {
+        document.getElementById("announceTitle").textContent = "数据加载失败";
+        document.getElementById("announceContent").textContent =
+          "请确认 data/sandbox.json 与本页同路径部署；本地请用 http 服务打开（勿直接双击 file://）。也可经管理端「写入本机预览」后访问 ?preview=1。";
+      }
+    }
+
+    document.getElementById("btnQuery").addEventListener("click", queryPerson);
+    document.getElementById("queryName").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") queryPerson();
+    });
+    const FLOW_HINTS = {
+      deposits: "入金记录：玩伴把娱乐本金转进来时的记账（线下转账后登记）。",
+      dividends: "分红提现记录：结算后的应分金额；「已转账」表示已打款并从池内资产扣除，「待转账」仍算在池内。",
+      adjustments: "追加/退伙记录：中途加本金，或减资、退伙清退本金时的自动记账。"
+    };
+    document.querySelectorAll(".tabs button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tabs button").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentFlowTab = btn.dataset.tab;
+        const hint = document.getElementById("flowTabHint");
+        if (hint) hint.textContent = FLOW_HINTS[currentFlowTab] || "";
+        if (DATA) renderFlows(DATA);
+      });
+    });
+
+    window.addEventListener("resize", () => {
+      donutChart && donutChart.resize();
+    });
+
+    // 禁用常见诱导类文案残留检查（开发期提示）
+    const banned = ["募资份额", "保本收益", "理财平台", "招募入伙", "充值"];
+    banned.forEach((w) => {
+      if (document.body.innerText.includes(w) && w === "充值" && !document.body.innerText.includes("无充值")) {
+        console.warn("词检提示:", w);
+      }
+    });
+
+    loadData();
+    // 定时拉取，便于上传 JSON 后前端自动同步
+    setInterval(loadData, 30000);
+  </script>
+</body>
+</html>

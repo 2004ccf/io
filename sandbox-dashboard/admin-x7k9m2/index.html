@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>沙盘记账后台（给管理员用）</title>
+  <style>
+    :root {
+      --bg: #f4f1ea; --card: #fffdf8; --ink: #1c1c1c; --muted: #5c5c5c;
+      --line: #d9d2c5; --accent: #2c5f4e; --warn: #c47b2d; --danger: #c0392b;
+      --tip: #eef5f1; --tip-border: #b7d4c6;
+      --font: "Microsoft YaHei", "PingFang SC", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--ink); line-height: 1.55; }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 16px; }
+    .card {
+      background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+      padding: 16px 18px; margin-bottom: 14px; box-shadow: 0 6px 18px rgba(0,0,0,.04);
+    }
+    h1 { font-size: 1.25rem; margin: 0 0 8px; }
+    h2 { font-size: 1.08rem; margin: 0 0 6px; color: var(--accent); }
+    .step-no {
+      display: inline-block; background: var(--accent); color: #fff; border-radius: 999px;
+      padding: 2px 10px; font-size: .82rem; font-weight: 700; margin-right: 6px;
+    }
+    .why {
+      background: var(--tip); border: 1px solid var(--tip-border); border-radius: 10px;
+      padding: 10px 12px; margin: 8px 0 14px; color: #244438; font-size: .9rem;
+    }
+    .field { margin-bottom: 12px; }
+    .field label { display: block; font-weight: 700; margin-bottom: 2px; }
+    .help { display: block; color: var(--muted); font-size: .82rem; margin-bottom: 6px; }
+    input, select, textarea {
+      width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line);
+      background: #fff; color: var(--ink); font: inherit;
+    }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    button {
+      border: 0; border-radius: 10px; padding: 10px 14px; font: inherit; font-weight: 700;
+      cursor: pointer; background: var(--accent); color: #fff; margin: 4px 8px 4px 0;
+    }
+    button.ghost { background: #ece7dc; color: var(--ink); }
+    button.warn { background: var(--warn); }
+    button.danger { background: var(--danger); }
+    table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; }
+    th { color: var(--muted); background: #f7f4ee; }
+    #loginBox { max-width: 460px; margin: 10vh auto; }
+    #app { display: none; }
+    .banner {
+      background: #fff8e8; border: 1px solid #e2c58a; color: #6a4a12;
+      padding: 12px 14px; border-radius: 12px; margin-bottom: 14px; font-size: .92rem;
+    }
+    .flow {
+      display: grid; gap: 8px; margin: 10px 0 0;
+    }
+    .flow .item {
+      background: #f7f4ee; border-radius: 10px; padding: 10px 12px; font-size: .9rem;
+    }
+    .flow b { color: var(--accent); }
+    .ok { color: #1f7a4c; font-weight: 700; }
+    .err { color: #c0392b; font-weight: 700; }
+    .status {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px;
+    }
+    .status span {
+      background: #f7f4ee; border-radius: 999px; padding: 4px 10px; font-size: .85rem;
+    }
+    .audit {
+      border-radius: 12px; padding: 12px 14px; margin-bottom: 14px; font-size: .92rem;
+      border: 2px solid #c0392b; background: #fdecea; color: #7a1c14;
+    }
+    .audit.pass {
+      border-color: #1f7a4c; background: #e8f5ee; color: #1a4d32;
+    }
+    .audit ul { margin: 8px 0 0; padding-left: 1.2rem; }
+    .audit li { margin: 4px 0; }
+    .budget {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 10px 0 12px;
+    }
+    .budget .cell {
+      background: #f7f4ee; border-radius: 10px; padding: 10px; text-align: center;
+    }
+    .budget .cell b { display: block; font-size: .78rem; color: var(--muted); font-weight: 600; }
+    .budget .cell span { font-size: 1.08rem; font-weight: 800; }
+    .budget .cell small { display: block; color: var(--muted); font-size: .72rem; margin-top: 2px; }
+    .wizard-step {
+      border: 1px dashed var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 12px;
+      background: #fffcf6;
+    }
+    .wizard-step h3 {
+      margin: 0 0 8px; font-size: .98rem; color: var(--accent);
+    }
+    .cat-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
+    }
+    .cat-card {
+      position: relative; border: 2px solid var(--line); border-radius: 12px; padding: 10px 12px;
+      background: #fff; cursor: pointer; transition: border-color .15s, background .15s;
+    }
+    .cat-card:hover { border-color: #9bb8ab; }
+    .cat-card.active { border-color: var(--accent); background: var(--tip); }
+    .cat-card input { position: absolute; opacity: 0; pointer-events: none; }
+    .cat-card strong { display: block; font-size: .92rem; margin-bottom: 4px; }
+    .cat-card span { display: block; font-size: .78rem; color: var(--muted); line-height: 1.4; }
+    .toolbar {
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: end; margin: 12px 0 8px;
+    }
+    .toolbar .field { margin: 0; min-width: 140px; flex: 1; }
+    .toolbar label { font-size: .85rem; }
+    .recon {
+      background: #f7f4ee; border-radius: 10px; padding: 10px 12px; margin-top: 12px;
+      font-size: .9rem; color: #244438;
+    }
+    .recon b { color: var(--accent); }
+    .inline-mv {
+      width: 96px; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--line);
+      font: inherit; background: #fff;
+    }
+    .ops button { padding: 6px 10px; font-size: .82rem; margin: 2px 4px 2px 0; }
+    .pay-check {
+      display: inline-flex; align-items: center; gap: 6px; font-weight: 700; cursor: pointer;
+    }
+    .pay-check input { width: auto; margin: 0; accent-color: var(--accent); transform: scale(1.15); }
+    .pay-yes { color: #1f7a4c; }
+    .pay-no { color: #c0392b; }
+    .field.bad input, .field.bad select { border-color: #c0392b; background: #fff5f4; }
+    .block-tip {
+      display: none; background: #fdecea; border: 1px solid #e0a8a2; color: #7a1c14;
+      border-radius: 10px; padding: 10px 12px; margin: 8px 0 12px; font-size: .9rem;
+    }
+    .block-tip.show { display: block; }
+    details summary { cursor: pointer; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+    @media (max-width: 900px) {
+      .budget { grid-template-columns: 1fr 1fr; }
+      .cat-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      .row, .row3 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- 登录 -->
+    <div id="loginBox" class="card">
+      <h1>沙盘记账后台（只有你能进）</h1>
+      <div class="why">
+        <b>这是干什么的？</b><br />
+        这里用来改玩伴名单、投资金额、分红和公告。改完后导出一个数据文件，覆盖上传，大家看的展示页就会更新。<br />
+        <b>注意：</b>这个网址不要发给外人；展示页上也没有后台入口。
+      </div>
+      <div class="field">
+        <label>管理员密码</label>
+        <span class="help">作用：防止别人乱改账本。默认密码是 sandbox2026，用完请尽快改掉。</span>
+        <input type="password" id="pwd" placeholder="输入密码后按回车" />
+      </div>
+      <button type="button" id="btnLogin">进入后台</button>
+      <p id="loginMsg" class="help"></p>
+    </div>
+
+    <div id="app">
+      <div class="banner">
+        <b>你只需要记住 3 步：</b><br />
+        ① 在下面改数据（加人、改投资、发公告、算分红） →
+        ② 点最上面的「保存成数据文件」 →
+        ③ 把下载的 <code>sandbox.json</code> 覆盖上传到网站的 <code>data</code> 文件夹<br />
+        约束：人数≤15人；单人出资与整体总额不设金额上限。网站不收钱，转账都在线下做。
+      </div>
+
+      <!-- 纠错模式总览 -->
+      <div id="auditBox" class="audit pass">
+        <b>纠错模式：</b><span id="auditTitle">正在检查…</span>
+        <ul id="auditList"></ul>
+      </div>
+
+      <!-- 总览 + 保存 -->
+      <div class="card">
+        <h2><span class="step-no">总览</span>当前账本状态</h2>
+        <div class="why">这里只看一眼「现在账本里有多少人、多少钱」，不用改。真正改数在下面各模块。纠错模式会拦住不合理的数字。</div>
+        <div class="status">
+          <span>上次更新：<b id="upd">—</b></span>
+          <span>玩伴人数：<b id="sumN">—</b></span>
+          <span>总娱乐本金：<b id="sumCap">—</b></span>
+          <span>已投入本金：<b id="sumInvested">—</b></span>
+          <span>还可投入：<b id="sumAvail">—</b></span>
+          <span>当前总资产：<b id="sumAssets">—</b></span>
+          <span>累计盈亏：<b id="sumPnL">—</b></span>
+          <span>沙盘净值（自动）：<b id="sumNav">—</b></span>
+        </div>
+        <p class="help" style="margin-top:8px;">
+          全自动联动：改玩伴/投资/分红/勾选已转账 → 统一重算入金、饼图、每人已分红、现金、总资产、净值。  
+          现金 = 总本金 − 持有中投入 + 已了结盈亏 − <b>已转账分红</b>（勾选「已转账」才出池；仅结算未转账不扣）。总娱乐本金只随玩伴名单变。
+        </p>
+        <p id="msg" class="help" style="margin-top:10px;"></p>
+
+        <h2 style="margin-top:16px;">保存 / 导出（改完必做）</h2>
+        <div class="flow">
+          <div class="item">
+            <b>保存成数据文件</b> —— 作用：把你刚改的内容打包成 <code>sandbox.json</code> 下载下来。  
+            你要把这个文件上传覆盖网站上的旧文件，大家打开展示页才能看到新数。
+            <div><button type="button" id="btnExportJson" class="warn">① 保存成数据文件（最常用）</button></div>
+          </div>
+          <div class="item">
+            <b>导出 Excel 表格</b> —— 作用：下载一份可用 Excel 打开的账目表，方便打印或微信发给玩伴对账。不影响网站显示。
+            <div><button type="button" id="btnExportCsv" class="ghost">导出 Excel/CSV 表格</button></div>
+          </div>
+          <div class="item">
+            <b>本机先预览</b> —— 作用：不上传服务器，先在你自己电脑上看看效果。打开展示页时地址后面加 <code>?preview=1</code>。
+            <div><button type="button" id="btnPreview" class="ghost">写入本机预览</button></div>
+          </div>
+          <div class="item">
+            <b>从文件恢复</b> —— 作用：如果你电脑里有以前备份的 <code>sandbox.json</code>，可以重新加载进来接着改。
+            <div>
+              <button type="button" id="btnLoadFile" class="ghost">从本地文件导入</button>
+              <input type="file" id="fileIn" accept="application/json,.json" style="display:none" />
+            </div>
+          </div>
+          <div class="item">
+            <b>退出后台</b> —— 作用：关掉管理权限，别人用这台电脑时进不来改账。
+            <div><button type="button" id="btnLogout" class="danger">退出登录</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1 公告 -->
+      <div class="card">
+        <h2><span class="step-no">1</span>发公告（给大家看的通知）</h2>
+        <div class="why">作用：写在展示页最上面，告诉玩伴「这期怎么结、能不能退伙」等。不改钱，只改通知文字。</div>
+        <div class="row">
+          <div class="field">
+            <label>公告标题</label>
+            <span class="help">作用：一句话标题，例如「8 月结算通知」。</span>
+            <input id="annTitle" placeholder="例如：当期结算与退伙规则提醒" />
+          </div>
+          <div class="field">
+            <label>发布日期</label>
+            <span class="help">作用：让大家知道这条公告是哪天发的。</span>
+            <input id="annDate" type="date" />
+          </div>
+        </div>
+        <div class="field">
+          <label>公告正文</label>
+          <span class="help">作用：详细说明。可写转账备注、退伙规则、本期是否分红等。</span>
+          <textarea id="annContent" rows="3" placeholder="写给玩伴看的说明…"></textarea>
+        </div>
+        <button type="button" id="btnSaveAnn">保存公告到账本</button>
+        <span class="help">点完后还要去做「① 保存成数据文件」并上传，展示页才会变。</span>
+      </div>
+
+      <!-- 2 成员 -->
+      <div class="card">
+        <h2><span class="step-no">2</span>玩伴名单（谁出了多少钱）</h2>
+        <div class="why">
+          作用：登记每个熟人出了多少「娱乐本金」。网站会自动算每个人的仓位占比（个人÷总额）。<br />
+          姓名填错会导致前端「个人查询」查不到人。总人数最多 15；单人金额不设上限。
+        </div>
+        <div class="row3">
+          <div class="field">
+            <label>玩伴姓名</label>
+            <span class="help">作用：展示页查询和流水用的名字，建议与微信名或协议一致。</span>
+            <input id="mName" placeholder="例如：阿陈" />
+          </div>
+          <div class="field">
+            <label>娱乐本金（元）</label>
+            <span class="help">作用：这个人实际线下转进来的钱。决定他占多少仓位。金额不设上限。</span>
+            <input id="mCap" type="number" min="0" step="0.01" placeholder="例如：3000" />
+          </div>
+          <div class="field">
+            <label>已结算分红（自动）</label>
+            <span class="help">作用：只读。由「分红流水」自动汇总，不必手填；每次联动重算会覆盖。</span>
+            <input id="mDiv" type="number" min="0" step="0.01" value="0" readonly style="background:#f7f4ee;" />
+          </div>
+        </div>
+        <button type="button" id="btnAddM">添加或更新这位玩伴</button>
+        <span class="help">同名再点一次 = 改本金（差额记入「追加/退伙」）；入金表每次按名单自动重算。</span>
+        <div style="overflow:auto;margin-top:12px;">
+          <table>
+            <thead>
+              <tr>
+                <th>姓名<br /><span class="help">谁</span></th>
+                <th>娱乐本金<br /><span class="help">出了多少</span></th>
+                <th>已分红<br /><span class="help">已拿走过的分成</span></th>
+                <th>仓位占比<br /><span class="help">自动算</span></th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="mBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 3 投资 -->
+      <div class="card">
+        <h2><span class="step-no">3</span>投资台账（钱投到哪里了）</h2>
+        <div class="why">
+          作用：用三步把「投出去的钱」记清楚；下面表格跟进每笔赚亏。展示页右侧台账和总资产都看这里。<br />
+          <b>纠错规则：</b>所有「持有中」投入合计不能超过总娱乐本金；市值不能为负。市值请按账单/结算手填，不自动拉网价。<br />
+          <b>自动核算：</b>改市值或「标记已了结」后，总资产 / 累计盈亏 / 净值立刻重算；了结时的赚亏会加回现金（已实现），不会从账本消失。总娱乐本金只随玩伴名单变，不会因了结而变。
+        </div>
+        <div class="budget">
+          <div class="cell"><b>总娱乐本金</b><span id="budTotal">¥0.00</span><small>大家一共出了多少</small></div>
+          <div class="cell"><b>已投入（持有中）</b><span id="budUsed">¥0.00</span><small>还没了结的本金</small></div>
+          <div class="cell"><b>还可投入</b><span id="budLeft">¥0.00</span><small>还能再投多少</small></div>
+          <div class="cell"><b>持有中浮动盈亏</b><span id="budPnl">¥0.00</span><small>市值 − 投入</small></div>
+          <div class="cell"><b>沙盘净值</b><span id="budNav">1.0000</span><small>总资产 ÷ 总本金</small></div>
+        </div>
+        <div id="invBlockTip" class="block-tip"></div>
+
+        <div class="wizard-step">
+          <h3>① 这笔钱投去哪？</h3>
+          <div class="cat-grid" id="catGrid">
+            <label class="cat-card active" data-cat="彼特B（现货）">
+              <input type="radio" name="iCatRadio" value="彼特B（现货）" checked />
+              <strong>彼特B（现货）</strong>
+              <span>适合记现货仓位。市值按你实际成交或账单填写。</span>
+            </label>
+            <label class="cat-card" data-cat="长期的利息（长期）">
+              <input type="radio" name="iCatRadio" value="长期的利息（长期）" />
+              <strong>长期的利息（长期）</strong>
+              <span>适合记利息/理财类。市值按账面余额或到账结果填。</span>
+            </label>
+            <label class="cat-card" data-cat="体育（短期）">
+              <input type="radio" name="iCatRadio" value="体育（短期）" />
+              <strong>体育（短期）</strong>
+              <span>适合记短期体育相关。市值按结算结果填。</span>
+            </label>
+          </div>
+          <p class="help" id="catHint" style="margin-top:8px;">建议核对：对照你的成交/账单截图，把凭证链接贴在第③步。</p>
+          <input type="hidden" id="iCat" value="彼特B（现货）" />
+        </div>
+
+        <div class="wizard-step">
+          <h3>② 投了多少、哪天投的？</h3>
+          <div class="row3">
+            <div class="field" id="fDateWrap">
+              <label>投资日期</label>
+              <span class="help">作用：这笔钱是哪天投出去的。</span>
+              <input id="iDate" type="date" />
+            </div>
+            <div class="field" id="fPrinWrap">
+              <label>投入金额（元）</label>
+              <span class="help">作用：当初投进去的本金。必须 ≤ 上面「还可投入」。</span>
+              <input id="iPrin" type="number" step="0.01" min="0" placeholder="例如 200" />
+            </div>
+            <div class="field">
+              <label>持有状态</label>
+              <span class="help">作用：新建一般选「持有中」；「已了结」不占用可投额度。</span>
+              <select id="iStatus"><option>持有中</option><option>已了结</option></select>
+            </div>
+          </div>
+        </div>
+
+        <div class="wizard-step">
+          <h3>③ 现在值多少？（手填市值）</h3>
+          <div class="row">
+            <div class="field" id="fMvWrap">
+              <label>当前市值（元）</label>
+              <span class="help" id="mvHint">作用：现在这笔还值多少。刚投时可先填成与投入相同；之后有账单再改。</span>
+              <input id="iMv" type="number" step="0.01" min="0" placeholder="可先与投入相同" />
+            </div>
+            <div class="field">
+              <label>凭证链接（可空）</label>
+              <span class="help">作用：贴转账/账单截图网址，方便以后对账。没有就留空。</span>
+              <input id="iVou" placeholder="没有就留空" />
+            </div>
+          </div>
+          <button type="button" id="btnAddI">添加这笔投资</button>
+        </div>
+
+        <div class="toolbar">
+          <div class="field">
+            <label>按品类筛选</label>
+            <select id="invFilterCat">
+              <option value="">全部品类</option>
+              <option>彼特B（现货）</option>
+              <option>长期的利息（长期）</option>
+              <option>体育（短期）</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>按状态筛选</label>
+            <select id="invFilterStatus">
+              <option value="">全部状态</option>
+              <option value="持有中">只看持有中</option>
+              <option value="已了结">只看已了结</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="overflow:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>时间<br /><span class="help">哪天投的</span></th>
+                <th>品类<br /><span class="help">投向</span></th>
+                <th>投入<br /><span class="help">本金</span></th>
+                <th>市值<br /><span class="help">可直接改</span></th>
+                <th>盈亏金额<br /><span class="help">市值−投入</span></th>
+                <th>盈亏比例<br /><span class="help">赚亏%</span></th>
+                <th>状态</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="iBody"></tbody>
+          </table>
+        </div>
+        <div class="recon" id="invRecon">对账摘要加载中…</div>
+      </div>
+
+      <!-- 4 分红 -->
+      <div class="card">
+        <h2><span class="step-no">4</span>分红结算（把赚的钱按比例分给每个人）</h2>
+        <div class="why">
+          作用：你填「这一期总共能分多少净利润」，系统按每人仓位自动算出该分多少，并记进流水。<br />
+          <b>重要：</b>网站不会真的转钱。算完后线下微信/支付宝转给大家，备注写「娱乐沙盘分红」。<br />
+          转完后在下方打勾「已转账」——勾选后才会从池内总资产/净值扣除；展示页同步显示转账状态。
+        </div>
+        <div class="row">
+          <div class="field">
+            <label>当期总净利润（元）</label>
+            <span class="help">作用：这一期准备拿出来分的总钱数（正数）。系统会按占比拆开。</span>
+            <input id="divTotal" type="number" step="0.01" placeholder="例如：300" />
+          </div>
+          <div class="field">
+            <label>结算日期</label>
+            <span class="help">作用：记在流水里，方便以后对账。</span>
+            <input id="divDate" type="date" />
+          </div>
+        </div>
+        <button type="button" id="btnSettle">按仓位自动算分红</button>
+        <p id="divSettleTip" class="help" style="margin-top:10px;"></p>
+        <div style="overflow:auto;margin-top:8px;">
+          <table>
+            <thead>
+              <tr>
+                <th>结算日</th>
+                <th>玩伴</th>
+                <th>应分金额</th>
+                <th>仓位占比</th>
+                <th>线下转账<br /><span class="help">勾选=已打给对方</span></th>
+              </tr>
+            </thead>
+            <tbody id="divPayBody"></tbody>
+          </table>
+        </div>
+        <p class="help" id="divPaySummary" style="margin-top:8px;"></p>
+      </div>
+
+      <!-- 5 流水（自动） -->
+      <div class="card">
+        <h2><span class="step-no">5</span>流水（自动生成，不用手填）</h2>
+        <div class="why">
+          <b>不用再手动添加流水。</b>系统会自动记账：<br />
+          · <b>入金</b>：每次保存/改数都会按玩伴当前本金自动重算（与总娱乐本金对齐）<br />
+          · <b>追加/退伙</b>：改本金或删人时自动记差额流水<br />
+          · <b>分红</b>：结算写入；勾选「已转账」后才从池子扣资产<br />
+          下面表格与展示页同步。也可手动点「一键重算入金」。
+        </div>
+        <button type="button" id="btnRebuildDep" class="warn">一键按玩伴名单重算入金流水</button>
+        <span class="help">作用：与自动联动相同——按每人当前娱乐本金重写入金表。分红流水不会被清掉。</span>
+
+        <div class="row" style="margin-top:14px;">
+          <div>
+            <b>入金合计</b>：¥<span id="sumDep">0.00</span>
+            <span class="help">作用：所有入金金额相加，应接近「总娱乐本金」。</span>
+          </div>
+          <div>
+            <b>分红合计</b>：¥<span id="sumDivFlow">0.00</span>
+            <span class="help">作用：历次自动分红流水金额相加。</span>
+          </div>
+        </div>
+
+        <div style="overflow:auto;margin-top:10px;">
+          <table>
+            <thead>
+              <tr>
+                <th>类型</th><th>时间</th><th>人员</th><th>金额</th><th>转账状态</th><th>备注（自动）</th>
+              </tr>
+            </thead>
+            <tbody id="flowPreview"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 6 净值（折叠，少用） -->
+      <div class="card">
+        <details>
+          <summary><span class="step-no">6</span>沙盘净值备份序列（自动写入，一般不用手改）</summary>
+          <div class="why" style="margin-top:8px;">
+            <b>沙盘净值已按本金+投资市值自动核算</b>（见总览「沙盘净值」）。每次改数据会自动写入今日净值点。<br />
+            前端大图是比特币公开行情；这里只是账本净值备份，一般不用手改。
+          </div>
+          <div class="field">
+            <label>净值列表</label>
+            <span class="help">格式示例：2026-08-01,1.018　（前面日期，后面净值数字）</span>
+            <textarea id="navText" rows="6" placeholder="2026-08-01,1.018"></textarea>
+          </div>
+          <button type="button" id="btnSaveNav">保存净值曲线</button>
+        </details>
+      </div>
+
+      <div class="card">
+        <h2>改完之后做什么？</h2>
+        <div class="flow">
+          <div class="item">1. 回到本页最上面，点 <b>「① 保存成数据文件」</b></div>
+          <div class="item">2. 得到 <code>sandbox.json</code>，上传覆盖网站目录里的 <code>data/sandbox.json</code></div>
+          <div class="item">3. 打开展示页刷新一下（或等约 30 秒自动刷新）</div>
+          <div class="item">4. 分红/出资记得线下转账，备注写「娱乐沙盘出资/分红」</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const PASS_HASH = "ee9efe67bef88b3aad3448aff026cb14b6c4921bb82cf1b2648c2d91de1db661";
+    const FALLBACK_PLAIN = "sandbox2026";
+    let DATA = null;
+
+    async function sha256(text) {
+      const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+      return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+    }
+    /** 资金金额统一：按分四舍五入，展示固定两位小数（如 1670.60） */
+    function money(n) {
+      return round2(n).toLocaleString("zh-CN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    function moneyInput(n) {
+      return round2(n).toFixed(2);
+    }
+    function pnlPct(principal, marketValue) {
+      const p = Number(principal || 0);
+      if (!(p > 0)) return null;
+      return ((Number(marketValue || 0) - p) / p) * 100;
+    }
+    function fmtPct(pct) {
+      if (pct == null || Number.isNaN(pct)) return "—";
+      const sign = pct >= 0 ? "+" : "";
+      return sign + pct.toFixed(2) + "%";
+    }
+    const CAT_HINTS = {
+      "彼特B（现货）": "建议核对：对照成交/账单截图填写市值，凭证可贴在第③步。",
+      "长期的利息（长期）": "建议核对：对照银行/平台账面余额或到账记录填写市值。",
+      "体育（短期）": "建议核对：对照结算截图填写市值；未结算可先等于投入。"
+    };
+    const MV_HINTS = {
+      "彼特B（现货）": "作用：按你实际成交或账单手填。刚投时可先填成与投入相同。",
+      "长期的利息（长期）": "作用：按账面余额或到账结果手填。刚投时可先填成与投入相同。",
+      "体育（短期）": "作用：按结算结果手填。未结算前可先填成与投入相同。"
+    };
+    function totalCapital() {
+      return round2(DATA.members.reduce((s, m) => s + Number(m.capital || 0), 0));
+    }
+    function todayStr() {
+      return new Date().toISOString().slice(0, 10);
+    }
+    function ensureFlows() {
+      if (!DATA.flows) DATA.flows = {};
+      DATA.flows.deposits = DATA.flows.deposits || [];
+      DATA.flows.dividends = DATA.flows.dividends || [];
+      DATA.flows.adjustments = DATA.flows.adjustments || [];
+    }
+    function round2(n) {
+      return Math.round(Number(n || 0) * 100) / 100;
+    }
+    /** 本金变化：只记追加/退伙差额（入金表由 recomputeAll 按名单整体重算） */
+    function autoFlowOnCapitalChange(name, oldCap, newCap, isNew) {
+      ensureFlows();
+      const date = todayStr();
+      const diff = round2(newCap - oldCap);
+      if (isNew) return; // 新人出资体现在自动重算的入金表
+      if (diff > 0) {
+        DATA.flows.adjustments.push({
+          date, name, amount: diff,
+          note: "追加本金（自动换算）", voucher: ""
+        });
+      } else if (diff < 0) {
+        DATA.flows.adjustments.push({
+          date, name, amount: round2(-diff),
+          note: "减资/部分退伙（自动换算）", voucher: ""
+        });
+      }
+    }
+    function autoFlowOnRemoveMember(name, capital) {
+      ensureFlows();
+      if (!(capital > 0)) return;
+      DATA.flows.adjustments.push({
+        date: todayStr(), name, amount: round2(capital),
+        note: "退伙清退本金（自动）", voucher: ""
+      });
+    }
+    /** 按玩伴名单重算入金：每人一条 = 当前娱乐本金 */
+    function rebuildDepositsFromMembers() {
+      ensureFlows();
+      DATA.flows.deposits = DATA.members
+        .filter((m) => Number(m.capital) > 0)
+        .map((m) => ({
+          date: todayStr(),
+          name: m.name,
+          amount: round2(m.capital),
+          note: "娱乐沙盘出资（自动）",
+          voucher: ""
+        }));
+    }
+    function setMsg(t, ok) {
+      const el = document.getElementById("msg");
+      el.textContent = t;
+      el.className = ok ? "ok" : "err";
+    }
+    function syncAssetsFromInvestments() {
+      const map = {};
+      (DATA.investments || []).forEach((i) => {
+        if (i.status !== "持有中") return;
+        map[i.category] = (map[i.category] || 0) + Number(i.marketValue || 0);
+      });
+      const colors = { "彼特B（现货）": "#2F6F4E", "长期的利息（长期）": "#3D7EA6", "体育（短期）": "#C47B2D" };
+      DATA.assets = Object.keys(map).map((k, idx) => ({
+        id: "a" + (idx + 1), category: k, amount: map[k], color: colors[k] || "#6B5B95"
+      }));
+    }
+    function holdingPrincipalSum(excludeIndex) {
+      return (DATA.investments || []).reduce((s, i, idx) => {
+        if (excludeIndex != null && idx === excludeIndex) return s;
+        if (i.status !== "持有中") return s;
+        return s + Number(i.principal || 0);
+      }, 0);
+    }
+    function holdingMarketSum() {
+      return (DATA.investments || []).reduce((s, i) => {
+        if (i.status !== "持有中") return s;
+        return s + Number(i.marketValue || 0);
+      }, 0);
+    }
+    function realizedPnLSum() {
+      return (DATA.investments || []).reduce((s, i) => {
+        if (i.status !== "已了结") return s;
+        return s + (Number(i.marketValue || 0) - Number(i.principal || 0));
+      }, 0);
+    }
+    /** 已转账分红合计（B2：只有 paid 才出池） */
+    function dividendPaidSum() {
+      ensureFlows();
+      return round2((DATA.flows.dividends || [])
+        .filter((r) => r.paid)
+        .reduce((s, r) => s + Number(r.amount || 0), 0));
+    }
+    /** 已结算分红合计（含待转账，用于校验「不能超额承诺」） */
+    function dividendSettledSum() {
+      ensureFlows();
+      return round2((DATA.flows.dividends || [])
+        .reduce((s, r) => s + Number(r.amount || 0), 0));
+    }
+    /** 池内可再投入现金（只扣已转账分红） */
+    function availableToInvest(excludeIndex) {
+      return round2(
+        totalCapital() - holdingPrincipalSum(excludeIndex) + realizedPnLSum() - dividendPaidSum()
+      );
+    }
+    /** 与前端同一套：总资产 / 盈亏 / 净值
+     * B2：现金与池内盈亏只扣除「已转账」分红；待转账仍算在池内。
+     */
+    function calcSandboxMetrics() {
+      const tc = totalCapital();
+      const invested = holdingPrincipalSum();
+      const holdingMV = holdingMarketSum();
+      const floatingPnL = round2(holdingMV - invested);
+      const realizedPnL = round2(realizedPnLSum());
+      const dividendsPaid = dividendPaidSum();
+      const dividendsSettled = dividendSettledSum();
+      const dividendsUnpaid = round2(dividendsSettled - dividendsPaid);
+      const cash = round2(tc - invested + realizedPnL - dividendsPaid);
+      const totalAssets = round2(holdingMV + cash);
+      const totalPnL = round2(floatingPnL + realizedPnL - dividendsPaid);
+      const grossPnL = round2(floatingPnL + realizedPnL);
+      const remainToAllocate = round2(grossPnL - dividendsSettled);
+      const nav = tc > 0 ? totalAssets / tc : 1;
+      return {
+        tc, invested, holdingMV, cash, totalAssets, totalPnL, nav,
+        floatingPnL, realizedPnL, dividendsPaid, dividendsSettled, dividendsUnpaid,
+        dividendsOut: dividendsPaid, grossPnL, remainToAllocate
+      };
+    }
+    function syncSettledDividendFromFlows() {
+      ensureFlows();
+      const map = {};
+      (DATA.flows.dividends || []).forEach((r) => {
+        map[r.name] = round2((map[r.name] || 0) + Number(r.amount || 0));
+      });
+      (DATA.members || []).forEach((m) => {
+        m.settledDividend = round2(map[m.name] || 0);
+      });
+    }
+    function autoUpdateNavHistory() {
+      const { nav } = calcSandboxMetrics();
+      const date = todayStr();
+      DATA.navHistory = DATA.navHistory || [];
+      const i = DATA.navHistory.findIndex((d) => d.date === date);
+      const point = { date, nav: Number(nav.toFixed(6)) };
+      if (i >= 0) DATA.navHistory[i] = point;
+      else DATA.navHistory.push(point);
+      DATA.navHistory.sort((a, b) => String(a.date).localeCompare(String(b.date)));
+      DATA.meta.sandboxNav = point.nav;
+    }
+    /** 改任一源数据后的统一联动（A1 入金重算 + L1 同步 + L2 指标） */
+    function recomputeAll() {
+      if (!DATA) return;
+      ensureFlows();
+      ensureDividendPaidFlags();
+      rebuildDepositsFromMembers();
+      syncAssetsFromInvestments();
+      syncSettledDividendFromFlows();
+      normalizeMoneyFields();
+      autoUpdateNavHistory();
+      DATA.meta.updatedAt = new Date().toLocaleString("zh-CN", { hour12: false });
+    }
+    /** 纠错：检查一笔即将写入的投资，返回禁止原因；通过则返回 "" */
+    function validateNewInvestment(row) {
+      const tc = totalCapital();
+      const prin = Number(row.principal);
+      const mv = Number(row.marketValue);
+      if (!row.date) return "禁止填入：请先选择投资时间。";
+      if (!(prin > 0)) return "禁止填入：投入金额必须大于 0。";
+      if (Number.isNaN(prin)) return "禁止填入：投入金额不是有效数字。";
+      if (mv < 0 || Number.isNaN(mv)) return "禁止填入：当前市值不能为负数。";
+      if (tc <= 0) {
+        return "禁止填入：总娱乐本金还是 0。请先在「玩伴名单」里录入每个人的出资金额，再登记投资。";
+      }
+      if (prin > tc) {
+        return `禁止填入：投入金额 ¥${money(prin)} 超过了总娱乐本金 ¥${money(tc)}。钱不够投这么多，请改小投入金额，或先增加玩伴本金。`;
+      }
+      const used = holdingPrincipalSum();
+      const left = availableToInvest();
+      if (row.status === "持有中" && prin > left + 1e-9) {
+        return `禁止填入：投入 ¥${money(prin)} 后会超支。池内还可投入只有 ¥${money(left)}（已扣持有投入与已转账分红）。请改小投入，或先了结旧投资 / 增加本金。`;
+      }
+      return "";
+    }
+    /** 纠错：减少玩伴本金时，总本金不能小于已投入 */
+    function validateMemberCapitalChange(name, oldCap, newCap, isNew) {
+      if (newCap < 0) return "禁止填入：娱乐本金不能为负数。";
+      // maxPerPerson / maxTotal 为 0 或未设置 = 不设金额上限
+      const maxPerson = Number(DATA.meta.maxPerPerson || 0);
+      const maxTotal = Number(DATA.meta.maxTotal || 0);
+      if (maxPerson > 0 && newCap > maxPerson) {
+        return `禁止填入：单人娱乐本金不能超过 ¥${money(maxPerson)}（规则上限）。`;
+      }
+      if (isNew && DATA.members.length >= DATA.meta.maxMembers) {
+        return `禁止填入：玩伴人数不能超过 ${DATA.meta.maxMembers} 人。`;
+      }
+      let nextTotal = totalCapital() - (isNew ? 0 : oldCap) + newCap;
+      nextTotal = round2(nextTotal);
+      if (maxTotal > 0 && nextTotal > maxTotal) {
+        return `禁止填入：全体总娱乐本金将变成 ¥${money(nextTotal)}，超过上限 ¥${money(maxTotal)}。`;
+      }
+      const invested = holdingPrincipalSum();
+      if (nextTotal + 1e-9 < invested) {
+        return `禁止填入：改完后总娱乐本金只有 ¥${money(nextTotal)}，但「持有中」投资已占用 ¥${money(invested)}。不能把本金改得比已投入还少。请先删减/了结部分投资，或不要把 ${name || "该玩伴"} 的本金降这么多。`;
+      }
+      return "";
+    }
+    function validateDividend(total) {
+      if (!(total > 0)) return "禁止结算：当期总净利润必须大于 0。";
+      if (totalCapital() <= 0) return "禁止结算：还没有娱乐本金，无法按仓位分红。";
+      const m = calcSandboxMetrics();
+      // 可承诺分配额度 = 毛盈亏 − 已结算（含待转账），防止超额分红
+      const remain = m.remainToAllocate;
+      if (total > remain + 1e-9 && remain >= 0) {
+        return `禁止结算：你要分的 ¥${money(total)} 大于还可承诺分配 ¥${money(remain)}（毛盈亏 ¥${money(m.grossPnL)} − 已结算分红 ¥${money(m.dividendsSettled)}）。请改小金额。`;
+      }
+      if (remain <= 0 && total > 0) {
+        return `禁止结算：还可承诺分配为 ¥${money(remain)}，没有可再分的净利润。`;
+      }
+      return "";
+    }
+    function ensureDividendPaidFlags() {
+      ensureFlows();
+      (DATA.flows.dividends || []).forEach((r) => {
+        if (typeof r.paid !== "boolean") r.paid = false;
+      });
+    }
+    function renderDivPayList() {
+      ensureDividendPaidFlags();
+      const tc = totalCapital();
+      const rows = DATA.flows.dividends || [];
+      const body = document.getElementById("divPayBody");
+      body.innerHTML = rows.map((r, idx) => {
+        const m = DATA.members.find((x) => x.name === r.name);
+        const share = tc > 0 && m ? (Number(m.capital) / tc * 100).toFixed(2) + "%" : "—";
+        const paid = !!r.paid;
+        return `<tr>
+          <td>${r.date}</td>
+          <td>${r.name}</td>
+          <td>¥${money(r.amount)}</td>
+          <td>${share}</td>
+          <td>
+            <label class="pay-check ${paid ? "pay-yes" : "pay-no"}">
+              <input type="checkbox" data-paidiv="${idx}" ${paid ? "checked" : ""} />
+              ${paid ? "已转账" : "待转账"}
+            </label>
+          </td>
+        </tr>`;
+      }).join("") || `<tr><td colspan="5" class="help">还没有分红记录。先在上方填写金额并点「按仓位自动算分红」。</td></tr>`;
+
+      const paidN = rows.filter((r) => r.paid).length;
+      const unpaidN = rows.length - paidN;
+      const unpaidSum = round2(rows.filter((r) => !r.paid).reduce((s, r) => s + Number(r.amount || 0), 0));
+      document.getElementById("divPaySummary").textContent = rows.length
+        ? `共 ${rows.length} 笔：已转账 ${paidN} 笔（已出池），待转账 ${unpaidN} 笔合计 ¥${money(unpaidSum)}（仍在池内）。勾选已转账会立刻重算总资产/净值；请再「保存成数据文件」。`
+        : "";
+
+      document.querySelectorAll("[data-paidiv]").forEach((box) => {
+        box.onchange = () => {
+          const idx = Number(box.dataset.paidiv);
+          if (!DATA.flows.dividends[idx]) return;
+          DATA.flows.dividends[idx].paid = !!box.checked;
+          touch();
+          setMsg(
+            box.checked
+              ? `已标记「${DATA.flows.dividends[idx].name}」已转账：该笔已从池内总资产/净值扣除。请保存数据文件。`
+              : `已取消「${DATA.flows.dividends[idx].name}」已转账：该笔加回池内资产。请保存数据文件。`,
+            true
+          );
+        };
+      });
+    }
+    /** 全盘纠错扫描，返回问题列表 */
+    function auditAll() {
+      const issues = [];
+      const n = DATA.members.length;
+      const cap = totalCapital();
+      const invested = holdingPrincipalSum();
+      const maxPerson = Number(DATA.meta.maxPerPerson || 0);
+      const maxTotal = Number(DATA.meta.maxTotal || 0);
+      if (n > DATA.meta.maxMembers) issues.push(`玩伴人数 ${n} 超过上限 ${DATA.meta.maxMembers}。`);
+      if (maxTotal > 0 && cap > maxTotal) {
+        issues.push(`总娱乐本金 ¥${money(cap)} 超过上限 ¥${money(maxTotal)}。`);
+      }
+      DATA.members.forEach((m) => {
+        if (maxPerson > 0 && Number(m.capital) > maxPerson) {
+          issues.push(`${m.name} 单人娱乐本金 ¥${money(m.capital)} 超过上限 ¥${money(maxPerson)}。`);
+        }
+        if (Number(m.capital) < 0) issues.push(`${m.name} 的娱乐本金为负数，不合法。`);
+      });
+      if (invested > cap + 1e-9) {
+        issues.push(`已投入本金 ¥${money(invested)} 大于总娱乐本金 ¥${money(cap)}（超支 ¥${money(invested - cap)}）。请删除或了结多余投资，或增加玩伴本金。`);
+      }
+      (DATA.investments || []).forEach((i, idx) => {
+        if (Number(i.principal) < 0) issues.push(`第 ${idx + 1} 笔投资「${i.category}」投入金额为负。`);
+        if (Number(i.marketValue) < 0) issues.push(`第 ${idx + 1} 笔投资「${i.category}」市值为负。`);
+        if (i.status === "持有中" && Number(i.principal) > cap + 1e-9) {
+          issues.push(`投资「${i.category}」（${i.date}）单笔投入 ¥${money(i.principal)} 已超过总娱乐本金 ¥${money(cap)}。`);
+        }
+      });
+      return issues;
+    }
+    function renderAudit() {
+      const issues = auditAll();
+      const box = document.getElementById("auditBox");
+      const list = document.getElementById("auditList");
+      const title = document.getElementById("auditTitle");
+      if (!issues.length) {
+        box.className = "audit pass";
+        title.textContent = "账本数字正常，可以保存。";
+        const m = calcSandboxMetrics();
+        list.innerHTML = `<li>总娱乐本金 ¥${money(m.tc)}；已投入 ¥${money(m.invested)}；现金 ¥${money(m.cash)}；已转账分红 −¥${money(m.dividendsPaid)}；待转账分红 ¥${money(m.dividendsUnpaid)}；当前总资产 ¥${money(m.totalAssets)}；池内盈亏 ¥${money(m.totalPnL)}；还可承诺分配 ¥${money(m.remainToAllocate)}；净值 <b>${m.nav.toFixed(4)}</b>。</li>`;
+      } else {
+        box.className = "audit";
+        title.textContent = `发现 ${issues.length} 个问题，保存前必须先改对。`;
+        list.innerHTML = issues.map((t) => `<li>${t}</li>`).join("");
+      }
+      return issues;
+    }
+    function showInvBlock(reason) {
+      const tip = document.getElementById("invBlockTip");
+      const wrap = document.getElementById("fPrinWrap");
+      const mvWrap = document.getElementById("fMvWrap");
+      if (reason) {
+        tip.textContent = reason;
+        tip.classList.add("show");
+        wrap.classList.add("bad");
+        if (/市值/.test(reason)) mvWrap.classList.add("bad");
+        else mvWrap.classList.remove("bad");
+      } else {
+        tip.textContent = "";
+        tip.classList.remove("show");
+        wrap.classList.remove("bad");
+        mvWrap.classList.remove("bad");
+      }
+    }
+    function syncCatUI() {
+      const cat = document.getElementById("iCat").value;
+      document.querySelectorAll(".cat-card").forEach((el) => {
+        el.classList.toggle("active", el.dataset.cat === cat);
+      });
+      document.getElementById("catHint").textContent = CAT_HINTS[cat] || "";
+      document.getElementById("mvHint").textContent = MV_HINTS[cat] || "";
+    }
+    function validateMarketValueEdit(idx, mv) {
+      if (mv < 0 || Number.isNaN(mv)) return "禁止填入：当前市值不能为负数。";
+      const row = DATA.investments[idx];
+      if (!row) return "找不到这笔投资。";
+      return "";
+    }
+    function renderInvestTable() {
+      const filterCat = document.getElementById("invFilterCat").value;
+      const filterStatus = document.getElementById("invFilterStatus").value;
+      const rows = (DATA.investments || []).map((i, idx) => ({ i, idx })).filter(({ i }) => {
+        if (filterCat && i.category !== filterCat) return false;
+        if (filterStatus && i.status !== filterStatus) return false;
+        return true;
+      });
+      document.getElementById("iBody").innerHTML = rows.map(({ i, idx }) => {
+        const pnl = Number(i.marketValue) - Number(i.principal);
+        const pct = pnlPct(i.principal, i.marketValue);
+        const pnlCls = pnl >= 0 ? "ok" : "err";
+        const closeBtn = i.status === "持有中"
+          ? `<button type="button" class="ghost" data-closei="${idx}">标记已了结</button>`
+          : `<button type="button" class="ghost" data-reopeni="${idx}">改回持有中</button>`;
+        return `<tr>
+          <td>${i.date}</td>
+          <td>${i.category}</td>
+          <td>¥${money(i.principal)}</td>
+          <td><input class="inline-mv" type="number" step="0.01" min="0" value="${moneyInput(i.marketValue)}" data-mvi="${idx}" title="改完失焦或回车即保存" /></td>
+          <td class="${pnlCls}">${pnl >= 0 ? "+" : ""}¥${money(pnl)}</td>
+          <td class="${pnlCls}">${fmtPct(pct)}</td>
+          <td>${i.status}</td>
+          <td class="ops">${closeBtn}<button type="button" class="danger" data-deli="${idx}">删除</button></td>
+        </tr>`;
+      }).join("") || `<tr><td colspan="8" class="help">没有符合筛选的投资记录。可在上方三步添加。</td></tr>`;
+
+      const m = calcSandboxMetrics();
+      const holdingN = (DATA.investments || []).filter((x) => x.status === "持有中").length;
+      const closedN = (DATA.investments || []).length - holdingN;
+      document.getElementById("invRecon").innerHTML =
+        `<b>对账摘要：</b>持有中 ${holdingN} 笔，投入 ¥${money(m.invested)}，市值 ¥${money(m.holdingMV)}，浮动 ${m.floatingPnL >= 0 ? "+" : ""}¥${money(m.floatingPnL)}；` +
+        `已了结 ${closedN} 笔，已实现 ${m.realizedPnL >= 0 ? "+" : ""}¥${money(m.realizedPnL)}；` +
+        `已转账分红 −¥${money(m.dividendsPaid)}；待转账 ¥${money(m.dividendsUnpaid)}；现金 ¥${money(m.cash)}；总资产 ¥${money(m.totalAssets)}；池内盈亏 ${m.totalPnL >= 0 ? "+" : ""}¥${money(m.totalPnL)}；净值 ${m.nav.toFixed(4)}。`;
+
+      document.querySelectorAll("[data-deli]").forEach((btn) => {
+        btn.onclick = () => {
+          if (!confirm("确定删除这笔投资？")) return;
+          DATA.investments.splice(Number(btn.dataset.deli), 1);
+          touch();
+          setMsg("已删除投资（记得保存成数据文件）", true);
+        };
+      });
+      document.querySelectorAll("[data-closei]").forEach((btn) => {
+        btn.onclick = () => {
+          const idx = Number(btn.dataset.closei);
+          const row = DATA.investments[idx];
+          if (!row) return;
+          const tip = `确认了结「${row.category}」（${row.date}）？\n\n` +
+            `请先确认表格里的「市值」是结案时的退出金额（当前 ¥${money(row.marketValue)}）。\n` +
+            `了结后：不再占用可投额度；赚亏 ¥${money(Number(row.marketValue) - Number(row.principal))} 会自动计入已实现盈亏并加回现金，顶部总资产/净值会立刻重算。\n` +
+            `总娱乐本金不变（只跟玩伴名单有关）。`;
+          if (!confirm(tip)) return;
+          const ask = prompt("结案市值（元）——可改，直接确定则用当前值：", moneyInput(row.marketValue));
+          if (ask == null) return;
+          const exitMv = round2(ask);
+          if (exitMv < 0 || Number.isNaN(exitMv)) {
+            alert("结案市值不能为负数或无效数字。");
+            return;
+          }
+          row.marketValue = exitMv;
+          row.status = "已了结";
+          touch();
+          const rp = exitMv - Number(row.principal);
+          setMsg(`已标记了结。已实现盈亏 ${rp >= 0 ? "+" : ""}¥${money(rp)} 已计入现金与净值，请再点「保存成数据文件」`, true);
+        };
+      });
+      document.querySelectorAll("[data-reopeni]").forEach((btn) => {
+        btn.onclick = () => {
+          const idx = Number(btn.dataset.reopeni);
+          const row = DATA.investments[idx];
+          if (!row) return;
+          const usedOthers = holdingPrincipalSum(idx);
+          const left = round2(totalCapital() - usedOthers);
+          if (Number(row.principal) > left + 1e-9) {
+            const tip = `无法改回持有中：投入 ¥${money(row.principal)} 会超支。还可投入只有 ¥${money(left)}。请先增加本金或了结其他投资。`;
+            setMsg(tip, false);
+            alert(tip);
+            return;
+          }
+          row.status = "持有中";
+          touch();
+          setMsg("已改回持有中", true);
+        };
+      });
+      document.querySelectorAll("[data-mvi]").forEach((input) => {
+        const save = () => {
+          const idx = Number(input.dataset.mvi);
+          const mv = Number(input.value);
+          const block = validateMarketValueEdit(idx, mv);
+          if (block) {
+            setMsg(block, false);
+            alert(block);
+            input.value = Number(DATA.investments[idx].marketValue);
+            return;
+          }
+          const mv2 = round2(mv);
+          if (round2(DATA.investments[idx].marketValue) === mv2) {
+            input.value = moneyInput(mv2);
+            return;
+          }
+          DATA.investments[idx].marketValue = mv2;
+          touch();
+          setMsg("市值已更新，净值会自动重算", true);
+        };
+        input.addEventListener("change", save);
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") { e.preventDefault(); input.blur(); }
+        });
+      });
+    }
+    function validateLimits() {
+      const issues = auditAll();
+      return issues[0] || "";
+    }
+    function touch() {
+      recomputeAll();
+      renderAll();
+    }
+    function renderAll() {
+      if (!DATA) return;
+      document.getElementById("upd").textContent = DATA.meta.updatedAt || "—";
+      const m = calcSandboxMetrics();
+      const tc = m.tc;
+      const used = m.invested;
+      const left = availableToInvest();
+      document.getElementById("sumCap").textContent = "¥" + money(tc);
+      document.getElementById("sumN").textContent = DATA.members.length + " 人";
+      document.getElementById("sumInvested").textContent = "¥" + money(used);
+      document.getElementById("sumAvail").textContent = "¥" + money(left);
+      document.getElementById("sumAssets").textContent = "¥" + money(m.totalAssets);
+      const pnlEl = document.getElementById("sumPnL");
+      pnlEl.textContent = (m.totalPnL >= 0 ? "+" : "") + "¥" + money(m.totalPnL);
+      pnlEl.style.color = m.totalPnL >= 0 ? "#1f7a4c" : "#c0392b";
+      document.getElementById("sumNav").textContent = m.nav.toFixed(4);
+      document.getElementById("budTotal").textContent = "¥" + money(tc);
+      document.getElementById("budUsed").textContent = "¥" + money(used);
+      document.getElementById("budLeft").textContent = "¥" + money(left);
+      const budPnl = document.getElementById("budPnl");
+      budPnl.textContent = (m.totalPnL >= 0 ? "+" : "") + "¥" + money(m.totalPnL);
+      budPnl.style.color = m.totalPnL >= 0 ? "#1f7a4c" : "#c0392b";
+      document.getElementById("budNav").textContent = m.nav.toFixed(4);
+      document.getElementById("annTitle").value = DATA.announcement.title || "";
+      document.getElementById("annContent").value = DATA.announcement.content || "";
+      document.getElementById("annDate").value = DATA.announcement.publishedAt || "";
+      renderAudit();
+      document.getElementById("mBody").innerHTML = DATA.members.map((m, idx) => {
+        const share = tc > 0 ? (m.capital / tc * 100).toFixed(2) + "%" : "0%";
+        return `<tr>
+          <td>${m.name}</td><td>¥${money(m.capital)}</td><td>¥${money(m.settledDividend)}</td><td>${share}</td>
+          <td><button type="button" class="danger" data-delm="${idx}">删除此人</button></td>
+        </tr>`;
+      }).join("") || `<tr><td colspan="5" class="help">还没有玩伴，先在上面添加。</td></tr>`;
+
+      renderInvestTable();
+
+      document.getElementById("navText").value = (DATA.navHistory || []).map((d) => d.date + "," + d.nav).join("\n");
+
+      ensureFlows();
+      const sumDep = DATA.flows.deposits.reduce((s, r) => s + Number(r.amount || 0), 0);
+      const sumDiv = DATA.flows.dividends.reduce((s, r) => s + Number(r.amount || 0), 0);
+      document.getElementById("sumDep").textContent = money(sumDep);
+      document.getElementById("sumDivFlow").textContent = money(sumDiv);
+
+      ensureDividendPaidFlags();
+      renderDivPayList();
+
+      const typeName = { deposits: "入金", dividends: "分红", adjustments: "追加/退伙" };
+      const previewRows = [];
+      ["deposits", "dividends", "adjustments"].forEach((k) => {
+        (DATA.flows[k] || []).forEach((r) => {
+          previewRows.push({ type: typeName[k], flowKey: k, ...r });
+        });
+      });
+      previewRows.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+      document.getElementById("flowPreview").innerHTML = previewRows.map((r) => {
+        let pay = "—";
+        if (r.flowKey === "dividends") {
+          pay = r.paid
+            ? `<span class="pay-yes">已转账</span>`
+            : `<span class="pay-no">待转账</span>`;
+        }
+        return `<tr>
+          <td>${r.type}</td><td>${r.date}</td><td>${r.name}</td>
+          <td>¥${money(r.amount)}</td><td>${pay}</td><td>${r.note || ""}</td>
+        </tr>`;
+      }).join("") || `<tr><td colspan="6" class="help">暂无流水。添加玩伴或结算分红后会自动出现。</td></tr>`;
+
+      document.querySelectorAll("[data-delm]").forEach((btn) => {
+        btn.onclick = () => {
+          const idx = Number(btn.dataset.delm);
+          const m = DATA.members[idx];
+          if (!m) return;
+          const block = validateMemberCapitalChange(m.name, Number(m.capital || 0), 0, false);
+          if (block) {
+            setMsg(block, false);
+            alert("纠错模式禁止删除该玩伴。\n\n" + block);
+            return;
+          }
+          if (!confirm("确定删除这个玩伴？系统会自动记一笔「退伙」流水。")) return;
+          autoFlowOnRemoveMember(m.name, m.capital);
+          DATA.members.splice(idx, 1);
+          touch();
+          setMsg("已删除玩伴，并自动写入退伙流水", true);
+        };
+      });
+
+      const warn = validateLimits();
+      if (warn) setMsg("注意：" + warn, false);
+    }
+
+    async function tryLogin() {
+      const pwd = document.getElementById("pwd").value;
+      const h = await sha256(pwd);
+      const ok = h === PASS_HASH || pwd === FALLBACK_PLAIN;
+      if (!ok) {
+        document.getElementById("loginMsg").textContent = "密码不对，请再试。默认是 sandbox2026";
+        document.getElementById("loginMsg").className = "err";
+        return;
+      }
+      sessionStorage.setItem("sandbox_admin_ok", "1");
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("app").style.display = "block";
+      await bootData();
+    }
+
+    async function bootData() {
+      try {
+        const res = await fetch("../data/sandbox.json?_=" + Date.now(), { cache: "no-store" });
+        DATA = await res.json();
+      } catch (e) {
+        const cached = localStorage.getItem("sandbox_dashboard_data");
+        DATA = cached ? JSON.parse(cached) : null;
+      }
+      if (!DATA) {
+        setMsg("没读到数据文件，请用「从本地文件导入」", false);
+        DATA = {
+          meta: { updatedAt: "", slogan: "熟人小额理财模拟娱乐看板，仅用于记账对账，不存在募资理财行为", maxMembers: 15, maxPerPerson: 0, maxTotal: 0, retentionYears: 3 },
+          announcement: { title: "", content: "", publishedAt: "" },
+          members: [], assets: [], investments: [], navHistory: [],
+          flows: { deposits: [], dividends: [], adjustments: [] },
+          rules: {}
+        };
+      }
+      touch();
+      setMsg("已载入账本并完成全量联动重算。改完记得点「保存成数据文件」", true);
+    }
+
+    function download(filename, text, type) {
+      const blob = new Blob([text], { type: type || "application/json;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function exportCsv() {
+      const lines = ["成员,娱乐本金,已结算分红"];
+      DATA.members.forEach((m) => lines.push([m.name, m.capital, m.settledDividend].join(",")));
+      lines.push("", "投资时间,投向品类,投入金额,当前市值,盈亏金额,盈亏比例%,状态,凭证");
+      DATA.investments.forEach((i) => {
+        const pnl = Number(i.marketValue) - Number(i.principal);
+        const pct = pnlPct(i.principal, i.marketValue);
+        lines.push([
+          i.date, i.category, i.principal, i.marketValue, pnl,
+          pct == null ? "" : pct.toFixed(2), i.status, (i.voucher || "").replace(/,/g, "，")
+        ].join(","));
+      });
+      ["deposits", "dividends", "adjustments"].forEach((k) => {
+        const title = { deposits: "入金", dividends: "分红", adjustments: "追加退伙" }[k];
+        if (k === "dividends") {
+          lines.push("", "流水," + title, "时间,人员,金额,是否已转账,备注");
+          (DATA.flows[k] || []).forEach((r) => lines.push([
+            r.date, r.name, r.amount, r.paid ? "已转账" : "待转账", (r.note || "").replace(/,/g, "，")
+          ].join(",")));
+        } else {
+          lines.push("", "流水," + title, "时间,人员,金额,备注");
+          (DATA.flows[k] || []).forEach((r) => lines.push([r.date, r.name, r.amount, (r.note || "").replace(/,/g, "，")].join(",")));
+        }
+      });
+      download("沙盘账目表.csv", "\uFEFF" + lines.join("\n"), "text/csv;charset=utf-8");
+      setMsg("表格已下载，用 Excel 打开即可", true);
+    }
+
+    document.getElementById("btnLogin").onclick = tryLogin;
+    document.getElementById("pwd").addEventListener("keydown", (e) => { if (e.key === "Enter") tryLogin(); });
+    if (sessionStorage.getItem("sandbox_admin_ok") === "1") {
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("app").style.display = "block";
+      bootData();
+    }
+
+    document.getElementById("btnLogout").onclick = () => {
+      sessionStorage.removeItem("sandbox_admin_ok");
+      location.reload();
+    };
+    document.getElementById("btnLoadFile").onclick = () => document.getElementById("fileIn").click();
+    document.getElementById("fileIn").onchange = async (e) => {
+      const f = e.target.files[0];
+      if (!f) return;
+      DATA = JSON.parse(await f.text());
+      touch();
+      setMsg("已从文件载入：" + f.name, true);
+    };
+    function normalizeMoneyFields() {
+      (DATA.members || []).forEach((m) => {
+        m.capital = round2(m.capital);
+        m.settledDividend = round2(m.settledDividend);
+      });
+      (DATA.investments || []).forEach((i) => {
+        i.principal = round2(i.principal);
+        i.marketValue = round2(i.marketValue);
+      });
+      (DATA.assets || []).forEach((a) => { a.amount = round2(a.amount); });
+      ["deposits", "dividends", "adjustments"].forEach((k) => {
+        ((DATA.flows && DATA.flows[k]) || []).forEach((r) => { r.amount = round2(r.amount); });
+      });
+    }
+    document.getElementById("btnExportJson").onclick = () => {
+      const issues = renderAudit();
+      if (issues.length) {
+        setMsg("纠错模式禁止保存：" + issues[0], false);
+        alert("纠错模式禁止保存数据文件。\n\n原因：\n- " + issues.join("\n- "));
+        return;
+      }
+      touch();
+      download("sandbox.json", JSON.stringify(DATA, null, 2));
+      setMsg("已下载 sandbox.json → 请上传覆盖网站 data 文件夹里的同名文件", true);
+    };
+    document.getElementById("btnExportCsv").onclick = exportCsv;
+    document.getElementById("btnPreview").onclick = () => {
+      recomputeAll();
+      localStorage.setItem("sandbox_dashboard_preview", "1");
+      localStorage.setItem("sandbox_dashboard_data", JSON.stringify(DATA));
+      renderAll();
+      setMsg("已写入本机（已全量联动重算）。请打开展示页并在地址后加 ?preview=1", true);
+    };
+    document.getElementById("btnSaveAnn").onclick = () => {
+      DATA.announcement.title = document.getElementById("annTitle").value.trim();
+      DATA.announcement.content = document.getElementById("annContent").value.trim();
+      DATA.announcement.publishedAt = document.getElementById("annDate").value;
+      touch();
+      setMsg("公告已写入账本，请再点「保存成数据文件」", true);
+    };
+    document.getElementById("btnAddM").onclick = () => {
+      const name = document.getElementById("mName").value.trim();
+      const capital = round2(document.getElementById("mCap").value);
+      if (!name) return setMsg("请先填姓名", false);
+      const colors = ["#2F6F4E", "#3D7EA6", "#C47B2D", "#6B5B95", "#8B4513", "#2E8B57", "#4682B4"];
+      let m = DATA.members.find((x) => x.name === name);
+      const isNew = !m;
+      const oldCap = isNew ? 0 : Number(m.capital || 0);
+      const block = validateMemberCapitalChange(name, oldCap, capital, isNew);
+      if (block) {
+        setMsg(block, false);
+        alert(block);
+        return;
+      }
+      if (m) {
+        autoFlowOnCapitalChange(name, oldCap, capital, false);
+        m.capital = capital;
+      } else {
+        autoFlowOnCapitalChange(name, 0, capital, true);
+        DATA.members.push({
+          id: "m" + Date.now(), name, capital, settledDividend: 0,
+          color: colors[DATA.members.length % colors.length]
+        });
+      }
+      touch();
+      setMsg("玩伴已更新：入金已按名单重算，已分红已按流水分摊。记得「保存成数据文件」", true);
+    };
+
+    document.getElementById("btnRebuildDep").onclick = () => {
+      if (!confirm("将清空「入金记录」，并按每位玩伴当前娱乐本金重新生成。分红流水保留。继续吗？")) return;
+      rebuildDepositsFromMembers();
+      touch();
+      setMsg("入金流水已按名单自动重算完成", true);
+    };
+    function readInvestDraft() {
+      let mvRaw = document.getElementById("iMv").value;
+      const prinRaw = document.getElementById("iPrin").value;
+      // 市值留空时默认等于投入，方便小白录入
+      if (prinRaw && !mvRaw && mvRaw !== "0") mvRaw = prinRaw;
+      return {
+        id: "inv" + Date.now(),
+        date: document.getElementById("iDate").value,
+        category: document.getElementById("iCat").value,
+        principal: round2(prinRaw),
+        marketValue: mvRaw === "" ? NaN : round2(mvRaw),
+        status: document.getElementById("iStatus").value,
+        voucher: document.getElementById("iVou").value.trim()
+      };
+    }
+    function liveCheckInvest() {
+      if (!DATA) return;
+      const draft = readInvestDraft();
+      if (!document.getElementById("iPrin").value) {
+        showInvBlock("");
+        return;
+      }
+      showInvBlock(validateNewInvestment(draft));
+    }
+    ["iPrin", "iMv", "iStatus", "iDate"].forEach((id) => {
+      document.getElementById(id).addEventListener("input", liveCheckInvest);
+      document.getElementById(id).addEventListener("change", liveCheckInvest);
+    });
+    document.querySelectorAll('input[name="iCatRadio"]').forEach((radio) => {
+      radio.addEventListener("change", () => {
+        if (!radio.checked) return;
+        document.getElementById("iCat").value = radio.value;
+        syncCatUI();
+      });
+    });
+    document.querySelectorAll(".cat-card").forEach((card) => {
+      card.addEventListener("click", () => {
+        const radio = card.querySelector('input[type="radio"]');
+        if (!radio) return;
+        radio.checked = true;
+        document.getElementById("iCat").value = radio.value;
+        syncCatUI();
+      });
+    });
+    ["invFilterCat", "invFilterStatus"].forEach((id) => {
+      document.getElementById(id).addEventListener("change", () => {
+        if (DATA) renderInvestTable();
+      });
+    });
+    syncCatUI();
+    if (!document.getElementById("iDate").value) {
+      document.getElementById("iDate").value = todayStr();
+    }
+
+    document.getElementById("btnAddI").onclick = () => {
+      const row = readInvestDraft();
+      if (!document.getElementById("iMv").value && row.principal > 0) {
+        document.getElementById("iMv").value = String(row.principal);
+        row.marketValue = row.principal;
+      }
+      const block = validateNewInvestment(row);
+      if (block) {
+        showInvBlock(block);
+        setMsg(block, false);
+        alert(block);
+        return;
+      }
+      showInvBlock("");
+      DATA.investments.push(row);
+      touch();
+      document.getElementById("iPrin").value = "";
+      document.getElementById("iMv").value = "";
+      document.getElementById("iVou").value = "";
+      document.getElementById("iStatus").value = "持有中";
+      setMsg("投资已添加。总资产会按新市值自动算；改市值可在表格里直接改", true);
+    };
+    document.getElementById("btnSettle").onclick = () => {
+      const total = round2(document.getElementById("divTotal").value);
+      const date = document.getElementById("divDate").value || new Date().toISOString().slice(0, 10);
+      const block = validateDividend(total);
+      if (block) {
+        setMsg(block, false);
+        alert(block);
+        return;
+      }
+      ensureFlows();
+      const tc = totalCapital();
+      const batchId = "div" + Date.now();
+      const names = [];
+      DATA.members.forEach((m) => {
+        const share = m.capital / tc;
+        const amt = round2(total * share);
+        DATA.flows.dividends.push({
+          id: batchId + "_" + m.id,
+          batchId,
+          date,
+          name: m.name,
+          amount: amt,
+          note: "娱乐沙盘分红（按仓位自动）",
+          voucher: "",
+          paid: false
+        });
+        names.push(`${m.name} ¥${money(amt)}`);
+      });
+      document.getElementById("divSettleTip").textContent =
+        `已拆分本期 ¥${money(total)} → ${names.join("；")}。默认「待转账」（此时不扣总资产）；线下打款后勾选「已转账」才会从池内扣除。`;
+      document.getElementById("divTotal").value = "";
+      touch();
+      setMsg("分红已写入（待转账）。勾选已转账后总资产/净值才会下降，并请「保存成数据文件」", true);
+    };
+    document.getElementById("btnSaveNav").onclick = () => {
+      const lines = document.getElementById("navText").value.split(/\r?\n/).map((s) => s.trim()).filter(Boolean);
+      DATA.navHistory = lines.map((line) => {
+        const [date, nav] = line.split(/[,，\s]+/);
+        return { date, nav: Number(nav) };
+      }).filter((d) => d.date && !Number.isNaN(d.nav));
+      touch();
+      setMsg("净值曲线已保存", true);
+    };
+  </script>
+</body>
+</html>
