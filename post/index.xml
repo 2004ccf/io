@@ -1,22 +1,34 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 陈乘峰</title><link>https://2004ccf.github.io/io/post/</link><description>Recent content in Posts on 陈乘峰</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>陈乘峰博客</copyright><lastBuildDate>Sun, 09 Aug 2026 21:53:00 +0800</lastBuildDate><atom:link href="https://2004ccf.github.io/io/post/index.xml" rel="self" type="application/rss+xml"/><item><title>财盈鸡精</title><link>https://2004ccf.github.io/io/p/cai-ying-ji-jing/</link><pubDate>Sun, 09 Aug 2026 21:53:00 +0800</pubDate><guid>https://2004ccf.github.io/io/p/cai-ying-ji-jing/</guid><description>&lt;p&gt;熟人小额理财模拟娱乐看板入口。网站不收钱、不转账；账本在服务器上跑，外网地址开机后可能更新，&lt;strong&gt;以本文下方最新链接为准&lt;/strong&gt;。&lt;/p&gt;
-&lt;h2 id="使用说明"&gt;使用说明
-&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;玩伴&lt;/strong&gt;：只打开「展示页」，不用登录，只能看不能改。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;管理员&lt;/strong&gt;：打开「管理后台」，用密码登录后改账，并点「保存到服务器」。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;注意&lt;/strong&gt;：管理后台地址写在本文中，但仍需密码；请勿把后台链接或密码转发给外人。不要把后台写进博客菜单。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="当前外网链接"&gt;当前外网链接
-&lt;/h2&gt;&lt;!-- SANDBOX_LINKS_START --&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;展示页（玩伴用）&lt;/strong&gt;：&lt;a class="link" href="https://meaning-intake-band-alex.trycloudflare.com/" target="_blank" rel="noopener"
-&gt;https://meaning-intake-band-alex.trycloudflare.com/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;管理后台（仅管理员，需密码）&lt;/strong&gt;：&lt;a class="link" href="https://meaning-intake-band-alex.trycloudflare.com/admin/" target="_blank" rel="noopener"
-&gt;https://meaning-intake-band-alex.trycloudflare.com/admin/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;更新时间&lt;/strong&gt;：2026-08-24 12:51&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- SANDBOX_LINKS_END --&gt;
-&lt;h2 id="补充"&gt;补充
-&lt;/h2&gt;&lt;p&gt;若链接打不开：多半是服务器未开机，或 Tunnel 窗口已关闭。等管理员重新一键启动并更新本文后再试。&lt;/p&gt;</description></item><item><title>如何阅读一本书——我的 CF 读书笔记体系</title><link>https://2004ccf.github.io/io/p/ruhe-yuedu-yibenshu-cf/</link><pubDate>Sun, 09 Aug 2026 13:26:16 +0800</pubDate><guid>https://2004ccf.github.io/io/p/ruhe-yuedu-yibenshu-cf/</guid><description>&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 陈乘峰</title><link>https://2004ccf.github.io/io/post/</link><description>Recent content in Posts on 陈乘峰</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>陈乘峰博客</copyright><lastBuildDate>Mon, 24 Aug 2026 13:27:00 +0800</lastBuildDate><atom:link href="https://2004ccf.github.io/io/post/index.xml" rel="self" type="application/rss+xml"/><item><title>足球赛事精算分析</title><link>https://2004ccf.github.io/io/p/football-workflow/</link><pubDate>Mon, 24 Aug 2026 13:27:00 +0800</pubDate><guid>https://2004ccf.github.io/io/p/football-workflow/</guid><description>&lt;h1 id="足球赛事精算分析"&gt;足球赛事精算分析
+&lt;/h1&gt;&lt;h1 id="足球赛事精算分析-1"&gt;足球赛事精算分析
+&lt;/h1&gt;&lt;p&gt;工作流自动汇总：每场比赛在本文追加/更新预测，不另开新页。&lt;/p&gt;
+&lt;!-- workflow-match:3023451 --&gt;
+&lt;h2 id="预测-2026-08-24-0456"&gt;预测 2026-08-24 04:56
+&lt;/h2&gt;&lt;p&gt;波尔图 vs 阿罗卡 · 0-0（0&amp;rsquo;，进行中）&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;最终胜负预测：&lt;/strong&gt; 平（次选：主胜）
+&lt;strong&gt;预测终场比分：&lt;/strong&gt; 1-0
+&lt;strong&gt;置信度：&lt;/strong&gt; 中
+&lt;strong&gt;核心理由：&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;当前 波尔图 0-0 阿罗卡，赛况 进行中&lt;/li&gt;
+&lt;li&gt;场面标签：上半场、平局、比赛未结束&lt;/li&gt;
+&lt;li&gt;半场僵持时，主场球队仍有翻盘空间&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;（基于 波尔图 0-0 阿罗卡，0&amp;rsquo;，进行中）&lt;/p&gt;
+&lt;!-- /workflow-match:3023451 --&gt;
+&lt;!-- workflow-match:2993757 --&gt;
+&lt;h2 id="预测-2026-08-24-1333"&gt;预测 2026-08-24 13:33
+&lt;/h2&gt;&lt;p&gt;博洛尼亚 vs 拉齐奥 · 0-0（0&amp;rsquo;，未开场）&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;最终胜负预测：&lt;/strong&gt; 平（次选：主胜）
+&lt;strong&gt;预测终场比分：&lt;/strong&gt; 1-0
+&lt;strong&gt;置信度：&lt;/strong&gt; 中
+&lt;strong&gt;核心理由：&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;当前 博洛尼亚 0-0 拉齐奥，赛况 未开场&lt;/li&gt;
+&lt;li&gt;场面标签：上半场、平局、未开场&lt;/li&gt;
+&lt;li&gt;半场僵持时，主场球队仍有翻盘空间&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;（基于 博洛尼亚 0-0 拉齐奥，0&amp;rsquo;，未开场）&lt;/p&gt;
+&lt;!-- /workflow-match:2993757 --&gt;</description></item><item><title>如何阅读一本书——我的 CF 读书笔记体系</title><link>https://2004ccf.github.io/io/p/ruhe-yuedu-yibenshu-cf/</link><pubDate>Sun, 09 Aug 2026 13:26:16 +0800</pubDate><guid>https://2004ccf.github.io/io/p/ruhe-yuedu-yibenshu-cf/</guid><description>&lt;blockquote&gt;
 &lt;p&gt;这是我读《如何阅读一本书》时整理的方法体系：原书结构、自己的笔记，再加上后来用起来的一些心得。用来指导怎么读，不是书评。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;hr&gt;
